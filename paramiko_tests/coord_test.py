@@ -167,8 +167,7 @@ if __name__ == "__main__":
         # Close gripper to pick
         mc.set_gripper_state(1, 40)
         time.sleep(1)
-        
-        continue
+    
         # Deposit and reset
         deposit()
         clean_strawberry_coords()
