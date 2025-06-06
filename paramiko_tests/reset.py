@@ -15,6 +15,7 @@ def set_origin_coord():
     sftp = ssh.open_sftp()
 
     mc.send_angles([0,0,0,0,0,0], 50)
+    time.sleep(4)
     ssh.close()
     sftp.close()
     return
