@@ -19,3 +19,4 @@ def set_origin_coord():
     ssh.close()
     sftp.close()
     return
+set_origin_coord()
