@@ -1,6 +1,6 @@
 import time
 from pymycobot.mycobot import MyCobot
-import paramiko
+import paramiko ### paramiko is used to connect to the arm via ssh
 
 # ---------------- Setup ----------------
 mc = MyCobot('/dev/ttyAMA0', 115200)
