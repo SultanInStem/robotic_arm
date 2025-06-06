@@ -20,7 +20,8 @@ ready_angles = [-10, 25, 55, 0, -90, 0]
 deposit_angles = [65, -90, 90, 45, -90, 0]
 
 
-# clear the coords file
+# clear the coords file 
+# it makes sure that the robot focuses on one strawberry at a time
 def clean_strawberry_coords():
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
