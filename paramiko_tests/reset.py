@@ -2,10 +2,10 @@ import time
 from pymycobot.mycobot import MyCobot
 import paramiko
 mc = MyCobot('/dev/ttyAMA0', 115200)
-NVIDIA_HOST = "129.8.203.200" #change based on ifconfig of NVIDIA
+NVIDIA_HOST = "129.8.203.200" 
 NVIDIA_USER = "agxorin3"
 NVIDIA_PASSWORD = "fresnostate"
-
+# This file moves the arm back to its initial position 
 
 def set_origin_coord(): 
     ssh = paramiko.SSHClient()
@@ -15,7 +15,10 @@ def set_origin_coord():
     sftp = ssh.open_sftp()
 
     mc.send_angles([0,0,0,0,0,0], 50)
-    time.sleep(4)
+
+    while mc.is_moving(): ### Allows for the movement to finish properly
+        time.sleep(0.1)
+
     ssh.close()
     sftp.close()
     return
