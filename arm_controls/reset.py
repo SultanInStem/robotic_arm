@@ -5,6 +5,7 @@ mc = MyCobot('/dev/ttyAMA0', 115200)
 
 def set_origin_coord(): 
     mc.send_angles([0,0,0,0,0,0], 50)
+    mc.set_gripper_state(1,50)
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
     return
