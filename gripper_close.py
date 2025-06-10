@@ -4,10 +4,8 @@ import time
 mc = MyCobot('/dev/ttyAMA0', 115200)
 
 
-def open():
-    
-    mc.set_gripper_state(0, 70)
+def close():
+    mc.set_gripper_state(1, 70)
     time.sleep(2)
     return
-open()
-
+close()
