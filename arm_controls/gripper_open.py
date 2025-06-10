@@ -4,8 +4,7 @@ mc = MyCobot('/dev/ttyAMA0', 115200)
 
 
 def open():
-    mc.init_gripper()
-    mc.set_gripper_value(0, 50)
+    mc.set_gripper_state(0, 70)
     time.sleep(2)
     return
 open()
