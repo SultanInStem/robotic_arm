@@ -5,7 +5,8 @@ mc = MyCobot('/dev/ttyAMA0', 115200)
 
 
 def close():
-    mc.set_gripper_value(1, 70)
+    grip_value = mc.set_gripper_value(100, 70)
+    print(grip_value)
     time.sleep(4)
     return
 close()
