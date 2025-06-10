@@ -8,5 +8,6 @@ def set_origin_coord():
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
     time.sleep(2)
+    mc.set_gripper_calibration()
     return
 set_origin_coord()
