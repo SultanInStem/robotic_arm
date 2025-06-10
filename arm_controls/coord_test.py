@@ -4,6 +4,7 @@ import paramiko ### paramiko is used to connect to the arm via ssh
 
 # ---------------- Setup ----------------
 mc = MyCobot('/dev/ttyAMA0', 115200)
+mc.init_gripper()
 
 IMG_CENTER_X = 320
 IMG_CENTER_Y = 240
