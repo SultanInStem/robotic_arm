@@ -1,15 +1,9 @@
-from pymycobot.mycobot import MyCobot
-from pymycobot import PI_PORT, PI_BAUD
+from pymycobot.mycobot320 import MyCobot320
 
 import time 
 
-mc = MyCobot("/dev/ttyAMA0", 115200)
+mc = MyCobot320("/dev/ttyAMA0", 115200)
 
-mc.set_gripper_calibration()
-
-mc.set_gripper_state(0,80)
-time.sleep(3)
-mc.set_gripper_state(1,80)
-time.sleep(3)
-mc.set_gripper_state(0,80)
-time.sleep(3)
+mc.send_angle([-0.2,0,0,0,0,0], 70)
+time.sleep(2)
+print("DONE")
