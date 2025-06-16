@@ -1,3 +1,8 @@
+# Important Instructions To Read!!
+
+
+
+
 # Packages and their functions
 ## Paramiko 
 Paramiko package is used to establish SSH connections to remote devices. In this case, the robotic arm. 
