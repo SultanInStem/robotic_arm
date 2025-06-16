@@ -15,6 +15,7 @@ NVIDIA_USER = "agxorin3"
 NVIDIA_PASSWORD = "fresnostate"
 COORD_FILE = "/home/agxorin3/Desktop/strawberry/strawberry_coords.txt"
 
+
 # Starting/Deposit Angles
 ready_angles = [-10, 25, 55, 0, -90, 0]
 deposit_angles = [65, -90, 90, 45, -90, 0]
@@ -108,11 +109,13 @@ def calculate_z_adjustment(j2):
 if __name__ == "__main__":
     lock = 1
     go_to_ready()
-
-    while True:
+    N = 10
+    i = 0 
+    while i <= N:
         coords = fetch_strawberry_coords() ### comes from sb_detect_send_coords.py
         if not len(coords):
             print("No strawberries detected.")
+            i += 1
             continue
         
         curr_pos = get_straw_pos(coords)
