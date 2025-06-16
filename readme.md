@@ -5,7 +5,12 @@
 ## DONT'S 
 - DO NOT disconnect ANY wires while the arm is still on. 
 - DO NOT connect wires loosely. Always make sure they are secured tightly. 
-- 
+- DO NOT touch the arm while it is on. Power it off and they do what you want.
+- DO NOT update pymycobot package. 
+- DO NOT touch colcon_ws file. 
+- DO NOT update the version of ROS2. 
+- DO NOT update the version of C++. 
+- DO NOT update the version of Python. 
 
 
 # Packages and their functions
