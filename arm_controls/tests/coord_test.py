@@ -1,6 +1,7 @@
 import time
 from pymycobot.mycobot import MyCobot
 import paramiko ### paramiko is used to connect to the arm via ssh
+from commands.reset import reset 
 
 # ---------------- Setup ----------------
 mc = MyCobot('/dev/ttyAMA0', 115200)
@@ -176,3 +177,6 @@ if __name__ == "__main__":
         deposit()
         clean_strawberry_coords()
         go_to_ready()
+
+
+reset()
