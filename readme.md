@@ -1,6 +1,11 @@
-# Important Instructions To Read!!
+# Important Instructions To Read !!! 
 
+## How To Start Up The Arm 
 
+## DONT'S 
+- DO NOT disconnect ANY wires while the arm is still on. 
+- DO NOT connect wires loosely. Always make sure they are secured tightly. 
+- 
 
 
 # Packages and their functions
