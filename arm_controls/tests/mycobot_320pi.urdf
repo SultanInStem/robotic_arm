@@ -3,8 +3,7 @@
 	
 <xacro:property name="width" value=".2" />
 
-
-  <link name="base">
+  <link name="base_link">
     <visual>
       <geometry>
 	     <!--- 0.0 0 -0.04  1.5708 3.14159-->
@@ -130,7 +129,7 @@
   <joint name="joint2_to_joint1" type="revolute">
     <axis xyz="0 0 1"/>
     <limit effort = "1000.0" lower = "-2.9321" upper = "2.9321" velocity = "0"/>
-    <parent link="base"/>
+    <parent link="base_link"/>
     <child link="link1"/>
     <origin xyz= "0 0 0.162" rpy = "0 0 0"/> 
   </joint>
@@ -179,6 +178,21 @@
     <parent link="link5"/>
     <child link="link6"/>
      <origin xyz= "0 0.06635 0" rpy = "-1.5708 0 0"/>
+  </joint>
+  <link name="gripper">
+    <visual>
+      <geometry>
+        <box size="0.05 0.02 0.02"/>  <!-- 5cm x 2cm x 2cm box -->
+      </geometry>
+      <origin xyz="0.025 0 0" rpy="0 0 0"/>
+    </visual>
+  </link>
+
+<!-- Fixed joint connecting wrist to gripper -->
+  <joint name="wrist_to_gripper" type="fixed">
+    <parent link="link6"/>  <!-- or whatever your last link is -->
+    <child link="gripper"/>
+    <origin xyz="0.05 0 0" rpy="0 0 0"/>  <!-- 5cm in front -->
   </joint>
 
 
