@@ -2,7 +2,6 @@ import time
 from pymycobot.mycobot import MyCobot 
 mc = MyCobot('/dev/ttyAMA0', 115200)
 
-
 def open():
     mc.set_gripper_state(0, 100)
     time.sleep(4)
