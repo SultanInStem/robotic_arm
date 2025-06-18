@@ -1,8 +1,10 @@
 import time
 from pymycobot.mycobot import MyCobot
+import sys
+import os
 
-
-
+# Go up two levels to reach the folder that contains globals.py
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 mc = MyCobot('/dev/ttyAMA0', 115200)
 # This file moves the arm back to its initial position 
 
