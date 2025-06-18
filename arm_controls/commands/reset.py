@@ -1,6 +1,6 @@
 import time
 from pymycobot.mycobot import MyCobot
-from globals import mc
+mc = MyCobot('/dev/ttyAMA0', 115200)
 # This file moves the arm back to its initial position 
 
 def reset(): 
