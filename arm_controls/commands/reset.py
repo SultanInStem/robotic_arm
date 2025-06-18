@@ -2,11 +2,11 @@ import time
 from pymycobot.mycobot import MyCobot
 import sys
 import os
-
-# Go up two levels to reach the folder that contains globals.py
+from globals import ARM_BANDWIDTH
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from globals import mc
-# mc = MyCobot('/dev/ttyAMA0', 115200)
+print(ARM_BANDWIDTH)
+# from globals import mc
+mc = MyCobot('/dev/ttyAMA0', 115200)
 # This file moves the arm back to its initial position 
 
 def reset(): 
