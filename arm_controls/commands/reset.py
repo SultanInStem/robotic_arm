@@ -13,4 +13,4 @@ def reset():
     time.sleep(2)
     mc.set_gripper_calibration()
     return
-# reset()
+reset()
