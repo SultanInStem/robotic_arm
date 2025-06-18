@@ -2,7 +2,8 @@ import time
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from globals import mc
+from globals import ARM_PORT, mc
+print(ARM_PORT)
 
 # This file moves the arm back to its initial position 
 def reset(): 
@@ -12,4 +13,4 @@ def reset():
     time.sleep(2)
     mc.set_gripper_calibration()
     return
-reset()
+# reset()
