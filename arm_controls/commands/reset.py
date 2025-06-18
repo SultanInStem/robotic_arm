@@ -2,8 +2,8 @@ import time
 from pymycobot.mycobot import MyCobot
 import sys
 import os
-from globals import ARM_BANDWIDTH
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from globals import ARM_BANDWIDTH
 print(ARM_BANDWIDTH)
 # from globals import mc
 mc = MyCobot('/dev/ttyAMA0', 115200)
