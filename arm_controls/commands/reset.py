@@ -1,8 +1,13 @@
 import time
 from pymycobot.mycobot import MyCobot
 import sys
-sys.path.append('/Desktop/robotic_arm/arm_controls')
-from globals import mc
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from globals import mc 
+
+
 
 # mc = MyCobot('/dev/ttyAMA0', 115200)
 # This file moves the arm back to its initial position 
