@@ -25,3 +25,7 @@ Pymycobot is designed to control MyCobot robotic arms developed by Elephant Robo
 ikpy is used to implement inverse kinematics and compute all joint angles at once.
 ## pyrealsense2 
 pyrealsense2 is used to interact with D435i 3D camera through python scripts.
+## ultralytics
+ultratyics is used to access YOLO (you only look once) models. 
+## cv2
+cv2 is used to control the camera.
