@@ -2,7 +2,7 @@ from pymycobot.mycobot import MyCobot
 from ikpy.chain import Chain
 import time
  
-mc = MyCobot("/dev/ttyAMA0", 115200) 
+# mc = MyCobot("/dev/ttyAMA0", 115200) 
 
 
 def main(): 
@@ -11,12 +11,13 @@ def main():
     angles = chain.inverse_kinematics(target)
     angles = angles[1:7]
     main_angles = []
-    for angle in angles: 
-        main_angles.push(angle)
-    mc.send_angles(main_angles, 10)
-    while mc.is_moving(): 
-        time.sleep(0.1)
-    time.sleep(2)
+    for i in range(0, len(angles)): 
+        main_angles.append(float(angles[i]))
+    print(type(main_angles))
+    # mc.send_angles(main_angles, 10)
+    # while mc.is_moving(): 
+        # time.sleep(0.1)
+    # time.sleep(2)
     # print("Frame of the last joint: " + mc.get_coords())
 
 main()
