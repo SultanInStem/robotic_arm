@@ -13,10 +13,9 @@ def main():
     for i in range(0, len(angles)): 
         main_angles.append(float(angles[i])*factor)
     mc.send_angles(main_angles, 10)
-    angles = [0.12, -1.70, -0.05, -0.36, -2.15, -1.6]
-    mc.send_angles(angles, 10)
     while mc.is_moving(): 
         time.sleep(0.1)
+    time.sleep(2)
 main()
 
 
