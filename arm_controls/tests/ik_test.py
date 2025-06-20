@@ -2,7 +2,7 @@ from ikpy.chain import Chain
  
 
 chain = Chain.from_urdf_file("mycobot_320pi.urdf")
-target = [-0.2,-0.148, 0.503]
+target = [0.4,0, 0.1]
 angles = chain.inverse_kinematics(target)
 angles = angles[1:7]
 print(angles)
