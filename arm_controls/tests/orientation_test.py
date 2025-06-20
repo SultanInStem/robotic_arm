@@ -18,7 +18,8 @@ def main():
     while mc.is_moving(): 
         time.sleep(0.1)
     time.sleep(2)
-    print("Frame of the last joint: " + mc.get_coords())
+    print("Frame of the last joint: " )
+    print(mc.get_coords())
 
 main()
 
