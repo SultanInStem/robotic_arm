@@ -17,6 +17,7 @@ def main():
     mc.send_angles(angles, 10)
     while mc.is_moving(): 
         time.sleep(0.1)
+main()
 
 
 
