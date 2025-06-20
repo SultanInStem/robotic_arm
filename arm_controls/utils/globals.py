@@ -1,0 +1,2 @@
+PORT = "/dev/ttyAMA0"
+BANDWIDTH = 115200

@@ -19,4 +19,3 @@ def compute_ik(x=0,y=0,z=0.5): # x,y,z must be in meters
     # angles are returned in degrees 
     print(main_angles)    
     return main_angles
-compute_ik()
