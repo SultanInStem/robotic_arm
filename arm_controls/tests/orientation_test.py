@@ -16,6 +16,8 @@ def main():
     while mc.is_moving(): 
         time.sleep(0.1)
     time.sleep(2)
+    print("Frame")
+    print(mc.get_coords())
 main()
 
 
