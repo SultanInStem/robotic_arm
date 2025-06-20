@@ -44,3 +44,9 @@ def reset():
     time.sleep(2)
     mc.set_gripper_calibration()
     return 0
+
+def calibrate_joints(): 
+    mc.set_servo_calibration(1)
+    print("You have 8 seconds to align all the joints")
+    time.sleep(8)
+    mc.focus_servo(1)
