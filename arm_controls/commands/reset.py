@@ -4,7 +4,7 @@ mc = MyCobot('/dev/ttyAMA0', 115200)
 
 # This file moves the arm back to its initial position 
 def reset(): 
-    mc.send_angles([0,0,0,0,0,0], 50)
+    mc.send_angles([0,0,0,0,0,0], 30)
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
     time.sleep(2)

@@ -15,6 +15,10 @@
 - DO NOT update the version of C++. 
 - DO NOT update the version of Python. 
 
+# Vision 
+
+yolo task=detect mode=train model=yolov8n.pt data=path/to/data.yaml epochs=50 imgsz=640
+
 
 # Packages and their functions
 ## Paramiko 
