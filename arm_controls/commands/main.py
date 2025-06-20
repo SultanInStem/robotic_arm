@@ -7,7 +7,7 @@ from utils.compute_ik import compute_ik
 from utils.globals import PORT, BANDWIDTH
 mc = MyCobot(PORT, BANDWIDTH)
 
-def gripper_open(speed=80):
+def open_gripper(speed=80):
     if speed > 100: 
         print("speed cannot be greater than 100")
         return -1
@@ -16,7 +16,7 @@ def gripper_open(speed=80):
 
     return 0 
 
-def gripper_close(speed=80): 
+def close_gripper(speed=80): 
     if speed > 100:
         print("speed cannot be greater than 100")
         return -1 
