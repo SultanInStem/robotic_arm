@@ -5,7 +5,6 @@ chain = Chain.from_urdf_file("mycobot_320pi.urdf")
 target = [0.4,0, 0.1]
 angles = chain.inverse_kinematics(target)
 angles = angles[1:7]
-print(angles)
 
 
 # Position: x = -0.050, y = -0.148, z = 0.503

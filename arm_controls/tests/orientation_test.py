@@ -10,11 +10,14 @@ def main():
     target = [0.4,0, 0.1]
     angles = chain.inverse_kinematics(target)
     angles = angles[1:7]
-    mc.send_angles(angles, 10)
+    main_angles = []
+    for angle in angles: 
+        main_angles.push(angle)
+    mc.send_angles(main_angles, 10)
     while mc.is_moving(): 
         time.sleep(0.1)
     time.sleep(2)
-    print("Frame of the last joint: " + mc.get_coords())
+    # print("Frame of the last joint: " + mc.get_coords())
 
 main()
 
