@@ -3,7 +3,7 @@ import os
 import time
 from pymycobot.mycobot import MyCobot 
 sys.path.append(os.path.abspath(".."))
-from utils.main import compute_ik
+from utils.funcs import compute_ik
 from utils.globals import PORT, BANDWIDTH
 mc = MyCobot(PORT, BANDWIDTH)
 
