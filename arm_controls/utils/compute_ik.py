@@ -17,5 +17,4 @@ def compute_ik(point=[0,0,0.5]): # x,y,z must be in meters
     for i in range(1, len(angles) - 1): 
         main_angles.append(round(float(angles[i]) * (180 / math.pi), 2))
     # angles are returned in degrees 
-    print(main_angles)    
     return main_angles
