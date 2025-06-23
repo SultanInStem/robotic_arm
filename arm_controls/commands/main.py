@@ -53,7 +53,6 @@ def calibrate_joints():
 
 def calibrate_gripper():
     mc.set_gripper_calibration()
-    mc.set_gripper_value(0, 100)
     time.sleep(2)
  
 
