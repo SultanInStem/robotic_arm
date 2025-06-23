@@ -50,3 +50,9 @@ def calibrate_joints():
     print("You have 8 seconds to align all the joints")
     time.sleep(8)
     mc.focus_servo(1)
+
+def calibrate_gripper():
+    mc.set_gripper_calibration()
+    time.sleep(2)
+ 
+
