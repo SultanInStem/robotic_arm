@@ -71,9 +71,9 @@ try:
             cx, cy = x + w // 2, y + h // 2
             depth = depth_frame.get_distance(cx,cy)
             coords.append((cx, cy, depth))
-            cv2.putText(color_image, f"X: {cx}", (0,0),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            cv2.putText(color_image, f"Y: {cy}", (50,0),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            cv2.putText(color_image, f"Z: {depth}", (50,0),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"X: {cx}", (0,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"Y: {cy}", (50,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"Z: {depth}", (50,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             print("Depth: ", depth)
 
 
