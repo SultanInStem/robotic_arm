@@ -44,6 +44,10 @@ def detect_strawberries(frame):
     return strawberries
 # Initializing the 3D camera
 pipeline = rs.pipeline()
+align = rs.align(rs.stream.color)
+profile = pipeline.get_active_profile()
+depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
+intrinsics = depth_profile.get_intrinsics()
 config = rs.config()
 config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
 config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
@@ -59,20 +63,25 @@ except Exception as e:
 try: 
     while True:
         frames = pipeline.wait_for_frames()
-        color_frame = frames.get_color_frame()
+        aligned_frames = align.process(frames)
+        depth_frame = aligned_frames.get_depth_frame()
+        color_frame = aligned_frames.get_color_frame()
 
-        if not color_frame:
-            print("Warning: No color frame received")
+        if not color_frame or depth_frame:
+            print("Warning: Color frame or depth frame is missing")
             continue	
-        frame = np.asanyarray(color_frame.get_data())
+        color_image = np.asanyarray(color_frame.get_data())
+        depth_image = np.asanyarray(depth_frame.get_data())
 
-        strawberries = detect_strawberries(frame)
+        strawberries = detect_strawberries(color_image)
         coords = []
+        depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
+        images = np.hstack((color_image, depth_colormap))
 
         for (x, y, w, h) in strawberries:
-            roi = frame[y:y+h, x:x+w]
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            cv2.putText(frame, "Strawberry", (x, y - 10),
+            roi = color_image[y:y+h, x:x+w]
+            cv2.rectangle(color_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.putText(color_image, "Strawberry", (x, y - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
             # Compute center coordinates
@@ -95,7 +104,7 @@ try:
                 berry = coords[0]
                 f.write(f"{berry[0]} {berry[1]}")
 
-        cv2.imshow("Strawberry Detector", frame)
+        cv2.imshow("Strawberry Detector", color_image)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 finally: 
