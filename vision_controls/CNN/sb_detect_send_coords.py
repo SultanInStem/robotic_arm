@@ -5,21 +5,9 @@ import pyrealsense2 as rs
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
-# Load trained model and PCA
-# classifier = joblib.load("svm_model.pkl")
-# scaler = joblib.load("scaler.pkl")
-# pca = joblib.load("pca.pkl")
 
 # File path for Raspberry Pi
 COORD_FILE = "/home/agxorin3/Desktop/strawberry/strawberry_coords.txt"
-
-# def preprocess_frame(frame):
-#     """Resize and preprocess a frame for PCA transformation."""
-#     frame = cv2.resize(frame, (50, 50))
-#     frame = frame.flatten().reshape(1, -1)
-#     frame = scaler.transform(frame)
-#     frame_pca = pca.transform(frame)
-#     return frame_pca
 
 def detect_strawberries(frame):
     """Detects strawberries using color thresholding and contour detection."""
@@ -58,8 +46,6 @@ depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
 intrinsics = depth_profile.get_intrinsics()
 
 
-
-
 try: 
     while True:
         frames = pipeline.wait_for_frames()
@@ -71,12 +57,9 @@ try:
             print("Warning: Color frame or depth frame is missing")
             continue	
         color_image = np.asanyarray(color_frame.get_data())
-        # depth_image = np.asanyarray(depth_frame.get_data())
 
         strawberries = detect_strawberries(color_image)
         coords = []
-        # depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
-        # images = np.hstack((color_image, depth_colormap))
 
         for (x, y, w, h) in strawberries:
             roi = color_image[y:y+h, x:x+w]
@@ -86,25 +69,19 @@ try:
 
             # Compute center coordinates
             cx, cy = x + w // 2, y + h // 2
-            coords.append((cx, cy))
             depth = depth_frame.get_distance(cx,cy)
+            coords.append((cx, cy, depth))
+            cv2.putText(color_image, f"X: {cx}", (0,0),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"Y: {cy}", (50,0),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"Z: {depth}", (50,0),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             print("Depth: ", depth)
-            # feat = preprocess_frame(roi)
-            # prediction = classifier.predict(feat)[0]
-
-            # if prediction == 1:  # Only save "Pickable" strawberries
-                # label = "Pickable"
-                # color = (0, 255, 0)
-                # center_x = x + w // 2
-                # center_y = y + h // 2
-                # pickable_strawberries.append((center_x, center_y))
 
 
         # Write bounding box center coordinates (X, Y) to the file for Raspberry Pi
         with open(COORD_FILE, "w") as f:
             if len(coords) > 0:
                 berry = coords[0]
-                f.write(f"{berry[0]} {berry[1]}")
+                f.write(f"{berry[0]} {berry[1]} {berry[2]}")
 
         cv2.imshow("Strawberry Detector", color_image)
         if cv2.waitKey(1) & 0xFF == ord('q'):
