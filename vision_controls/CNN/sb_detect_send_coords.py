@@ -71,12 +71,13 @@ try:
             print("Warning: Color frame or depth frame is missing")
             continue	
         color_image = np.asanyarray(color_frame.get_data())
-        depth_image = np.asanyarray(depth_frame.get_data())
+        # depth_image = np.asanyarray(depth_frame.get_data())
 
         strawberries = detect_strawberries(color_image)
         coords = []
-        depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
-        images = np.hstack((color_image, depth_colormap))
+        depth_intrin = depth_frame.profile.as_video_stream_profile().intrinsics
+        # depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
+        # images = np.hstack((color_image, depth_colormap))
 
         for (x, y, w, h) in strawberries:
             roi = color_image[y:y+h, x:x+w]
