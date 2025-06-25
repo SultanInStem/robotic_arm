@@ -30,6 +30,10 @@ def detect_strawberries(frame):
             strawberries.append((x, y, w, h))
 
     return strawberries
+def pixel_to_metric(intrinsics, x,y, depth): 
+    point = rs.rs2_deproject_pixel_to_point(intrinsics, [x,y], depth)
+    return point[0], point[1], point[2] # Returns X,Y,Z in meters
+
 # Initializing the 3D camera
 pipeline = rs.pipeline()
 config = rs.config()
@@ -57,7 +61,7 @@ try:
             print("Warning: Color frame or depth frame is missing")
             continue	
         color_image = np.asanyarray(color_frame.get_data())
-
+        depth_intrin = depth_frame.profile.as_video_stream_profile().intrinsics
         strawberries = detect_strawberries(color_image)
         coords = []
 
@@ -69,11 +73,12 @@ try:
 
             # Compute center coordinates
             cx, cy = x + w // 2, y + h // 2
-            depth = round(depth_frame.get_distance(cx,cy), 2)
-            coords.append((cx, cy, depth))
-            cv2.putText(color_image, f"X: {cx}", (0,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            cv2.putText(color_image, f"Y: {cy}", (150,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            cv2.putText(color_image, f"Z: {depth}", (300,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            depth = round(depth_frame.get_distance(cx,cy), 3)
+            X, Y, Z = pixel_to_metric(depth_intrin, cx, cy, depth)
+            coords.append((X, Y, Z))
+            cv2.putText(color_image, f"X: {X}", (0,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"Y: {Y}", (150,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"Z: {Z}", (300,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             print("Depth: ", depth)
 
 
