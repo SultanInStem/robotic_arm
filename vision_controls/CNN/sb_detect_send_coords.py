@@ -87,6 +87,8 @@ try:
             # Compute center coordinates
             cx, cy = x + w // 2, y + h // 2
             coords.append((cx, cy))
+            depth = depth_frame.get_distance(cx,cy)
+            print("Depth: ", depth)
             # feat = preprocess_frame(roi)
             # prediction = classifier.predict(feat)[0]
 
