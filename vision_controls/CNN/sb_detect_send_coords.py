@@ -53,6 +53,9 @@ except Exception as e:
      print("Error: Could not start the camera")
      exit()
 align = rs.align(rs.stream.color)
+profile = pipeline.get_active_profile()
+depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
+intrinsics = depth_profile.get_intrinsics()
 
 
 
@@ -64,7 +67,7 @@ try:
         depth_frame = aligned_frames.get_depth_frame()
         color_frame = aligned_frames.get_color_frame()
 
-        if not color_frame or depth_frame:
+        if not color_frame or not depth_frame:
             print("Warning: Color frame or depth frame is missing")
             continue	
         color_image = np.asanyarray(color_frame.get_data())
