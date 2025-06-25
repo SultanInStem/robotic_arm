@@ -44,19 +44,19 @@ def detect_strawberries(frame):
     return strawberries
 # Initializing the 3D camera
 pipeline = rs.pipeline()
-align = rs.align(rs.stream.color)
-profile = pipeline.get_active_profile()
-depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
-intrinsics = depth_profile.get_intrinsics()
 config = rs.config()
 config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
 config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
-
 try: 
      pipeline.start(config)
 except Exception as e: 
      print("Error: Could not start the camera")
      exit()
+align = rs.align(rs.stream.color)
+profile = pipeline.get_active_profile()
+depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
+intrinsics = depth_profile.get_intrinsics()
+
 
 
 
