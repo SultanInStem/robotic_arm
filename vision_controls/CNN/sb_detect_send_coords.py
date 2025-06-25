@@ -63,7 +63,7 @@ try:
         # strawberries = detect_strawberries(color_image)
 
         # Run Yolo 
-        results = model[color_image][0]
+        results = model(color_image)[0]
         coords = []
         for box in results.boxes: 
             cls = int(box.cls.item())
