@@ -69,7 +69,7 @@ try:
 
             # Compute center coordinates
             cx, cy = x + w // 2, y + h // 2
-            depth = depth_frame.get_distance(cx,cy)
+            depth = round(depth_frame.get_distance(cx,cy), 2)
             coords.append((cx, cy, depth))
             cv2.putText(color_image, f"X: {cx}", (0,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             cv2.putText(color_image, f"Y: {cy}", (50,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
