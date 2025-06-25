@@ -53,9 +53,6 @@ except Exception as e:
      print("Error: Could not start the camera")
      exit()
 align = rs.align(rs.stream.color)
-profile = pipeline.get_active_profile()
-depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
-intrinsics = depth_profile.get_intrinsics()
 
 
 
