@@ -1,16 +1,15 @@
 import cv2
 import numpy as np
-import joblib
 import pyrealsense2 as rs
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
-
+from ultralytics import YOLO 
+import torch
 
 # File path for Raspberry Pi
 COORD_FILE = "/home/agxorin3/Desktop/strawberry/strawberry_coords.txt"
+model = YOLO("/yolo/train12/weights/best.pt")
 
 def detect_strawberries(frame):
-    """Detects strawberries using color thresholding and contour detection."""
+    """Detects strawberries using color thresholding and contour detection"""
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     lower_red = np.array([0, 120, 70])
     upper_red = np.array([10, 255, 255])
