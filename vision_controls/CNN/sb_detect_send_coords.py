@@ -76,9 +76,9 @@ try:
             depth = round(depth_frame.get_distance(cx,cy), 3)
             X, Y, Z = pixel_to_metric(depth_intrin, cx, cy, depth)
             coords.append((X, Y, Z))
-            cv2.putText(color_image, f"X: {X}", (0,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            cv2.putText(color_image, f"Y: {Y}", (150,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            cv2.putText(color_image, f"Z: {Z}", (300,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"X: {round(X, 3)}", (0,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"Y: {round(Y, 3)}", (150,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"Z: {round(Z, 3)}", (300,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             print("Depth: ", depth)
 
 
