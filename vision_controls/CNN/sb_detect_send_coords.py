@@ -6,7 +6,7 @@ import torch
 
 # File path for Raspberry Pi
 COORD_FILE = "/home/agxorin3/Desktop/strawberry/strawberry_coords.txt"
-model = YOLO("/yolo/train12/weights/best.pt")
+model = YOLO("./yolo/train12/weights/best.pt")
 
 def detect_strawberries(frame):
     """Detects strawberries using color thresholding and contour detection"""
