@@ -67,7 +67,7 @@ try:
         depth_frame = aligned_frames.get_depth_frame()
         color_frame = aligned_frames.get_color_frame()
 
-        if not color_frame:
+        if not color_frame or depth_frame:
             print("Warning: Color frame or depth frame is missing")
             continue	
         color_image = np.asanyarray(color_frame.get_data())
