@@ -72,8 +72,8 @@ try:
             depth = round(depth_frame.get_distance(cx,cy), 2)
             coords.append((cx, cy, depth))
             cv2.putText(color_image, f"X: {cx}", (0,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            cv2.putText(color_image, f"Y: {cy}", (50,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            cv2.putText(color_image, f"Z: {depth}", (50,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"Y: {cy}", (150,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            cv2.putText(color_image, f"Z: {depth}", (300,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             print("Depth: ", depth)
 
 
