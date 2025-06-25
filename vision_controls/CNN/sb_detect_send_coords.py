@@ -60,25 +60,25 @@ try:
             continue	
         color_image = np.asanyarray(color_frame.get_data())
         depth_intrin = depth_frame.profile.as_video_stream_profile().intrinsics
-        strawberries = detect_strawberries(color_image)
+        # strawberries = detect_strawberries(color_image)
+
+        # Run Yolo 
+        results = model[color_image][0]
         coords = []
-
-        for (x, y, w, h) in strawberries:
-            roi = color_image[y:y+h, x:x+w]
-            cv2.rectangle(color_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            cv2.putText(color_image, "Strawberry", (x, y - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-
-            # Compute center coordinates
-            cx, cy = x + w // 2, y + h // 2
+        for box in results.boxes: 
+            cls = int(box.cls.item())
+            conf = float(box.conf.item())
+            if conf < 0.5:
+                continue 
+            x1,y1,x2,y2 = map(int, box.xyxy[0])
+            cx = (x1 + x2) // 2
+            cy = (y1 + y2) // 2 
             depth = round(depth_frame.get_distance(cx,cy), 3)
             X, Y, Z = pixel_to_metric(depth_intrin, cx, cy, depth)
             coords.append((X, Y, Z))
             cv2.putText(color_image, f"X: {round(X, 3)}", (0,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             cv2.putText(color_image, f"Y: {round(Y, 3)}", (150,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
             cv2.putText(color_image, f"Z: {round(Z, 3)}", (300,100),  cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            print("Depth: ", depth)
-
 
         # Write bounding box center coordinates (X, Y) to the file for Raspberry Pi
         with open(COORD_FILE, "w") as f:
