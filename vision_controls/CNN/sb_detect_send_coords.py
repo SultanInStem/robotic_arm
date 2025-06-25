@@ -6,20 +6,20 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 # Load trained model and PCA
-classifier = joblib.load("svm_model.pkl")
-scaler = joblib.load("scaler.pkl")
-pca = joblib.load("pca.pkl")
+# classifier = joblib.load("svm_model.pkl")
+# scaler = joblib.load("scaler.pkl")
+# pca = joblib.load("pca.pkl")
 
 # File path for Raspberry Pi
 COORD_FILE = "/home/agxorin3/Desktop/strawberry/strawberry_coords.txt"
 
-def preprocess_frame(frame):
-    """Resize and preprocess a frame for PCA transformation."""
-    frame = cv2.resize(frame, (50, 50))
-    frame = frame.flatten().reshape(1, -1)
-    frame = scaler.transform(frame)
-    frame_pca = pca.transform(frame)
-    return frame_pca
+# def preprocess_frame(frame):
+#     """Resize and preprocess a frame for PCA transformation."""
+#     frame = cv2.resize(frame, (50, 50))
+#     frame = frame.flatten().reshape(1, -1)
+#     frame = scaler.transform(frame)
+#     frame_pca = pca.transform(frame)
+#     return frame_pca
 
 def detect_strawberries(frame):
     """Detects strawberries using color thresholding and contour detection."""
@@ -67,27 +67,32 @@ try:
         frame = np.asanyarray(color_frame.get_data())
 
         strawberries = detect_strawberries(frame)
-        pickable_strawberries = []
+        coords = []
 
         for (x, y, w, h) in strawberries:
             roi = frame[y:y+h, x:x+w]
-            feat = preprocess_frame(roi)
-            prediction = classifier.predict(feat)[0]
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.putText(frame, "Strawberry", (x, y - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
-            if prediction == 1:  # Only save "Pickable" strawberries
-                label = "Pickable"
-                color = (0, 255, 0)
-                center_x = x + w // 2
-                center_y = y + h // 2
-                pickable_strawberries.append((center_x, center_y))
+            # Compute center coordinates
+            cx, cy = x + w // 2, y + h // 2
+            coords.append((cx, cy))
+            # feat = preprocess_frame(roi)
+            # prediction = classifier.predict(feat)[0]
 
-            cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
-            cv2.putText(frame, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
+            # if prediction == 1:  # Only save "Pickable" strawberries
+                # label = "Pickable"
+                # color = (0, 255, 0)
+                # center_x = x + w // 2
+                # center_y = y + h // 2
+                # pickable_strawberries.append((center_x, center_y))
+
 
         # Write bounding box center coordinates (X, Y) to the file for Raspberry Pi
         with open(COORD_FILE, "w") as f:
-            if len(pickable_strawberries) > 0:
-                berry = pickable_strawberries[0]
+            if len(coords) > 0:
+                berry = coords[0]
                 f.write(f"{berry[0]} {berry[1]}")
 
         cv2.imshow("Strawberry Detector", frame)
