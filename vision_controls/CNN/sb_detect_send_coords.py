@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import joblib
+import pyrealsense2 as rs
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
@@ -9,12 +10,6 @@ classifier = joblib.load("svm_model.pkl")
 scaler = joblib.load("scaler.pkl")
 pca = joblib.load("pca.pkl")
 
-# Initialize the camera
-cap = cv2.VideoCapture(0)
-if not cap.isOpened():
-	print("Error: Camera did not open")
-	exit()
-		
 # File path for Raspberry Pi
 COORD_FILE = "/home/agxorin3/Desktop/strawberry/strawberry_coords.txt"
 
@@ -47,43 +42,58 @@ def detect_strawberries(frame):
             strawberries.append((x, y, w, h))
 
     return strawberries
+# Initializing the 3D camera
+pipeline = rs.pipeline()
+config = rs.config()
+config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        print("Error: Could not read the frame")
-    if not cap.isOpened():
-        print("Error: Can't see")
-		
+try: 
+     pipeline.start(config)
+except Exception as e: 
+     print("Error: Could not start the camera")
+     exit()
 
-    strawberries = detect_strawberries(frame)
-    pickable_strawberries = []
 
-    for (x, y, w, h) in strawberries:
-        strawberry_roi = frame[y:y+h, x:x+w]
-        frame_pca = preprocess_frame(strawberry_roi)
-        prediction = classifier.predict(frame_pca)[0]
 
-        if prediction == 1:  # Only save "Pickable" strawberries
-            label = "Pickable"
-            color = (0, 255, 0)
-            center_x = x + w // 2
-            center_y = y + h // 2
-            pickable_strawberries.append((center_x, center_y))
+try: 
+    while True:
+        frames = pipeline.wait_for_frames()
+        color_frame = frames.get_color_frame()
 
-        cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
-        cv2.putText(frame, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
+        if not color_frame:
+            print("Warning: No color frame received")
+            continue	
+        frame = np.asanyarray(color_frame.get_data())
 
-    # Write bounding box center coordinates (X, Y) to the file for Raspberry Pi
-    with open(COORD_FILE, "w") as f:
-	    if len(pickable_strawberries) > 0:
-	        berry = pickable_strawberries[0] 
-	        f.write(f"{berry[0]} {berry[1]}")
+        strawberries = detect_strawberries(frame)
+        pickable_strawberries = []
 
-    cv2.imshow("Strawberry Detector", frame)
+        for (x, y, w, h) in strawberries:
+            roi = frame[y:y+h, x:x+w]
+            feat = preprocess_frame(roi)
+            prediction = classifier.predict(feat)[0]
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+            if prediction == 1:  # Only save "Pickable" strawberries
+                label = "Pickable"
+                color = (0, 255, 0)
+                center_x = x + w // 2
+                center_y = y + h // 2
+                pickable_strawberries.append((center_x, center_y))
 
-cap.release()
-cv2.destroyAllWindows()
+            cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
+            cv2.putText(frame, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
+
+        # Write bounding box center coordinates (X, Y) to the file for Raspberry Pi
+        with open(COORD_FILE, "w") as f:
+            if len(pickable_strawberries) > 0:
+                berry = pickable_strawberries[0]
+                f.write(f"{berry[0]} {berry[1]}")
+
+        cv2.imshow("Strawberry Detector", frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+finally: 
+    pipeline.stop()        
+    cv2.destroyAllWindows()
+    print("stopped")
