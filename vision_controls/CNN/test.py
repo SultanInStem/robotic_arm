@@ -60,6 +60,8 @@ try:
 
         coords = []
 
+        print(output.shape)   # e.g. (num_detections, N)
+        print(output[0].tolist()) 
         for det in output:
             x1, y1, x2, y2, conf, cls = det.tolist()
             if conf < 0.5:
