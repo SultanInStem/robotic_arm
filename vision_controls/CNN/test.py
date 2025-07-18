@@ -52,7 +52,7 @@ try:
 
         # Preprocess image for PyTorch model (resize, normalize, etc.)
         img = cv2.resize(color_image, (640, 640))  # adjust size if needed
-        img_tensor = torch.from_numpy(img).permute(2, 0, 1).float().div(255.0).unsqueeze(0).to(device)
+        img_tensor = torch.from_numpy(img).permute(2, 0, 1).div(255.0).unsqueeze(0).to(device).half()
 
         # Run inference
         with torch.no_grad():
