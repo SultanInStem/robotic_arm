@@ -162,29 +162,23 @@ def pixel_to_metric(intrinsics, x,y, depth):
     point = rs.rs2_deproject_pixel_to_point(intrinsics, [x,y], depth)
     return point[0], point[1], point[2] # Returns X,Y,Z in meters
 def preprocess(image, img_size=640):
-    # Resize and pad to img_size, maintaining aspect ratio (letterbox)
-    # This helper replicates Ultralytics' letterbox function roughly
-
     h0, w0 = image.shape[:2]
     r = img_size / max(h0, w0)
     new_unpad = int(w0 * r), int(h0 * r)
     image_resized = cv2.resize(image, new_unpad, interpolation=cv2.INTER_LINEAR)
 
-    # Compute padding
     dw = img_size - new_unpad[0]
     dh = img_size - new_unpad[1]
     top, bottom = dh // 2, dh - (dh // 2)
     left, right = dw // 2, dw - (dw // 2)
 
-    # Add border
     image_padded = cv2.copyMakeBorder(image_resized, top, bottom, left, right, cv2.BORDER_CONSTANT, value=(114,114,114))
-
-    # Convert BGR to RGB
     image_rgb = cv2.cvtColor(image_padded, cv2.COLOR_BGR2RGB)
 
-    # Convert to tensor
+    # Convert to tensor and ensure float16
     img_tensor = torch.from_numpy(image_rgb).permute(2,0,1).float() / 255.0
-    img_tensor = img_tensor.unsqueeze(0).to(device)  # add batch dim
+    img_tensor = img_tensor.to(device, dtype=torch.float16)  # Convert to float16
+    img_tensor = img_tensor.unsqueeze(0)  # Add batch dimension
 
     return img_tensor, r, left, top
 
