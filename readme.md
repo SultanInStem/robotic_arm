@@ -5,7 +5,7 @@
 2) Power on the arm 
 3) Run reset.py to calibrate the arm 
 
-# Vision 
+# Visionc_
 
 # Packages and their functions
 ## Paramiko 
