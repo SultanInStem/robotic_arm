@@ -6,7 +6,7 @@ import torch
 
 # File path for Raspberry Pi
 COORD_FILE = "/home/agxorin3/Desktop/strawberry/strawberry_coords.txt"
-model = torch.load('yolov5m.pt', map_location='cuda' if torch.cuda.is_available() else 'cpu')
+model = torch.load('train/my_model.pt', map_location='cuda' if torch.cuda.is_available() else 'cpu')
 
 
 def detect_strawberries(frame):
