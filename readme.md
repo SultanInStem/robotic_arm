@@ -38,3 +38,6 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D BUILD_TESTS=OFF \
       -D BUILD_PERF_TESTS=OFF \
       -D BUILD_EXAMPLES=OFF ..
+
+
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu114
