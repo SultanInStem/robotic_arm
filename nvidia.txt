@@ -1,0 +1,6 @@
+1 Setting up nvcc --version 
+
+
+
+echo 'export PYTHONPATH=$PYTHONPATH:/usr/local/python/cv2/python-3.6/' >> ~/.bashrc
+source ~/.bashrc
