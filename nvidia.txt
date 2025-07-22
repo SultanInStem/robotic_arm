@@ -2,5 +2,5 @@
 
 
 
-echo 'export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.8/site-packages/cv2/python3.8/' >> ~/.bashrc
+echo 'export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.8/site-packages/cv2/python-3.8/' >> ~/.bashrc
 source ~/.bashrc
