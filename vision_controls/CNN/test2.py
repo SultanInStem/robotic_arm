@@ -4,7 +4,7 @@ import cv2
 import torch
 from ultralytics import YOLO
 
-model = YOLO('yolov5m.pt')  # This will not require torchvision
+model = YOLO('yolo/my_model.pt')  # This will not require torchvision
 
 
 # Load the YOLOv5 model
