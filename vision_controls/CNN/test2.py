@@ -2,9 +2,12 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 import torch
+from ultralytics import YOLO
+
+model = YOLO('yolov5m.pt')  # This will not require torchvision
+
 
 # Load the YOLOv5 model
-model = torch.load('yolo/my_model.pt', map_location='cuda' if torch.cuda.is_available() else 'cpu')
 model.eval()
 
 # Initialize Intel RealSense pipeline
@@ -25,6 +28,7 @@ try:
         # Convert RealSense frame to numpy array
         frame = np.asanyarray(color_frame.get_data())
 
+        results = model(frame)
         # Preprocess image for YOLOv5 (resize, normalize, convert to tensor)
         img = cv2.resize(frame, (640, 640))
         img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB and HWC to CHW
