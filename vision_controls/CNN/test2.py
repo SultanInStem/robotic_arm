@@ -4,7 +4,7 @@ import cv2
 import torch
 
 # Load the YOLOv5 model
-model = torch.load('yolov5m.pt', map_location='cuda' if torch.cuda.is_available() else 'cpu')
+model = torch.load('yolo/my_model.pt', map_location='cuda' if torch.cuda.is_available() else 'cpu')
 model.eval()
 
 # Initialize Intel RealSense pipeline
