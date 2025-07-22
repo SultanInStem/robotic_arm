@@ -4,7 +4,7 @@ import cv2
 import torch
 from ultralytics import YOLO
 
-model = torch.load('yolo/my_model.pt')
+model = torch.load('yolo/train/weights/best.pt')
 print(type(model))
 
 
