@@ -6,6 +6,16 @@ echo 'export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.8/site-packages/cv2/p
 source ~/.bashrc
 
 
+# substitute the link URL and wheel filename from the desired torch version above
+wget https://nvidia.box.com/shared/static/p57jwntv436lfrd78inwl7iml6p13fzh.whl -O torch-1.13.0a0+d0d6b1f2.nv22.10-cp38-cp38-linux_aarch64.whl
+sudo apt-get install python3-pip libopenblas-base libopenmpi-dev libomp-dev
+pip3 install 'Cython<3'
+pip3 install numpy torch-1.13.0a0+d0d6b1f2.nv22.10-cp38-cp38-linux_aarch64.whl
+
+
+
+
+
 $ sudo apt-get install libjpeg-dev zlib1g-dev libpython3-dev libopenblas-dev libavcodec-dev libavformat-dev libswscale-dev
 $ git clone --branch <0.13.0> https://github.com/pytorch/vision torchvision   # see below for version of torchvision to download
 $ cd torchvision
