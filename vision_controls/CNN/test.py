@@ -13,7 +13,9 @@ try:
     model_path = "yolo/train/weights/best.pt"  # Update with correct path if needed
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file {model_path} not found")
-    model = YOLO(model_path).cuda()  # Explicitly move model to GPU
+    model = YOLO(model_path)
+    model.export(format="engine", device="cuda")
+    model = YOLO("best.engine")
     print(f"Model device: {next(model.model.parameters()).device}")
 
     # Path to the input image
