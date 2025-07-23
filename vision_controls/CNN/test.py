@@ -4,13 +4,14 @@ import os
 import torch
 torch.cuda.empty_cache()
 # Load the pre-trained YOLO model
-model = YOLO("yolo/my_model.pt").cuda()  # Replace with the path to your model if not in the current directory
+model = YOLO("yolo/my_model.pt")  # Replace with the path to your model if not in the current directory
 
 # Path to the input image
 image_path = "test.jpg"  # Replace with your image file path
 
-# Perform inference on the image
-results = model(image_path)
+print(f"Model device: {next(model.model.parameters()).device}")
+results = model(image_path, device="cuda")
+print(f"Inference completed on: {results[0].boxes.device}")
 
 # Process results
 # Results are returned as a list of detections
