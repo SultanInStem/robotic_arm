@@ -9,7 +9,7 @@ model = YOLO("yolo/my_model.pt")  # Replace with the path to your model if not i
 image_path = "test.jpg"  # Replace with your image file path
 
 # Perform inference on the image
-results = model(image_path, device='cuda')
+results = model(image_path, device='cpu')
 
 # Process results
 # Results are returned as a list of detections
