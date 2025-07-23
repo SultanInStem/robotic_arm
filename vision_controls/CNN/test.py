@@ -2,11 +2,13 @@ import torch
 import cv2
 import numpy as np
 import os
+import sys
+sys.path.insert(0, '/path/to/yolov5')
 from models.yolo import Model  # Assuming you cloned YOLOv5 repo
 import yaml
 
 # Load the model config
-with open('yolov5s.yaml') as f:  # Replace with correct config
+with open('yolov5m.yaml') as f:  # Replace with correct config
     config = yaml.safe_load(f)
 
 model = Model(cfg=config)  # Construct model from config
