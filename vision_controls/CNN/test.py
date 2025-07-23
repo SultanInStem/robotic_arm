@@ -9,13 +9,12 @@ try:
         raise RuntimeError("CUDA is not available. Check GPU setup.")
     print(f"Using GPU: {torch.cuda.get_device_name(0)}")
 
-    # Load the pre-trained YOLO model
-    model_path = "yolo/train/weights/best.pt"  # Update with correct path if needed
+    # Load the TensorRT engine
+    model_path = "best.engine"  # Update with correct path
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file {model_path} not found")
-    model = YOLO(model_path)
-    model.export(format="engine", device="cuda")
-    model = YOLO("best.engine")
+
+    model = YOLO(model_path).cuda()
     print(f"Model device: {next(model.model.parameters()).device}")
 
     # Path to the input image
@@ -26,13 +25,18 @@ try:
     # Clear GPU memory
     torch.cuda.empty_cache()
 
-    # Perform inference on the image using GPU
-    results = model(image_path, device="cuda")
+    # Perform inference
+    try:
+        results = model(image_path, device="cuda")
+    except RuntimeError as e:
+        print(f"TensorRT failed: {e}. Falling back to PyTorch...")
+        model = YOLO("best.pt")  # Fallback to original model
+        results = model(image_path, device="cuda", engine=False)
     print(f"Inference completed on: {results[0].boxes.device}")
 
     # Process results
     for result in results:
-        annotated_image = result.plot()  # Add bounding boxes and labels
+        annotated_image = result.plot()
         output_path = "output_image.jpg"
         cv2.imwrite(output_path, annotated_image)
         print(f"Output image saved as {output_path}")
@@ -44,9 +48,9 @@ try:
 
         # Print detection details
         for detection in result.boxes:
-            class_id = int(detection.cls)
+            class_id = int(detection.cls.cpu())
             class_name = model.names[class_id]
-            confidence = float(detection.conf)
+            confidence = float(detection.conf.cpu())
             bbox = [float(coord) for coord in detection.xyxy[0].cpu().numpy().tolist()]
             print(f"Detected: {class_name} (Confidence: {confidence:.2f}, BBox: {[round(coord, 2) for coord in bbox]})")
 
