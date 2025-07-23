@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import os
 import sys
-sys.path.insert(0, '/path/to/yolov5')
+sys.path.insert(0, 'yolov5')
 from models.yolo import Model  # Assuming you cloned YOLOv5 repo
 import yaml
 
