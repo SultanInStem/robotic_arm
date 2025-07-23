@@ -23,3 +23,10 @@ $ export BUILD_VERSION=0.13.0  # where 0.14.0 is the torchvision version
 $ python3 setup.py install --user
 $ cd ../  # attempting to load torchvision from build dir will result in import error
 $ pip install 'pillow<7' # always needed for Python 2.7, not needed torchvision v0.5.0+ with Python 3.6
+
+
+sudo apt-key adv --fetch-keys https://repo.download.nvidia.com/jetson/jetson-ota-public.asc
+sudo tee /etc/apt/sources.list.d/nvidia-l4t-apt-source.list <<EOF
+deb https://repo.download.nvidia.com/jetson/common r36 main
+deb https://repo.download.nvidia.com/jetson/t234 r36 main
+EOF
