@@ -1,8 +1,16 @@
 import torch
-import torchvision
-print("TorchVision version:", torchvision.__version__)
-print("TorchVision compiled with CUDA:", torchvision._C._is_cuda_build)
 
-print("Torch built with CUDA:", torch.backends.cuda.is_built())
+# Check if CUDA is available
 print("CUDA available:", torch.cuda.is_available())
-print("CUDA version (from torch):", torch.version.cuda)
+
+# Create a tensor on GPU
+x = torch.rand(3, 3).cuda()
+y = torch.rand(3, 3).cuda()
+
+# Do a computation
+z = x @ y  # Matrix multiplication
+print("Result on GPU:", z)
+
+# Confirm where it lives
+print("Is CUDA tensor:", z.is_cuda)
+
