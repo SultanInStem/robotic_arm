@@ -1,16 +1,21 @@
 import torch
+import torchvision
+from torchvision.ops import nms
 
-# Check if CUDA is available
+print("Torch version:", torch.__version__)
+print("TorchVision version:", torchvision.__version__)
 print("CUDA available:", torch.cuda.is_available())
 
-# Create a tensor on GPU
-x = torch.rand(3, 3).cuda()
-y = torch.rand(3, 3).cuda()
+# Try a simple torchvision op (NMS)
+boxes = torch.tensor([
+    [10, 10, 20, 20],
+    [12, 12, 22, 22],
+    [30, 30, 40, 40]
+], dtype=torch.float32).cuda()
 
-# Do a computation
-z = x @ y  # Matrix multiplication
-print("Result on GPU:", z)
+scores = torch.tensor([0.9, 0.85, 0.75], dtype=torch.float32).cuda()
 
-# Confirm where it lives
-print("Is CUDA tensor:", z.is_cuda)
+# Non-maximum suppression test
+indices = nms(boxes, scores, iou_threshold=0.5)
+print("NMS output indices:", indices)
 
