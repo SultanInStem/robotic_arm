@@ -3,31 +3,33 @@ import cv2
 import numpy as np
 import os
 
-# Function to load the model
 def load_yolo_model(model_path):
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file {model_path} not found")
     
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    try:
-        # Load as scripted model
-        model = torch.load(model_path, map_location=device)
-        model.eval()
-        print("Loaded model as torch.jit scripted model")
-    except RuntimeError as e:
-        print(f"Scripted model load failed: {e}")
-        # Fallback: Load as state_dict (requires architecture)
+    loaded = torch.load(model_path, map_location=device)
+    
+    # If loaded is a state_dict
+    if isinstance(loaded, dict) and 'model' not in loaded:
         try:
-            from ultralytics.models.yolo import YOLOv8  # Adjust for YOLOv5 if needed
-            model = YOLOv8()  # Instantiate model (replace with correct architecture, e.g., yolov8n.yaml)
-            state_dict = torch.load(model_path, map_location=device)
-            model.load_state_dict(state_dict)
+            from ultralytics import YOLO  # Adjust as needed
+            model = YOLO("yolov8n.yaml")  # Replace with your model architecture config
+            model.model.load_state_dict(loaded)
             model.eval()
-            print("Loaded model as state_dict")
-        except ImportError:
-            raise ImportError("YOLO architecture not found. Install ultralytics or provide model definition.")
+            print("Loaded model from state_dict")
+        except Exception as e:
+            raise RuntimeError(f"Could not load state_dict: {e}")
+    else:
+        try:
+            model = loaded
+            model.eval()
+            print("Loaded full model")
+        except AttributeError:
+            raise RuntimeError("Loaded object is not a model and has no eval() method.")
     
     return model.to(device)
+
 
 # Preprocess image
 def preprocess_image(image_path, input_size=(640, 640)):
