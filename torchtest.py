@@ -5,6 +5,7 @@ from torchvision.ops import nms
 print("Torch version:", torch.__version__)
 print("TorchVision version:", torchvision.__version__)
 print("CUDA available:", torch.cuda.is_available())
+print("GPU name:", torch.cuda.get_device_name(0))
 
 # Try a simple torchvision op (NMS)
 boxes = torch.tensor([

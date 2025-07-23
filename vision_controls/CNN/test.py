@@ -1,7 +1,8 @@
 from ultralytics import YOLO
 import cv2
 import os
-
+import torch
+torch.cuda.empty_cache()
 # Load the pre-trained YOLO model
 model = YOLO("yolo/my_model.pt")  # Replace with the path to your model if not in the current directory
 
