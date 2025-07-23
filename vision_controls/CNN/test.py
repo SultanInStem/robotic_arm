@@ -2,33 +2,43 @@ import torch
 import cv2
 import numpy as np
 import os
+from models.yolo import Model  # Assuming you cloned YOLOv5 repo
+import yaml
 
-def load_yolo_model(model_path):
-    if not os.path.exists(model_path):
-        raise FileNotFoundError(f"Model file {model_path} not found")
+# Load the model config
+with open('yolov5s.yaml') as f:  # Replace with correct config
+    config = yaml.safe_load(f)
+
+model = Model(cfg=config)  # Construct model from config
+model.load_state_dict(torch.load("yolo/my_model.pt", map_location='cpu'))
+model.eval()
+
+# def load_yolo_model(model_path):
+#     if not os.path.exists(model_path):
+#         raise FileNotFoundError(f"Model file {model_path} not found")
     
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    loaded = torch.load(model_path, map_location=device)
+#     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+#     loaded = torch.load(model_path, map_location=device)
     
-    # If loaded is a state_dict
-    if isinstance(loaded, dict) and 'model' not in loaded:
-        try:
-            from ultralytics import YOLO  # Adjust as needed
-            model = YOLO("yolov8n.yaml")  # Replace with your model architecture config
-            model.model.load_state_dict(loaded)
-            model.eval()
-            print("Loaded model from state_dict")
-        except Exception as e:
-            raise RuntimeError(f"Could not load state_dict: {e}")
-    else:
-        try:
-            model = loaded
-            model.eval()
-            print("Loaded full model")
-        except AttributeError:
-            raise RuntimeError("Loaded object is not a model and has no eval() method.")
+#     # If loaded is a state_dict
+#     if isinstance(loaded, dict) and 'model' not in loaded:
+#         try:
+#             from ultralytics import YOLO  # Adjust as needed
+#             model = YOLO("yolov8n.yaml")  # Replace with your model architecture config
+#             model.model.load_state_dict(loaded)
+#             model.eval()
+#             print("Loaded model from state_dict")
+#         except Exception as e:
+#             raise RuntimeError(f"Could not load state_dict: {e}")
+#     else:
+#         try:
+#             model = loaded
+#             model.eval()
+#             print("Loaded full model")
+#         except AttributeError:
+#             raise RuntimeError("Loaded object is not a model and has no eval() method.")
     
-    return model.to(device)
+#     return model.to(device)
 
 
 # Preprocess image
@@ -97,7 +107,7 @@ try:
 
     # Load model
     model_path = "yolo/my_model.pt"  # Update path
-    model = load_yolo_model(model_path)
+    # model = load_yolo_model(model_path)
     print(f"Model device: {next(model.parameters()).device}")
 
     # Load and preprocess image
