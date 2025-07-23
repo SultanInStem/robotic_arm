@@ -35,3 +35,4 @@ def test_torch_and_torchvision():
     print("Output shape:", output.shape)
     print("Test completed successfully.")
 
+test_torch_and_torchvision()
