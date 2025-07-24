@@ -4,7 +4,7 @@ import os
 import time
 
 # Load the pre-trained YOLO model
-model = YOLO("yolo/train/weights/best.pt")  # Replace with the path to your model if not in the current directory
+model = YOLO("oculus_s/train/weights/best.pt")  # Replace with the path to your model if not in the current directory
 
 # Path to the input image
 image_path = "test.jpg"  # Replace with your image file path
