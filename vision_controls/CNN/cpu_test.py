@@ -9,7 +9,7 @@ model = YOLO("yolo/train/weights/best.pt")  # Replace with the path to your mode
 image_path = "test.jpg"  # Replace with your image file path
 
 # Perform inference on the image
-results = model(image_path, device="cpu", weights_only=False)
+results = model(image_path, device="cpu")
 
 # Process results
 # Results are returned as a list of detections
