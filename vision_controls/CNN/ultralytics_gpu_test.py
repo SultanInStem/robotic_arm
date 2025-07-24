@@ -12,7 +12,7 @@ image_path = "test.jpg"  # Replace with your image file path
 
 start_time = time.time() 
 # Perform inference on the image
-results = model(image_path, device="cpu")
+results = model(image_path)
 
 # Process results
 # Results are returned as a list of detections
