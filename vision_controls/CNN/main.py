@@ -104,7 +104,8 @@ try:
             x,y,z = point_3d
             if z > 0: 
                 strawberry_position = [x, y, z]
-            print("Position: ", strawberry_position)        
+            print("Position: ", strawberry_position) 
+        coord = []       
         # Handle clicked point
         # if clicked_point is not None:
         #     x, y = clicked_point
