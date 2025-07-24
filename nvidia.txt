@@ -15,23 +15,6 @@ pip3 install numpy torch-1.13.0a0+d0d6b1f2.nv22.10-cp38-cp38-linux_aarch64.whl
 
 
 
-
-$ sudo apt-get install libjpeg-dev zlib1g-dev libpython3-dev libopenblas-dev libavcodec-dev libavformat-dev libswscale-dev
-$ git clone --branch <0.13.0> https://github.com/pytorch/vision torchvision   # see below for version of torchvision to download
-$ cd torchvision
-$ export BUILD_VERSION=0.13.0  # where 0.14.0 is the torchvision version  
-$ python3 setup.py install --user
-$ cd ../  # attempting to load torchvision from build dir will result in import error
-$ pip install 'pillow<7' # always needed for Python 2.7, not needed torchvision v0.5.0+ with Python 3.6
-
-
-sudo apt-key adv --fetch-keys https://repo.download.nvidia.com/jetson/jetson-ota-public.asc
-sudo tee /etc/apt/sources.list.d/nvidia-l4t-apt-source.list <<EOF
-deb https://repo.download.nvidia.com/jetson/common r36 main
-deb https://repo.download.nvidia.com/jetson/t234 r36 main
-EOF
-
-
 sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
 sudo sh -c 'echo "deb http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list'
 sudo apt install -y ros-galactic-ros-base
@@ -40,3 +23,7 @@ echo "source /opt/ros/galactic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
 sudo apt install -y python3-colcon-common-extensions python3-rosdep python3-vcstool build-essential
+
+
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y git cmake libssl-dev libusb-1.0-0-dev libudev-dev pkg-config libgtk-3-dev
