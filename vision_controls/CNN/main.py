@@ -58,10 +58,10 @@ try:
         depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
 
 
-
+        coord = []
+        strawberry_position = []
         # Using YOLO 
         def run_yolo_detection(): 
-            input = cv2.resize(color_image, (640, 640))
             results = model(color_image, device="cpu")
             scale_x = original_width / 640
             scale_y = original_height / 640
@@ -84,17 +84,25 @@ try:
                     cx = (x1_orig + x2_orig) // 2
                     cy = (y1_orig + y2_orig) // 2
                     print(f"Object at (x, y): ({cx}, {cy}) in RealSense frame")
+                    return [cx,cy]
+            return []
       
 
         if current_time - last_time >= interval: 
-            run_yolo_detection()
+            coord = run_yolo_detection()
+            if(len(coord) < 0): 
+                print("Not strawberries detected")
+
             last_time = time.time()
         # Stack images horizontally
         images = np.hstack((color_image, depth_colormap))
         # print(len(images))
         # print(type(images))
-
-        
+        if(len(coord) > 0): 
+            z = depth_frame.get_distance(coord[0], coord[1])
+            if z > 0: 
+                strawberry_position = [coord[0], coord[1], z]
+        print("Position: ", strawberry_position)        
         # Handle clicked point
         # if clicked_point is not None:
         #     x, y = clicked_point
