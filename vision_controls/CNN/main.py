@@ -2,10 +2,13 @@ import cv2
 import pyrealsense2 as rs
 import numpy as np
 import cv2
+import time 
 from ultralytics import YOLO 
 
 original_width = 640 
 original_height = 480
+interval = 2
+last_time = time.time()
 
 model = YOLO("oculus_s/my_model.pt")
 # Global variables to store clicked point
@@ -37,6 +40,7 @@ intrinsics = depth_profile.get_intrinsics()
 try:
     while True:
         # Wait for frames
+        current_time = time.time()
         frames = pipeline.wait_for_frames()
         # Align frames
         aligned_frames = align.process(frames)
@@ -56,31 +60,34 @@ try:
 
 
         # Using YOLO 
+        def run_yolo_detection(): 
+            results = model(color_image, device="cpu")
+            scale_x = original_width / 640
+            scale_y = original_height / 640
+            for r in results:
+                boxes = r.boxes
+                for box in boxes:
+                    x1, y1, x2, y2 = box.xyxy[0]  # bounding box in 640x640
+                    x1, y1, x2, y2 = x1.item(), y1.item(), x2.item(), y2.item()
 
-        results = model(color_image, device="cpu")
-        scale_x = original_width / 640
-        scale_y = original_height / 640
-        for r in results:
-            boxes = r.boxes
-            for box in boxes:
-                x1, y1, x2, y2 = box.xyxy[0]  # bounding box in 640x640
-                x1, y1, x2, y2 = x1.item(), y1.item(), x2.item(), y2.item()
+                    # Map to original frame size
+                    x1_orig = int(x1 * scale_x)
+                    y1_orig = int(y1 * scale_y)
+                    x2_orig = int(x2 * scale_x)
+                    y2_orig = int(y2 * scale_y)
 
-                # Map to original frame size
-                x1_orig = int(x1 * scale_x)
-                y1_orig = int(y1 * scale_y)
-                x2_orig = int(x2 * scale_x)
-                y2_orig = int(y2 * scale_y)
+                    # Draw on original frame
+                    cv2.rectangle(color_image, (x1_orig, y1_orig), (x2_orig, y2_orig), (0, 255, 0), 2)
 
-                # Draw on original frame
-                cv2.rectangle(color_image, (x1_orig, y1_orig), (x2_orig, y2_orig), (0, 255, 0), 2)
-
-                # Print center point in original frame
-                cx = (x1_orig + x2_orig) // 2
-                cy = (y1_orig + y2_orig) // 2
-                print(f"Object at (x, y): ({cx}, {cy}) in RealSense frame")
+                    # Print center point in original frame
+                    cx = (x1_orig + x2_orig) // 2
+                    cy = (y1_orig + y2_orig) // 2
+                    print(f"Object at (x, y): ({cx}, {cy}) in RealSense frame")
       
 
+        if current_time - last_time >= interval: 
+            run_yolo_detection()
+            last_time = time.time()
         # Stack images horizontally
         images = np.hstack((color_image, depth_colormap))
         # print(len(images))
