@@ -1,6 +1,7 @@
 from ultralytics import YOLO
 import cv2
 import os
+import time
 
 # Load the pre-trained YOLO model
 model = YOLO("yolo/train/weights/best.pt")  # Replace with the path to your model if not in the current directory
@@ -8,6 +9,8 @@ model = YOLO("yolo/train/weights/best.pt")  # Replace with the path to your mode
 # Path to the input image
 image_path = "test.jpg"  # Replace with your image file path
 
+
+start_time = time.time() 
 # Perform inference on the image
 results = model(image_path, device="cpu")
 
@@ -22,6 +25,8 @@ for result in results:
     cv2.imwrite(output_path, annotated_image)
     print(f"Output image saved as {output_path}")
 
+    end_time = time.time() 
+    print("SECONDS ", end_time - start_time)
     # Optionally, display the image
     cv2.imshow("YOLO Detection", annotated_image)
     cv2.waitKey(0)  # Wait for a key press to close the window
@@ -34,4 +39,3 @@ for result in results:
         confidence = detection.conf  # Confidence score
         bbox = detection.xyxy[0].tolist()  # Bounding box coordinates [x_min, y_min, x_max, y_max]
         print(f"Detected: {class_name} (Confidence: {confidence:.2f}, BBox: {bbox})")
-
