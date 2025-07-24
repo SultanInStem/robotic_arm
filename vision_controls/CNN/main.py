@@ -62,6 +62,7 @@ try:
         scale_x = original_width / 640
         scale_y = original_height / 640
         for r in results:
+            
             boxes = r.boxes
             for box in boxes:
                 x1, y1, x2, y2 = box.xyxy[0]  # bounding box in 640x640
@@ -83,7 +84,7 @@ try:
       
 
         # Stack images horizontally
-        # images = np.hstack((color_image, depth_colormap))
+        images = np.hstack((color_image, depth_colormap))
         # print(len(images))
         # print(type(images))
 
@@ -109,9 +110,9 @@ try:
         #             images = np.hstack((color_image, depth_colormap))
         
         # Display
-        # cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-        # cv2.setMouseCallback('RealSense', mouse_callback)
-        # cv2.imshow('RealSense', images)
+        cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
+        cv2.setMouseCallback('RealSense', mouse_callback)
+        cv2.imshow('RealSense', images)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
