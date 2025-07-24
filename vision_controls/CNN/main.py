@@ -62,7 +62,7 @@ try:
         scale_x = original_width / 640
         scale_y = original_height / 640
         for r in results:
-            
+            print(r)
             boxes = r.boxes
             for box in boxes:
                 x1, y1, x2, y2 = box.xyxy[0]  # bounding box in 640x640
