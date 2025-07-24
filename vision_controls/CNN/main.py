@@ -23,7 +23,7 @@ else:
 import yaml
 from models.yolo import Model  # Make sure you have YOLOv5 repo in your PYTHONPATH or current dir
 
-with open('models/yolov5m.yaml') as f:  # adjust if you used yolov5s, yolov5l, etc.
+with open('models/yolov5s.yaml') as f:  # adjust if you used yolov5s, yolov5l, etc.
     cfg = yaml.safe_load(f)
 
 # Instantiate model
