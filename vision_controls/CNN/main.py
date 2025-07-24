@@ -54,6 +54,8 @@ try:
         
         # Stack images horizontally
         images = np.hstack((color_image, depth_colormap))
+        # print(len(images))
+        print(type(images))
         
         # Handle clicked point
         if clicked_point is not None:
