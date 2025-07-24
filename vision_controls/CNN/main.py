@@ -85,8 +85,8 @@ try:
                     print(f"Object at (x, y): ({cx}, {cy}) in RealSense frame")
       
 
+        run_yolo_detection()
         if current_time - last_time >= interval: 
-            run_yolo_detection()
             last_time = time.time()
         # Stack images horizontally
         images = np.hstack((color_image, depth_colormap))
