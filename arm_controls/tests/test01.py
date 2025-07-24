@@ -4,8 +4,8 @@ from pymycobot.mycobot import MyCobot
 import sys
 import os
 sys.path.append(os.path.abspath(".."))
-from commands.main import reset
-
+# from commands.main import reset, compute_fk
+from utils.funcs import compute_fk
 
 
 ### PSEUDO CODE 
@@ -18,7 +18,7 @@ from commands.main import reset
 ###
 
 # mc = MyCobot('/dev/ttyAMA0', 115200)
-
+compute_fk([0,0,0,0,0,0,0,0])
 
 def look_around():
     z_levels = [0.5, 0.4, 0.3, 0.2]
@@ -31,12 +31,12 @@ def look_around():
 
 
 
-    return True     
+    return False    
         
 
 # ----------- MAIN LOOP --------- 
 is_running = True 
-reset() ### set the arm to the origin b4 running the loop
+# reset() ### set the arm to the origin b4 running the loop
 while(is_running): 
 
     is_running = look_around()
