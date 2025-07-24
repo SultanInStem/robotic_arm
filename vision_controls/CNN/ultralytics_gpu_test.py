@@ -12,7 +12,7 @@ image_path = "test.jpg"  # Replace with your image file path
 
 start_time = time.time() 
 # Perform inference on the image
-results = model(image_path)
+results = model.predict(image_path, device="cuda")
 
 # Process results
 # Results are returned as a list of detections
