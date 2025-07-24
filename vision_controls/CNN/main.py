@@ -56,23 +56,21 @@ try:
 
 
         # Using YOLO 
-        # resized_input = cv2.resize(color_image, (640, 640))
-        # input = cv2.cvtColor(resized_input, cv2.COLOR_BGR2RGB)
+
         results = model(color_image, device="cpu")
         scale_x = original_width / 640
         scale_y = original_height / 640
         for r in results:
             boxes = r.boxes
-            print("Boxes: ", boxes)
             for box in boxes:
                 x1, y1, x2, y2 = box.xyxy[0]  # bounding box in 640x640
                 x1, y1, x2, y2 = x1.item(), y1.item(), x2.item(), y2.item()
 
                 # Map to original frame size
                 x1_orig = int(x1 * scale_x)
-                y1_orig = int(y1 * scale_y)
+                y1_orig = y1 + int(y1 * scale_y)
                 x2_orig = int(x2 * scale_x)
-                y2_orig = int(y2 * scale_y)
+                y2_orig = y2 + int(y2 * scale_y)
 
                 # Draw on original frame
                 cv2.rectangle(color_image, (x1_orig, y1_orig), (x2_orig, y2_orig), (0, 255, 0), 2)
