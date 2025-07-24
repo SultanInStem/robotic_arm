@@ -1,0 +1,16 @@
+
+gitpython>=3.1.30
+matplotlib>=3.3
+pymycobot==3.6.1
+ikpy==3.4.2
+pillow>=10.3.0
+PyYAML>=5.3.1
+requests>=2.32.2
+scipy>=1.4.1
+thop>=0.1.1 
+tqdm>=4.66.3
+
+
+
+pandas>=1.1.4
+seaborn>=0.11.0
