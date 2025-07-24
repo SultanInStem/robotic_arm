@@ -1,3 +1,5 @@
+# torch and torcvision are also required but should be installed seperately to allow CUDA
+
 
 gitpython>=3.1.30
 matplotlib>=3.3
