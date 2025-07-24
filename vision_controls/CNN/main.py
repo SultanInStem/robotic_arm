@@ -74,7 +74,7 @@ try:
                     x1_orig = int(x1 * scale_x)
                     y1_orig = -int(y1 * scale_y)
                     x2_orig = int(x2 * scale_x)
-                    y2_orig = int(y2 * scale_y)
+                    y2_orig = -int(y2 * scale_y)
 
                     # Draw on original frame
                     cv2.rectangle(color_image, (x1_orig, y1_orig), (x2_orig, y2_orig), (0, 255, 0), 2)
