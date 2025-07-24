@@ -99,10 +99,12 @@ try:
         # print(len(images))
         # print(type(images))
         if(len(coord) > 0): 
-            z = depth_frame.get_distance(coord[0], coord[1])
+            depth = depth_frame.get_distance(coord[0], coord[1])
+            point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [coord[0], coord[1]], depth)
+            x,y,z = point_3d
             if z > 0: 
-                strawberry_position = [coord[0], coord[1], z]
-        print("Position: ", strawberry_position)        
+                strawberry_position = [x, y, z]
+            print("Position: ", strawberry_position)        
         # Handle clicked point
         # if clicked_point is not None:
         #     x, y = clicked_point
