@@ -58,7 +58,7 @@ try:
         resized_input = cv2.resize(color_image, (640,640))
         input = cv2.cvtColor(resized_input, cv2.COLOR_BGR2RGB)
         results = model(input, device="cpu")
-        results.show()
+        print(results)
       
 
         # Stack images horizontally
