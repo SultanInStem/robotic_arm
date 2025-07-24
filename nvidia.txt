@@ -27,3 +27,8 @@ sudo apt install -y python3-colcon-common-extensions python3-rosdep python3-vcst
 
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y git cmake libssl-dev libusb-1.0-0-dev libudev-dev pkg-config libgtk-3-dev
+
+
+
+git clone https://github.com/IntelRealSense/librealsense.git
+cd librealsense
