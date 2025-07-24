@@ -7,7 +7,7 @@ from ultralytics import YOLO
 
 original_width = 640 
 original_height = 480
-interval = 2
+interval = 0.1
 last_time = time.time()
 
 model = YOLO("oculus_s/my_model.pt")
