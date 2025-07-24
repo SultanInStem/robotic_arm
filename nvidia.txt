@@ -38,3 +38,5 @@ sudo apt install -y ros-galactic-ros-base
 
 echo "source /opt/ros/galactic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
+
+sudo apt install -y python3-colcon-common-extensions python3-rosdep python3-vcstool build-essential
