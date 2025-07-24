@@ -78,7 +78,6 @@ try:
                     y2_orig = int(y2 * scale_y)
 
                     # Draw on original frame
-                    cv2.rectangle(color_image, (x1_orig, y2_orig), (x2_orig, y1_orig), (0, 255, 0), 2)
 
                     # Print center point in original frame
                     cx = (x1_orig + x2_orig) // 2
@@ -96,8 +95,7 @@ try:
             last_time = time.time()
         # Stack images horizontally
         images = np.hstack((color_image, depth_colormap))
-        # print(len(images))
-        # print(type(images))
+
         if(len(coord) > 0): 
             depth = depth_frame.get_distance(coord[0], coord[1])
             point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [coord[0], coord[1]], depth)
@@ -105,7 +103,7 @@ try:
             if z > 0: 
                 strawberry_position = [x, y, z]
             print("Position: ", strawberry_position) 
-        coord = []       
+            coord = []       
         # Handle clicked point
         # if clicked_point is not None:
         #     x, y = clicked_point
@@ -127,6 +125,7 @@ try:
         #             images = np.hstack((color_image, depth_colormap))
         
         # Display
+        cv2.rectangle(color_image, (strawberry_position[0], strawberry_position[1]), (strawberry_position[0] + 10, strawberry_position[1] + 10), (0, 255, 0), 2)
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.setMouseCallback('RealSense', mouse_callback)
         cv2.imshow('RealSense', images)
