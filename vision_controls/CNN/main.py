@@ -7,7 +7,7 @@ from ultralytics import YOLO
 
 original_width = 640 
 original_height = 480
-interval = 0.1
+interval = 1
 last_time = time.time()
 
 model = YOLO("oculus_s/my_model.pt")
@@ -78,7 +78,7 @@ try:
                     y2_orig = int(y2 * scale_y)
 
                     # Draw on original frame
-                    cv2.rectangle(color_image, (x1_orig, -y2_orig), (x2_orig, -y1_orig), (0, 255, 0), 2)
+                    cv2.rectangle(color_image, (x1_orig, y2_orig), (x2_orig, y1_orig), (0, 255, 0), 2)
 
                     # Print center point in original frame
                     cx = (x1_orig + x2_orig) // 2
@@ -86,8 +86,8 @@ try:
                     print(f"Object at (x, y): ({cx}, {cy}) in RealSense frame")
       
 
-        run_yolo_detection()
         if current_time - last_time >= interval: 
+            run_yolo_detection()
             last_time = time.time()
         # Stack images horizontally
         images = np.hstack((color_image, depth_colormap))
