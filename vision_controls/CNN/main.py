@@ -6,7 +6,7 @@ from PIL import Image
 import yaml
 import os
 # Load checkpoint
-checkpoint = torch.load("yolo/my_model.pt", map_location='cpu', weights_only=False)
+checkpoint = torch.load("oculus/my_model.pt", map_location='cpu', weights_only=False)
 
 # Choose the weights to load: EMA weights if available (better), else regular model weights
 weights = checkpoint['ema'] if checkpoint.get('ema') is not None else checkpoint['model']
