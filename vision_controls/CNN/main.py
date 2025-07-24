@@ -56,9 +56,9 @@ try:
 
 
         # Using YOLO 
-        resized_input = cv2.resize(color_image, (640,640))
-        input = cv2.cvtColor(resized_input, cv2.COLOR_BGR2RGB)
-        results = model(input, device="cpu")
+        # resized_input = cv2.resize(color_image, (640, 640))
+        # input = cv2.cvtColor(resized_input, cv2.COLOR_BGR2RGB)
+        results = model(color_image, device="cpu")
         scale_x = original_width / 640
         scale_y = original_height / 640
         for r in results:
