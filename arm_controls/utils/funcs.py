@@ -18,5 +18,6 @@ def compute_ik(point=[0,0,0.5]): # x,y,z must be in meters
         main_angles.append(round(float(angles[i]) * (180 / math.pi), 2))
     # angles are returned in degrees 
     return main_angles
-def computer_fk(): 
+def computer_fk(angles):
+     
     pass
