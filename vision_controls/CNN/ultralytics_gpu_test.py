@@ -5,14 +5,14 @@ import time
 
 # Load the pre-trained YOLO model
 model = YOLO("oculus_s/train/weights/best.pt")  # Replace with the path to your model if not in the current directory
-model.to("cuda")
+model.to("cuda:0")
 # Path to the input image
 image_path = "test.jpg"  # Replace with your image file path
 
 
 start_time = time.time() 
 # Perform inference on the image
-results = model.predict(image_path, device="cuda")
+results = model.predict(image_path, device="cuda:0")
 
 # Process results
 # Results are returned as a list of detections
