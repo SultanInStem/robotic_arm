@@ -34,3 +34,4 @@ for result in results:
         confidence = detection.conf  # Confidence score
         bbox = detection.xyxy[0].tolist()  # Bounding box coordinates [x_min, y_min, x_max, y_max]
         print(f"Detected: {class_name} (Confidence: {confidence:.2f}, BBox: {bbox})")
+
