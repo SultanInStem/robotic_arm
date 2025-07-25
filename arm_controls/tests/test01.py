@@ -76,7 +76,7 @@ while(is_running==True):
         continue
     coords = coords[0]
     coords_arr = coords.split()
-    for i in range(0, len(coords)):
+    for i in range(0, len(coords_arr)):
         coords_arr[i] = round(float(coords_arr[i]), 2)
     coords_arr = np.array(coords_arr) # convert into numpy vector 
     # coords is in end_effector_frame so we should translate it to base_frame 
