@@ -1,6 +1,7 @@
 import sys
 import os
 import time
+import math 
 from pymycobot.mycobot import MyCobot 
 sys.path.append(os.path.abspath(".."))
 from utils.funcs import compute_ik, compute_fk
@@ -57,6 +58,8 @@ def calibrate_gripper():
  
 def get_arms_position(): 
     angles = mc.get_angles()
+    for i in range(0, len(angles)): 
+        angles[i] = round(angles[i] * (math.pi / 180), 2 )
     angles.insert(0,0)
     angles.append(0)
     print("angles: ", angles)
