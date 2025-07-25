@@ -67,7 +67,7 @@ def deposit():
 # go_to_ready()
 
 coords = fetch_strawberry_coords() # [x,y,z]
-print(type(coords))
+print(type(coords[0]))
 
 is_running = False
 while(is_running==True):
@@ -95,7 +95,7 @@ while(is_running==True):
     clean_strawberry_coords()
     go_to_ready()
 
-reset()
+# reset()
 
 
 
