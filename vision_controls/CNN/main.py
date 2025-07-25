@@ -33,6 +33,8 @@ intrinsics = depth_profile.get_intrinsics()
 try:
     while True:
         # Wait for frames
+        with open(COORD_FILE, "w") as f:
+                f.write(f"")
         current_time = time.time()
         frames = pipeline.wait_for_frames()
         # Align frames
