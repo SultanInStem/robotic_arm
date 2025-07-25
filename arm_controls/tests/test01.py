@@ -82,23 +82,23 @@ while(is_running==True):
     # coords is in end_effector_frame so we should translate it to base_frame 
     a = [0,-10, 25, 55, 0, -90, 0, 0]
     rotation_matrix = get_rotation_matrix(a)
-    print(type(rotation_matrix))
-    print(type(coords_arr))
     straw_pos = np.dot(rotation_matrix, coords_arr)
-    print("ACTUAL POSITION: ", straw_pos)
+    if len(straw_pos) > 0: 
 
-    # target_angles = compute_ik(straw_pos)
-    
+        print("ACTUAL POSITION: ", straw_pos)
 
-    # mc.send_angles(target_angles, 20)
-    # time.sleep(1)
-    # mc.set_gripper_state(1, 60)
-    # time.sleep(1)
-    # deposit()
-    clean_strawberry_coords()
-    # go_to_ready()
+        target_angles = compute_ik(straw_pos)
 
-# reset()
+
+        mc.send_angles(target_angles, 10)
+        time.sleep(1)
+        mc.set_gripper_state(1, 60)
+        time.sleep(1)
+        deposit()
+        clean_strawberry_coords()
+        go_to_ready()
+
+reset()
 
 
 
