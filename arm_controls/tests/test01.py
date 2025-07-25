@@ -71,7 +71,7 @@ while(True):
     if not len(coords):
         print("No strawberries detected.")
         continue
-    for i in len(0, coords):
+    for i in range(0,len(coords)):
         coords[i] = round(float(coords[i]), 2)
     coords = np.array(coords) # convert into numpy vector 
     print(coords)
