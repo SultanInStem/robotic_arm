@@ -2,7 +2,6 @@ import paramiko
 import sys
 import os 
 sys.path.append(os.path.abspath(".."))
-from commands.main import reset
 from utils.globals import NVIDIA_HOST, NVIDIA_PASSWORD, NVIDIA_USER
 
 
