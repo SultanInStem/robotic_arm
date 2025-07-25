@@ -67,7 +67,7 @@ def deposit():
 # go_to_ready()
 
 coords = fetch_strawberry_coords() # [x,y,z]
-print(type(float(coords[0])))
+print(coords[0])
 
 is_running = False
 while(is_running==True):
