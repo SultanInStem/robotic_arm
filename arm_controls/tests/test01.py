@@ -67,16 +67,17 @@ def deposit():
 # go_to_ready()
 
 coords = fetch_strawberry_coords() # [x,y,z]
-print(coords[0])
+print(coords[0].split())
 
 is_running = False
 while(is_running==True):
     coords = fetch_strawberry_coords() # [x,y,z]
-    print(type(coords))
     # might have to negate one of the coordinates 
     if not len(coords):
         print("No strawberries detected.")
         continue
+    coords = coords[0]
+    coords_arr = coords.split()
     for i in range(0,len(coords)):
         coords[i] = round(float(coords[i]), 2)
     coords = np.array(coords) # convert into numpy vector 
