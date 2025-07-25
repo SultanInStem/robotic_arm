@@ -87,7 +87,7 @@ while(i < N):
     clean_strawberry_coords()
     go_to_ready()
 
-# reset()
+reset()
 
 
 
