@@ -193,7 +193,7 @@
   <joint name="wrist_to_gripper" type="fixed">
     <parent link="link6"/>  <!-- or whatever your last link is -->
     <child link="gripper"/>
-    <origin xyz="0 0 0.12" rpy="0 0 0"/>  <!-- 5cm in front -->
+    <origin xyz="0 0 0.13" rpy="0 0 0"/>  <!-- 5cm in front -->
   </joint>
 
 
