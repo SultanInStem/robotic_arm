@@ -54,17 +54,17 @@ def fetch_strawberry_coords():
 
 def go_to_ready(): 
     time.sleep(1)
-    angles = [(-10),25,55,0,(-90),0]
-    mc.send_angles(ready_angles, 30)
+    mc.send_angles(ready_angles, 20)
  
 def deposit():
-    mc.send_angles(deposit_angles, 40)
+    mc.send_angles(deposit_angles, 20)
     time.sleep(4)
     mc.set_gripper_state(0, 60)  # Open gripper
     time.sleep(1)
 
 # ----------- MAIN LOOP --------- 
 reset() ### set the arm to the origin b4 running the loop
+go_to_ready()
 i = 0
 N = 10
 while(i < N):
@@ -79,7 +79,7 @@ while(i < N):
     rotation_matrix = get_rotation_matrix(ready_angles)
     straw_pos = rotation_matrix @ coords
     target_angles = compute_ik(straw_pos)
-    mc.send_angles(target_angles, 30)  
+    mc.send_angles(target_angles, 20)  
     time.sleep(1)
     mc.set_gripper_state(1, 60)
     time.sleep(1)
