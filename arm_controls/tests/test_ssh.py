@@ -8,7 +8,7 @@ from utils.globals import NVIDIA_HOST, NVIDIA_PASSWORD, NVIDIA_USER
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(NVIDIA_HOST, username=NVIDIA_USER, password=NVIDIA_PASSWORD)
+ssh.connect(NVIDIA_HOST, username=NVIDIA_USER, password=NVIDIA_PASSWORD, look_for_keys=False)
 COORD_FILE = "/home/usr2/Desktop/missed_me.txt"
 sftp = ssh.open_sftp()
 try:
