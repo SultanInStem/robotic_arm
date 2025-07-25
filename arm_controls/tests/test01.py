@@ -63,7 +63,7 @@ def deposit():
     time.sleep(1)
 
 # ----------- MAIN LOOP --------- 
-# reset() ### set the arm to the origin b4 running the loop
+reset() ### set the arm to the origin b4 running the loop
 go_to_ready()
 
 
