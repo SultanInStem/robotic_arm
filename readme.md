@@ -1,4 +1,3 @@
-# Important Instructions To Read !!! 
 
 ## How To Start Up The Arm
 1) Open the gripper to the full extent 
