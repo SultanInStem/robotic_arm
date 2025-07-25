@@ -63,10 +63,16 @@ def deposit():
     time.sleep(1)
 
 # ----------- MAIN LOOP --------- 
-reset() ### set the arm to the origin b4 running the loop
-go_to_ready()
-while(True):
+# reset() ### set the arm to the origin b4 running the loop
+# go_to_ready()
+
+coords = fetch_strawberry_coords() # [x,y,z]
+print(type(coords))
+
+is_running = False
+while(is_running==True):
     coords = fetch_strawberry_coords() # [x,y,z]
+    print(type(coords))
     # might have to negate one of the coordinates 
     if not len(coords):
         print("No strawberries detected.")
