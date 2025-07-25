@@ -63,13 +63,11 @@ def deposit():
     time.sleep(1)
 
 # ----------- MAIN LOOP --------- 
-# reset() ### set the arm to the origin b4 running the loop
-# go_to_ready()
+reset() ### set the arm to the origin b4 running the loop
+go_to_ready()
 
-coords = fetch_strawberry_coords() # [x,y,z]
-print(coords[0].split())
 
-is_running = False
+is_running = True
 while(is_running==True):
     coords = fetch_strawberry_coords() # [x,y,z]
     # might have to negate one of the coordinates 
@@ -78,15 +76,14 @@ while(is_running==True):
         continue
     coords = coords[0]
     coords_arr = coords.split()
-    for i in range(0,len(coords)):
-        coords[i] = round(float(coords[i]), 2)
-    coords = np.array(coords) # convert into numpy vector 
-    print(coords)
+    for i in range(0, len(coords)):
+        coords_arr[i] = round(float(coords_arr[i]), 2)
+    coords_arr = np.array(coords_arr) # convert into numpy vector 
     # coords is in end_effector_frame so we should translate it to base_frame 
     a = [0,-10, 25, 55, 0, -90, 0, 0]
     rotation_matrix = get_rotation_matrix(a)
     print(rotation_matrix)
-    straw_pos = rotation_matrix @ coords
+    straw_pos = rotation_matrix @ coords_arr
     target_angles = compute_ik(straw_pos)
     mc.send_angles(target_angles, 20)  
     time.sleep(1)
