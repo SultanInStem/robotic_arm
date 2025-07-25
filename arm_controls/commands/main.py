@@ -59,6 +59,7 @@ def get_arms_position():
     angles = mc.get_angles()
     angles.insert(0,0)
     angles.append(0)
+    print("angles: ", angles)
     pos = compute_fk(angles)
     print("POSITION: ", pos)
     return pos
