@@ -7,6 +7,7 @@ from ultralytics import YOLO
 
 original_width = 640 
 original_height = 480
+is_video_displayed = False
 interval = 1
 last_time = time.time()
 COORD_FILE = "strawberry_coords.txt"

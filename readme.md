@@ -10,3 +10,12 @@ Pymycobot (3.6.1 DO NOT UPDATE)
 
 to transfrom a vector from end_effector_frame to base_frame, 
 we shoud multiply the vector by a rotation matrix 
+
+
+
+
+# Connecting ssh via ethernet 
+sudo nmcli con delete static-eth0
+sudo nmcli con add type ethernet ifname enp1s0 con-name static-eth0 ip4 192.168.10.1/24
+sudo nmcli con up static-eth0
+
