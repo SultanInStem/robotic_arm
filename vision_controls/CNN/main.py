@@ -7,18 +7,10 @@ from ultralytics import YOLO
 
 original_width = 640 
 original_height = 480
-interval = 0.01
+interval = 1
 last_time = time.time()
 COORD_FILE = ""
 model = YOLO("oculus_s/my_model.pt")
-# Global variables to store clicked point
-clicked_point = None
-
-# Mouse callback function to capture click coordinates
-def mouse_callback(event, x, y, flags, param):
-    global clicked_point
-    if event == cv2.EVENT_LBUTTONDOWN:
-        clicked_point = (x, y)
 
 # Initialize pipeline
 pipeline = rs.pipeline()
@@ -106,7 +98,7 @@ try:
             print("No strawberries detected")
 
 
-
+        # Write coordinates of a strawberry to a .txt file for the PI
         with open(COORD_FILE, "w") as f:
             if len(strawberry_position) > 0:
                 x,y,z = strawberry_position[0], strawberry_position[1], strawberry_position[2]
