@@ -102,10 +102,10 @@ try:
 
 
         # Display
-        cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('RealSense', images)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        # cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
+        # cv2.imshow('RealSense', images)
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
+        #     break
 
 finally:
     pipeline.stop()
