@@ -39,7 +39,7 @@ def move_to_location(point, speed):
     return 0
 
 def reset(): 
-    mc.send_angles([0,0,0,0,0,0], 30)
+    mc.send_angles([0,0,0,0,0,0], 10)
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
     time.sleep(2)
