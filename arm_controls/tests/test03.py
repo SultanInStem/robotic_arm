@@ -81,17 +81,18 @@ while(is_running==True):
     rotation_matrix = get_rotation_matrix(a)
     straw_pos = np.dot(rotation_matrix, coords_arr)
     if len(straw_pos) > 0: 
-
         print("ACTUAL POSITION: ", straw_pos)
 
         target_angles = compute_ik(straw_pos)
-        mc.send_angles(target_angles, 10)
-        time.sleep(1)
-        mc.set_gripper_state(1, 60)
-        time.sleep(1)
-        deposit()
-        clean_strawberry_coords()
-        reset()
+        if(len(target_angles) == 6): 
+
+            mc.send_angles(target_angles, 10)
+            time.sleep(1)
+            mc.set_gripper_state(1, 60)
+            time.sleep(1)
+            deposit()
+            clean_strawberry_coords()
+            reset()
 
 reset()
 
