@@ -23,14 +23,11 @@ def compute_fk(angles): # angles must contain 8 items
     rotation = end_effector_frame[:3, :3]
     x,y,z = end_effector_frame[0][3], end_effector_frame[1][3], end_effector_frame[2][3]
     position = [round(x,2),round(y,2),round(z,2)]
-    print(position)
 
     for i in range(0, len(rotation)): 
         for j in range(0, len(rotation[i])): 
             rotation[i][j] = round(rotation[i][j], 2)
-    print(rotation)
-    print(end_effector_frame)
-    return end_effector_frame
+    return position
 
 
 # Rotation matrix that translates from end_effector_frame to base_frame
