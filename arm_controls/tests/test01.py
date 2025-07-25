@@ -88,8 +88,6 @@ while(is_running==True):
         print("ACTUAL POSITION: ", straw_pos)
 
         target_angles = compute_ik(straw_pos)
-
-
         mc.send_angles(target_angles, 10)
         time.sleep(1)
         mc.set_gripper_state(1, 60)
