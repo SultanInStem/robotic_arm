@@ -1,4 +1,5 @@
 import warnings 
+import numpy as np 
 chain = None
 with warnings.catch_warnings(): 
     warnings.simplefilter("ignore")
@@ -24,4 +25,5 @@ for i in range(0, len(rotation)):
     for j in range(0, len(rotation[i])): 
         rotation[i][j] = round(rotation[i][j], 2)
 print(rotation)
+# v_base = rotation @ v_end 
 # print(f"Position: x = {x:.3f}, y = {y:.3f}, z = {z:.3f}")

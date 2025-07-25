@@ -5,8 +5,9 @@ import sys
 import os
 sys.path.append(os.path.abspath(".."))
 # from commands.main import reset, compute_fk
-from utils.funcs import compute_fk
+from utils.funcs import compute_fk, get_rotation_matrix
 
+COORD_FILE = "/Desktop/robotic_arm/vision_controls/CNN/strawberry_coords.txt"
 
 ### PSEUDO CODE 
 # 1) Look around for a strawberry 
@@ -18,7 +19,7 @@ from utils.funcs import compute_fk
 ###
 
 # mc = MyCobot('/dev/ttyAMA0', 115200)
-compute_fk([0,0,0,0,0,0,0,0])
+# compute_fk([0,0,0,0,0,0,0,0])
 
 def look_around():
     z_levels = [0.5, 0.4, 0.3, 0.2]

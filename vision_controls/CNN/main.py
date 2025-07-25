@@ -9,14 +9,14 @@ original_width = 640
 original_height = 480
 interval = 1
 last_time = time.time()
-COORD_FILE = ""
+COORD_FILE = "strawberry_coords.txt"
 model = YOLO("oculus_s/my_model.pt")
 
 # Initialize pipeline
 pipeline = rs.pipeline()
 config = rs.config()
-config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+config.enable_stream(rs.stream.depth, original_width, original_height, rs.format.z16, 30)
+config.enable_stream(rs.stream.color, original_width, original_height, rs.format.bgr8, 30)
 
 # Start streaming
 pipeline.start(config)
@@ -79,7 +79,7 @@ try:
                     return [cx,cy]
             return []
       
-
+        # Run yolo in the specified interval
         if current_time - last_time >= interval: 
             coord = run_yolo_detection()
             last_time = time.time()

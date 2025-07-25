@@ -31,3 +31,11 @@ def compute_fk(angles): # angles must contain 8 items
     print(rotation)
     print(end_effector_frame)
     return end_effector_frame
+
+def get_rotation_matrix(angles): ## must contain 8 items 
+    end_effector_frame = chain.forward_kinematics(angles)
+    rotation = end_effector_frame[:3, :3]
+    for i in range(0, len(rotation)): 
+        for j in range(0, len(rotation[i])): 
+            rotation[i][j] = round(rotation[i][j], 2)
+    return rotation

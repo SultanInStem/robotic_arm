@@ -6,3 +6,7 @@
 
 Pymycobot (3.6.1 DO NOT UPDATE)
 
+
+
+to transfrom a vector from end_effector_frame to base_frame, 
+we shoud multiply the vector by a rotation matrix 
