@@ -71,8 +71,10 @@ while(True):
     if not len(coords):
         print("No strawberries detected.")
         continue
+    for i in len(coords):
+        coords[i] = round(float(coords[i]), 2)
     coords = np.array(coords) # convert into numpy vector 
-    print(type(coords))
+    print(coords)
     # coords is in end_effector_frame so we should translate it to base_frame 
     a = [0,-10, 25, 55, 0, -90, 0, 0]
     rotation_matrix = get_rotation_matrix(a)
