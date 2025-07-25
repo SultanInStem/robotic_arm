@@ -6,7 +6,7 @@ import os
 import numpy as np
 sys.path.append(os.path.abspath(".."))
 from commands.main import reset
-from utils.funcs import get_rotation_matrix, compute_ik
+from utils.funcs import get_rotation_matrix, compute_ik, convert_to_radians
 from utils.globals import NVIDIA_HOST, NVIDIA_PASSWORD, NVIDIA_USER
 
 mc = MyCobot('/dev/ttyAMA0', 115200)
@@ -14,7 +14,7 @@ mc = MyCobot('/dev/ttyAMA0', 115200)
 
 
 COORD_FILE = "/home/usr2/Desktop/robotic_arm/vision_controls/CNN/strawberry_coords.txt"
-ready_angles = [-10, 25, 55, 0, -90, 0]
+ready_angles = [0, 0, 0, 0, 0, 0]
 deposit_angles = [65, -90, 90, 45, -90, 0]
 
 
@@ -71,12 +71,15 @@ while(is_running==True):
         coords_arr[i] = round(float(coords_arr[i]), 2)
     coords_arr = np.array(coords_arr) # convert into numpy vector 
     # coords is in end_effector_frame so we should translate it to base_frame 
-    a = [0,-10, 25, 55, 0, -90, 0, 0]
+    a = [0, 0, 0, 0, 0, 0, 0, 0]
+    for i in range(0, len(a)): 
+        a[i] = convert_to_radians(a[i])
     rotation_matrix = get_rotation_matrix(a)
     straw_pos = np.dot(rotation_matrix, coords_arr)
  
     print("ACTUAL POSITION: ", straw_pos)
     target_angles = compute_ik(straw_pos)
+    
 
 reset()
 

@@ -26,7 +26,7 @@ def compute_fk(angles): # angles must contain 8 items in radians!!!
 
 
 # Rotation matrix that translates from end_effector_frame to base_frame
-def get_rotation_matrix(angles): ## must contain 8 items 
+def get_rotation_matrix(angles): ## must contain 8 angles in radians
     end_effector_frame = chain.forward_kinematics(angles)
     rotation = end_effector_frame[:3, :3]
     for i in range(0, len(rotation)): 
