@@ -32,6 +32,8 @@ def compute_fk(angles): # angles must contain 8 items
     print(end_effector_frame)
     return end_effector_frame
 
+
+# Rotation matrix that translates from end_effector_frame to base_frame
 def get_rotation_matrix(angles): ## must contain 8 items 
     end_effector_frame = chain.forward_kinematics(angles)
     rotation = end_effector_frame[:3, :3]
