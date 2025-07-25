@@ -1,45 +1,92 @@
 import time 
-# import paramiko 
+import paramiko 
 from pymycobot.mycobot import MyCobot
 import sys
 import os
+import numpy as np
 sys.path.append(os.path.abspath(".."))
-# from commands.main import reset, compute_fk
-from utils.funcs import compute_fk, get_rotation_matrix
+from commands.main import reset
+from utils.funcs import get_rotation_matrix, compute_ik
+from utils.globals import NVIDIA_HOST, NVIDIA_PASSWORD, NVIDIA_USER
+
+mc = MyCobot('/dev/ttyAMA0', 115200)
+
+
 
 COORD_FILE = "/Desktop/robotic_arm/vision_controls/CNN/strawberry_coords.txt"
+ready_angles = [-10, 25, 55, 0, -90, 0]
+deposit_angles = [65, -90, 90, 45, -90, 0]
 
-### PSEUDO CODE 
-# 1) Look around for a strawberry 
-# if nothing is found, go the original position and stop 
-# 2) Locate the strawberry  
-# 3) Pick the strawberry 
-# 4) Deposit the strawberry
-# 5) Repeat
-###
+def clean_strawberry_coords():
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(NVIDIA_HOST, username=NVIDIA_USER, password=NVIDIA_PASSWORD)
 
-# mc = MyCobot('/dev/ttyAMA0', 115200)
-# compute_fk([0,0,0,0,0,0,0,0])
+    sftp = ssh.open_sftp()
+    try:
+        with sftp.open(COORD_FILE, "w") as f:
+            f.write("")
+    except FileNotFoundError:
+        pass
 
-def look_around():
-    z_levels = [0.5, 0.4, 0.3, 0.2]
-    # the arm does 360 around it origin at specified z_levels
-    for i in range(len(z_levels)):
-        print(i)
-        # go to i'th z-level at the same (x,y)
-        # rotate the first joint 
-        # repeat 
+    sftp.close()
+    ssh.close()
+
+def fetch_strawberry_coords():
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(NVIDIA_HOST, username=NVIDIA_USER, password=NVIDIA_PASSWORD)
+
+    sftp = ssh.open_sftp()
+    try:
+        with sftp.open(COORD_FILE, "r") as f:
+            coords = f.readlines()
+    except FileNotFoundError:
+        coords = []
+
+    sftp.close()
+    ssh.close()
+    print("STRAWBERRY: ")
+    print(coords)
+    return coords
 
 
 
-    return False    
-        
+def go_to_ready(): 
+    time.sleep(1)
+    angles = [(-10),25,55,0,(-90),0]
+    mc.send_angles(ready_angles, 30)
+ 
+def deposit():
+    mc.send_angles(deposit_angles, 40)
+    time.sleep(4)
+    mc.set_gripper_state(0, 60)  # Open gripper
+    time.sleep(1)
 
 # ----------- MAIN LOOP --------- 
-is_running = True 
-# reset() ### set the arm to the origin b4 running the loop
-while(is_running): 
+reset() ### set the arm to the origin b4 running the loop
+i = 0
+N = 10
+while(i < N):
+    coords = fetch_strawberry_coords() # [x,y,z]
+    if not len(coords):
+        print("No strawberries detected.")
+        i += 1
+        continue
+    coords = np.array(coords) # convert into numpy vector 
+    # coords is in end_effector_frame so we should translate it to base_frame 
+    rotation_matrix = get_rotation_matrix(ready_angles)
+    straw_pos = rotation_matrix @ coords
+    target_angles = compute_ik(straw_pos)
+    mc.send_angles(target_angles, 30)  
+    time.sleep(1)
+    mc.set_gripper_state(1, 60)
+    time.sleep(1)
+    deposit()
+    clean_strawberry_coords()
+    go_to_ready()
 
-    is_running = look_around()
+# reset()
 
-    pass
+
+
