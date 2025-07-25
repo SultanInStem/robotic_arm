@@ -9,7 +9,7 @@ original_width = 640
 original_height = 480
 interval = 0.01
 last_time = time.time()
-
+COORD_FILE = ""
 model = YOLO("oculus_s/my_model.pt")
 # Global variables to store clicked point
 clicked_point = None
@@ -90,9 +90,6 @@ try:
 
         if current_time - last_time >= interval: 
             coord = run_yolo_detection()
-            if(len(coord) < 0): 
-                print("Not strawberries detected")
-
             last_time = time.time()
         # Stack images horizontally
         images = np.hstack((color_image, depth_colormap))
@@ -105,6 +102,15 @@ try:
                 strawberry_position = [x, y, z]
             print("Position: ", strawberry_position) 
             coord = []       
+        else: 
+            print("No strawberries detected")
+
+
+
+        with open(COORD_FILE, "w") as f:
+            if len(strawberry_position) > 0:
+                x,y,z = strawberry_position[0], strawberry_position[1], strawberry_position[2]
+                f.write(f"{x} {y} {z}")
         # Handle clicked point
         # if clicked_point is not None:
         #     x, y = clicked_point
