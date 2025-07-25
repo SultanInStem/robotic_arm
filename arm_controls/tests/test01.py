@@ -84,7 +84,9 @@ while(is_running==True):
     rotation_matrix = get_rotation_matrix(a)
     print(rotation_matrix)
     straw_pos = rotation_matrix @ coords_arr
+    print("ACTUAL POSITION: ", straw_pos)
     target_angles = compute_ik(straw_pos)
+
     # mc.send_angles(target_angles, 20)
     # time.sleep(1)
     # mc.set_gripper_state(1, 60)
