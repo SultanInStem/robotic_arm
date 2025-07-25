@@ -3,7 +3,7 @@ import os
 import time
 from pymycobot.mycobot import MyCobot 
 sys.path.append(os.path.abspath(".."))
-from utils.funcs import compute_ik
+from utils.funcs import compute_ik, compute_fk
 from utils.globals import PORT, BANDWIDTH
 mc = MyCobot(PORT, BANDWIDTH)
 
@@ -55,4 +55,10 @@ def calibrate_gripper():
     mc.set_gripper_calibration()
     time.sleep(2)
  
-
+def get_arms_position(): 
+    angles = mc.get_angles()
+    angles.insert(0,0)
+    angles.append(0)
+    pos = compute_fk(angles)
+    print("POSITION: ", pos)
+    return pos

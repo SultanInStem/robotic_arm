@@ -9,9 +9,12 @@ with warnings.catch_warnings():
 
 
 
-target = [-0.050, -0.148, 0.503]
-angles = chain.inverse_kinematics(target)
-print(len(angles))
+
+pos = chain.forward_kinematics([0,0,0,0,0,0,0,0])
+print(pos)
+# target = [-0.050, -0.148, 0.503]
+# angles = chain.inverse_kinematics(target)
+# print(len(angles))
 # angles = angles[1:7]
 
 # to go from the coordinate system of the gripper 
@@ -20,11 +23,11 @@ print(len(angles))
 
 # Position: x = -0.050, y = -0.148, z = 0.503
 
-end_effector_frame = chain.forward_kinematics(angles)
-rotation = end_effector_frame[:3, :3]
-for i in range(0, len(rotation)): 
-    for j in range(0, len(rotation[i])): 
-        rotation[i][j] = round(rotation[i][j], 2)
-print(rotation)
+# end_effector_frame = chain.forward_kinematics(angles)
+# rotation = end_effector_frame[:3, :3]
+# for i in range(0, len(rotation)): 
+    # for j in range(0, len(rotation[i])): 
+        # rotation[i][j] = round(rotation[i][j], 2)
+# print(rotation)
 # v_base = rotation @ v_end 
 # print(f"Position: x = {x:.3f}, y = {y:.3f}, z = {z:.3f}")
