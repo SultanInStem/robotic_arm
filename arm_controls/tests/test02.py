@@ -65,6 +65,8 @@ while(is_running==True):
         continue
     coords = coords[0]
     coords_arr = coords.split()
+    if len(coords_arr) < 3: 
+        continue
     for i in range(0, len(coords_arr)):
         coords_arr[i] = round(float(coords_arr[i]), 2)
     coords_arr = np.array(coords_arr) # convert into numpy vector 
@@ -72,9 +74,9 @@ while(is_running==True):
     a = [0,-10, 25, 55, 0, -90, 0, 0]
     rotation_matrix = get_rotation_matrix(a)
     straw_pos = np.dot(rotation_matrix, coords_arr)
-    if len(straw_pos) > 0: 
-        print("ACTUAL POSITION: ", straw_pos)
-        target_angles = compute_ik(straw_pos)
+ 
+    print("ACTUAL POSITION: ", straw_pos)
+    target_angles = compute_ik(straw_pos)
 
 reset()
 
