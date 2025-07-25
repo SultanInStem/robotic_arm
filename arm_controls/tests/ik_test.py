@@ -11,6 +11,7 @@ with warnings.catch_warnings():
 
 target = [-0.050, -0.148, 0.503]
 angles = chain.inverse_kinematics(target)
+print(len(angles))
 # angles = angles[1:7]
 
 # to go from the coordinate system of the gripper 

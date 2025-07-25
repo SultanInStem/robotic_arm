@@ -74,7 +74,7 @@ while(True):
     coords = np.array(coords) # convert into numpy vector 
     # coords is in end_effector_frame so we should translate it to base_frame 
     a = [0,-10, 25, 55, 0, -90, 0, 0]
-    rotation_matrix = get_rotation_matrix(ready_angles)
+    rotation_matrix = get_rotation_matrix(a)
     straw_pos = rotation_matrix @ coords
     target_angles = compute_ik(straw_pos)
     mc.send_angles(target_angles, 20)  
