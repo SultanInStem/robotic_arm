@@ -78,6 +78,7 @@ try:
                     y2_orig = int(y2 * scale_y)
 
                     # Draw on original frame
+                    cv2.rectangle(color_image, (x1, y2), (x2, y1), (0, 255, 0), 2)
 
                     # Print center point in original frame
                     cx = (x1_orig + x2_orig) // 2
@@ -125,7 +126,6 @@ try:
         #             images = np.hstack((color_image, depth_colormap))
         
         # Display
-        cv2.rectangle(color_image, (strawberry_position[0], strawberry_position[1]), (strawberry_position[0] + 10, strawberry_position[1] + 10), (0, 255, 0), 2)
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.setMouseCallback('RealSense', mouse_callback)
         cv2.imshow('RealSense', images)
