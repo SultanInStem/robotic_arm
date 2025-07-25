@@ -111,26 +111,6 @@ try:
             if len(strawberry_position) > 0:
                 x,y,z = strawberry_position[0], strawberry_position[1], strawberry_position[2]
                 f.write(f"{x} {y} {z}")
-        # Handle clicked point
-        # if clicked_point is not None:
-        #     x, y = clicked_point
-        #     if x < color_image.shape[1]:  # Ensure click is in color image
-        #         # Get depth value (in meters)
-        #         depth = depth_frame.get_distance(x, y)
-                
-        #         if depth > 0:  # Valid depth
-        #             # Deproject pixel to 3D point
-        #             point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [x, y], depth)
-        #             x_3d, y_3d, z_3d = point_3d
-                    
-        #             # Display coordinates on image
-        #             text = f"3D: ({x_3d:.3f}, {y_3d:.3f}, {z_3d:.3f}) m, Depth: {depth*1000:.1f} mm"
-        #             cv2.putText(color_image, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-        #             # Mark clicked point
-        #             cv2.circle(color_image, (x, y), 5, (0, 0, 255), -1)
-        #             # Update stacked image
-        #             images = np.hstack((color_image, depth_colormap))
-        
         # Display
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.setMouseCallback('RealSense', mouse_callback)
