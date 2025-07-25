@@ -65,14 +65,11 @@ def deposit():
 # ----------- MAIN LOOP --------- 
 reset() ### set the arm to the origin b4 running the loop
 go_to_ready()
-i = 0
-N = 10
-while(i < N):
+while(True):
     coords = fetch_strawberry_coords() # [x,y,z]
     # might have to negate one of the coordinates 
     if not len(coords):
         print("No strawberries detected.")
-        i += 1
         continue
     coords = np.array(coords) # convert into numpy vector 
     # coords is in end_effector_frame so we should translate it to base_frame 
