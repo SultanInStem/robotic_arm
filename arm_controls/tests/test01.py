@@ -35,7 +35,7 @@ def clean_strawberry_coords():
 def fetch_strawberry_coords():
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(NVIDIA_HOST, username=NVIDIA_USER, password=NVIDIA_PASSWORD)
+    ssh.connect(NVIDIA_HOST, username=NVIDIA_USER, password=NVIDIA_PASSWORD, look_for_keys=False, allow_agent=False)
 
     sftp = ssh.open_sftp()
     try:
