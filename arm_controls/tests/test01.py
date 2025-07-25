@@ -13,7 +13,7 @@ mc = MyCobot('/dev/ttyAMA0', 115200)
 
 
 
-COORD_FILE = "/Desktop/robotic_arm/vision_controls/CNN/strawberry_coords.txt"
+COORD_FILE = "/home/usr2/Desktop/robotic_arm/vision_controls/CNN/strawberry_coords.txt"
 ready_angles = [-10, 25, 55, 0, -90, 0]
 deposit_angles = [65, -90, 90, 45, -90, 0]
 
