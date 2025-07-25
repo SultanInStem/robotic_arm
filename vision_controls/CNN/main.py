@@ -92,17 +92,15 @@ try:
             x,y,z = point_3d
             if z > 0: 
                 strawberry_position = [x, y, z]
+                # Write coordinates of a strawberry to a .txt file for the PI
+                with open(COORD_FILE, "w") as f:
+                    f.write(f"{x} {y} {z}")
             print("Position: ", strawberry_position) 
             coord = []       
         else: 
             print("No strawberries detected")
 
 
-        # Write coordinates of a strawberry to a .txt file for the PI
-        with open(COORD_FILE, "w") as f:
-            if len(strawberry_position) > 0:
-                x,y,z = strawberry_position[0], strawberry_position[1], strawberry_position[2]
-                f.write(f"{x} {y} {z}")
         # Display
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.setMouseCallback('RealSense', mouse_callback)
