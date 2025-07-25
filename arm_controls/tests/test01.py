@@ -84,10 +84,11 @@ while(is_running==True):
     rotation_matrix = get_rotation_matrix(a)
     print(type(rotation_matrix))
     print(type(coords_arr))
-    straw_pos = rotation_matrix * coords_arr
+    straw_pos = np.dot(rotation_matrix, coords_arr)
     print("ACTUAL POSITION: ", straw_pos)
 
-    target_angles = compute_ik(straw_pos)
+    # target_angles = compute_ik(straw_pos)
+    
 
     # mc.send_angles(target_angles, 20)
     # time.sleep(1)
