@@ -69,6 +69,7 @@ i = 0
 N = 10
 while(i < N):
     coords = fetch_strawberry_coords() # [x,y,z]
+    # might have to negate one of the coordinates 
     if not len(coords):
         print("No strawberries detected.")
         i += 1
