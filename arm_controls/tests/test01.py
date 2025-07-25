@@ -63,7 +63,7 @@ def deposit():
     time.sleep(1)
 
 # ----------- MAIN LOOP --------- 
-reset() ### set the arm to the origin b4 running the loop
+# reset() ### set the arm to the origin b4 running the loop
 go_to_ready()
 
 
@@ -82,9 +82,11 @@ while(is_running==True):
     # coords is in end_effector_frame so we should translate it to base_frame 
     a = [0,-10, 25, 55, 0, -90, 0, 0]
     rotation_matrix = get_rotation_matrix(a)
-    print(rotation_matrix)
-    straw_pos = rotation_matrix @ coords_arr
+    print(type(rotation_matrix))
+    print(type(coords_arr))
+    straw_pos = rotation_matrix * coords_arr
     print("ACTUAL POSITION: ", straw_pos)
+
     target_angles = compute_ik(straw_pos)
 
     # mc.send_angles(target_angles, 20)
