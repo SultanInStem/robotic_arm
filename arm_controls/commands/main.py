@@ -9,6 +9,7 @@ from utils.globals import PORT, BANDWIDTH
 mc = MyCobot320(PORT, BANDWIDTH)
 
 def open_gripper(speed=80):
+    print("GRIPPER VALUE ", mc.get_gripper_value())
     if speed > 100: 
         print("speed cannot be greater than 100")
         return -1
@@ -67,3 +68,8 @@ def get_arms_orientation():
     print("ANGLES (RAD): ", angles)
     print("POSITION: ", pos)
     return pos
+
+
+
+
+
