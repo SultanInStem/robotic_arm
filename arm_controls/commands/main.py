@@ -12,7 +12,10 @@ def open_gripper(speed=80):
     if speed > 100: 
         print("speed cannot be greater than 100")
         return -1
-    mc.set_gripper_state(0, speed)
+    elif mc.is_gripper_moving():
+        print("gripper is already moving")
+        return -1 
+    mc.set_gripper_value(100, speed)
     time.sleep(2)
 
     return 0 
@@ -20,8 +23,11 @@ def open_gripper(speed=80):
 def close_gripper(speed=80): 
     if speed > 100:
         print("speed cannot be greater than 100")
+        return -1
+    elif mc.is_gripper_moving():
+        print("gripper is already moving")
         return -1 
-    mc.set_gripper_state(1, speed)
+    mc.set_gripper_value(0, speed)
     time.sleep(2)
     return 0 
 
