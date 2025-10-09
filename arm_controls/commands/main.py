@@ -1,12 +1,12 @@
 import sys
 import os
 import time
-import math 
-from pymycobot.mycobot import MyCobot 
+from pymycobot.mycobot320 import MyCobot320
+
 sys.path.append(os.path.abspath(".."))
 from utils.funcs import compute_ik, compute_fk, convert_to_radians
 from utils.globals import PORT, BANDWIDTH
-mc = MyCobot(PORT, BANDWIDTH)
+mc = MyCobot320(PORT, BANDWIDTH)
 
 def open_gripper(speed=80):
     if speed > 100: 
@@ -26,7 +26,6 @@ def close_gripper(speed=80):
     return 0 
 
 def move_to_location(point, speed): 
-    mc = MyCobot(PORT, BANDWIDTH)
     angles = compute_ik(point)
     if len(angles) < 6: return -1
     elif speed > 90: 
