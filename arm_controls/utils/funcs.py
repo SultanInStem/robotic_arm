@@ -6,8 +6,8 @@ with warnings.catch_warnings():
     from ikpy.chain import Chain
     chain = Chain.from_urdf_file("../mycobot_320pi.urdf")
 
-def compute_ik(point=[0,0,0.5]): # x,y,z must be in meters 
-    angles = chain.inverse_kinematics(point)
+def compute_ik(point=[0,0,0.5], orientation=[-1,0,0]): # x,y,z must be in meters 
+    angles = chain.inverse_kinematics(point, orientation, orientation_mode="Y")
     distance = point[0]**2 + point[1]**2 + point[2]**2 
     if distance > 0.5**2: 
         print("the point is out of reach")

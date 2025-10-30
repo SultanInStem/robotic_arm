@@ -10,7 +10,8 @@ with warnings.catch_warnings():
 
 
 target = [-0.4, 0, 0]
-angles = chain.inverse_kinematics(target)
+orientation = [-1,0,0]
+angles = chain.inverse_kinematics(target, orientation, orientation_mode="Y")
 for i in range(0, len(angles)): 
     angles[i] = round(angles[i], 2)
 # angles = angles[1:7]
