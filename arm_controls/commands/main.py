@@ -9,8 +9,7 @@ from utils.globals import PORT, BANDWIDTH
 mc = MyCobot320(PORT, BANDWIDTH)
 
 def open_gripper(speed=80):
-    # print("GRIPPER VALUE ", mc.get_gripper_mode())
-    # mc.set_gripper_state(0, speed)
+    mc.set_gripper_mode(1)
     if speed > 100: 
         print("speed cannot be greater than 100")
         return -1
