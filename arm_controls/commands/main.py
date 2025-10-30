@@ -26,9 +26,20 @@ def close_gripper(speed=80):
         print("speed cannot be greater than 100")
         return -1
 
-    mc.set_gripper_value(50, speed)
+    mc.set_gripper_value(0, speed)
     time.sleep(2)
     return 0 
+def grab_object(speed, degree): 
+    mc.set_gripper_mode(1)
+    if speed > 100: 
+        print("speed cannot be greater than 100")
+        return -1
+    if degree < 0 or degree > 100: 
+        print("degree must be between 0 and 100")
+        return -1
+    mc.set_gripper_value(degree, speed)
+    time.sleep(2)
+    return 0
 
 def move_to_location(point, speed): 
     angles = compute_ik(point)
