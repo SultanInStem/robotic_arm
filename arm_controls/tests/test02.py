@@ -42,7 +42,7 @@ while True:
     
     if len(coords_in_end_effector_frame) == 3:
         coords_in_end_effector_frame.append(1)
-        current_angles = mc.get_angles()
+        current_angles = [0] + mc.get_angles() + [0]
         print("Current angles: ", current_angles)
         point = convert_point_from_end_effector_to_base_frame(coords_in_end_effector_frame, current_angles)
 
