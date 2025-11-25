@@ -44,10 +44,10 @@ while True:
         current_angles = [0] + mc.get_angles() + [0]
         for i in range(0, len(current_angles)): 
             current_angles[i] = convert_to_radians(current_angles[i])
-        # print("Current angles: ", current_angles)
+        print("Current angles: ", current_angles)
         coords_in_end_effector_frame.append(1)
         point = convert_point_from_end_effector_to_base_frame(coords_in_end_effector_frame, current_angles)
-        # print("Point in base frame: ", point)
+        print("Point in base frame: ", point)
 
 
 
