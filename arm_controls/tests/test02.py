@@ -45,6 +45,7 @@ while True:
         current_angles = [0] + mc.get_angles() + [0]
         print("Current angles: ", current_angles)
         point = convert_point_from_end_effector_to_base_frame(coords_in_end_effector_frame, current_angles)
+        print("Point in base frame: ", point)
 
 
 
