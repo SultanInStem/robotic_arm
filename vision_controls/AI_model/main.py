@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import time
 import socket
+import os
 from ultralytics import YOLO # Import YOLO
 
 # Load the pre-trained YOLOv8n (nano) model
@@ -22,14 +23,14 @@ LOCAL_FILE = "coords_data.txt"
 
 
 
-def send_coords_to_pi():
+def send_coords_to_pi(point=None):
     # --- 1. Create the .txt file ---
     print(f"Creating local file: {LOCAL_FILE}")
     try:
         with open(LOCAL_FILE, 'w') as f:
-            f.write("This is a test file from the Jetson.\n")
-            f.write(f"Timestamp: {time.time()}\n")
-            f.write("Hello, Raspberry Pi this is Mac Miller! (via Socket)\n")
+            file_size = os.path.getsize(LOCAL_FILE)
+            if file_size == 0 and point is not None:
+                f.write(f"{point[0]}, {point[1]}, {point[2]}\n")
         print("Local file created successfully.")
     except Exception as e:
         print(f"Error creating file: {e}")
