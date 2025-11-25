@@ -1,12 +1,78 @@
 import pyrealsense2 as rs
 import numpy as np
 import cv2
+import time
+import paramiko
 from ultralytics import YOLO # Import YOLO
 
 # Load the pre-trained YOLOv8n (nano) model
 # This model will be downloaded automatically on the first run.
 # You can use other models like 'yolov8s.pt' for better accuracy at the cost of speed.
 model = YOLO('my_model.pt') 
+
+# Information for SSH connection to Raspberry Pi
+PI_HOST = "192.168.10.2"
+PI_PORT = 22 
+PI_USER = "er@er"
+PI_PASSWORD = "fresnostate"
+REMOTE_PATH_ON_PI = "/Desktop/robotic_arm/vision_controls/AI_model"
+LOCAL_PATH = "coords_data.txt"
+
+
+try:
+    with open(LOCAL_PATH, 'w') as f:
+        f.write("This is a test file from the Jetson.\n")
+        f.write(f"Timestamp: {time.time()}\n")
+        f.write("Hello, Raspberry Pi! (via SFTP with SSH Key)\n")
+    print("Local file created successfully.")
+except Exception as e:
+    print(f"Error creating file: {e}")
+    exit()
+
+sh_client = None
+try:
+    print(f"Connecting to {PI_USER}@{PI_HOST} using SSH key...")
+    
+    # Create an SSH client object
+    ssh_client = paramiko.SSHClient()
+    
+    # Automatically add the server's host key
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    
+    # Connect using SSH keys.
+    # Paramiko will automatically look for your default keys
+    # (like ~/.ssh/id_rsa) since we are not providing a password.
+    ssh_client.connect(hostname=PI_HOST,
+                       port=PI_PORT,
+                       username=PI_USER)
+                       
+    print("Connected successfully.")
+
+    # Open an SFTP session on the established SSH connection
+    sftp = ssh_client.open_sftp()
+    
+    # Upload the file
+    print(f"Uploading '{LOCAL_PATH}' to '{REMOTE_PATH_ON_PI}'...")
+    sftp.put(LOCAL_PATH, REMOTE_PATH_ON_PI)
+    
+    print("File uploaded successfully.")
+    
+    # Close the SFTP session
+    sftp.close()
+
+except paramiko.AuthenticationException:
+    print("Authentication failed. Did you run 'ssh-copy-id'?")
+except paramiko.SSHException as e:
+    print(f"SSH connection error: {e}")
+except Exception as e:
+    print(f"An error occurred: {e}")
+finally:
+    # Always close the SSH connection
+    if ssh_client:
+        ssh_client.close()
+        print("Connection closed.")
+
+
 
 # Initialize pipeline
 pipeline = rs.pipeline()
@@ -68,7 +134,7 @@ try:
                 if depth > 0:  # Check if depth is valid (not 0)
                     # 3. Deproject pixel to 3D point
                     point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [cx, cy], depth)
-                    x_3d, y_3d, z_3d = point_3d
+                    x_3d, z_3d, y_3d = point_3d
                     print("X ", x_3d, " Y: ", y_3d, " Depth: ", z_3d)
                     
                     # 4. Draw visualizations
@@ -80,7 +146,7 @@ try:
                     cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
                     
                     # Prepare text
-                    text = f"{class_name}: ({x_3d:.2f}, {y_3d:.2f}, {z_3d:.2f}) m"
+                    text = f"{class_name}: ({x_3d:.2f}, {z_3d:.2f}, {y_3d:.2f}) m"
                     
                     # Put text above the box
                     cv2.putText(color_image, text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)

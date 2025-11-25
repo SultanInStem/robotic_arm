@@ -1,5 +1,6 @@
 import warnings 
 import math
+import numpy as np
 chain = None
 with warnings.catch_warnings(): 
     warnings.simplefilter("ignore")
@@ -18,6 +19,12 @@ def compute_ik(point=[0,0,0.5], orientation=[0,0,-1]): # x,y,z must be in meters
         main_angles.append(round(float(angles[i]) * (180 / math.pi), 2))
     # angles are returned in degrees 
     return main_angles
+def convert_point_from_end_effector_to_base_frame(point_in_end_effector_frame, angles): 
+    end_effector_frame = chain.forward_kinematics(angles)
+    point_in_base_frame = np.dot(end_effector_frame, point_in_end_effector_frame)
+    x, y, z = point_in_base_frame[0], point_in_base_frame[1], point_in_base_frame[2]
+    position = [round(x,2), round(y,2), round(z,2)]
+    return position
 def compute_fk(angles): # angles must contain 8 items in radians!!!
     end_effector_frame = chain.forward_kinematics(angles)
     x,y,z = end_effector_frame[0][3], end_effector_frame[1][3], end_effector_frame[2][3]
