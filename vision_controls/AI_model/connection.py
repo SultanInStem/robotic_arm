@@ -1,7 +1,7 @@
 import socket
 
 # --- Configuration ---
-HOST = '192.168.10.2'  # Listen on all available network interfaces
+HOST = '0.0.0.0'  # Listen on all available network interfaces
 PORT = 65432        # A port to listen on (must match the client)
 BUFFER_SIZE = 4096  # 4KB buffer for receiving data
 RECEIVED_FILENAME = 'coords_data.txt' # Name to save the file as
