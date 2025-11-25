@@ -65,11 +65,11 @@ try:
                 
                 # 2. Get depth value at the center point
                 depth = depth_frame.get_distance(cx, cy)
-                print("X ", cx, " Y: ", cy, " Depth: ", depth)
                 if depth > 0:  # Check if depth is valid (not 0)
                     # 3. Deproject pixel to 3D point
                     point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [cx, cy], depth)
                     x_3d, y_3d, z_3d = point_3d
+                    print("X ", x_3d, " Y: ", y_3d, " Depth: ", z_3d)
                     
                     # 4. Draw visualizations
                     
