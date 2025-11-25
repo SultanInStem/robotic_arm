@@ -2,7 +2,7 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 import time
-import paramiko
+import socket
 from ultralytics import YOLO # Import YOLO
 
 # Load the pre-trained YOLOv8n (nano) model
@@ -11,12 +11,68 @@ from ultralytics import YOLO # Import YOLO
 model = YOLO('my_model.pt') 
 
 # Information for SSH connection to Raspberry Pi
-PI_HOST = "192.168.10.2"
-PI_PORT = 22 
-PI_USER = "er"
-PI_PASSWORD = "fresnostate"
+SERVER_HOST = '192.168.10.2' # Example: '192.168.1.10'
+SERVER_PORT = 65432
+BUFFER_SIZE = 4096           # 4KB buffer for sending data
 REMOTE_PATH_ON_PI = "/Desktop/robotic_arm/vision_controls/AI_model"
-LOCAL_PATH = "coords_data.txt"
+LOCAL_FILE = "coords_data.txt"
+
+
+
+
+
+
+def send_coords_to_pi():
+    # --- 1. Create the .txt file ---
+    print(f"Creating local file: {LOCAL_FILE}")
+    try:
+        with open(LOCAL_FILE, 'w') as f:
+            f.write("This is a test file from the Jetson.\n")
+            f.write(f"Timestamp: {time.time()}\n")
+            f.write("Hello, Raspberry Pi! (via Socket)\n")
+        print("Local file created successfully.")
+    except Exception as e:
+        print(f"Error creating file: {e}")
+
+    # --- 2. Send the file ---
+    print(f"Connecting to Raspberry Pi at {SERVER_HOST}:{SERVER_PORT}...")
+    try:
+        # 1. Create a socket object
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        
+            # 2. Connect to the server
+            s.connect((SERVER_HOST, SERVER_PORT))
+            print("Connected.")
+        
+            # 3. Open the file in 'read binary' (rb) mode
+            with open(LOCAL_FILE, 'rb') as f:
+                while True:
+                    # 4. Read a chunk of data from the file
+                    bytes_read = f.read(BUFFER_SIZE)
+                
+                    # If we're at the end of the file, bytes_read will be empty
+                    if not bytes_read:
+                        break
+                
+                    # 5. Send the data chunk to the server
+                    s.sendall(bytes_read)
+                
+            # 6. The 'with' block will auto-close the connection here
+            print(f"File '{LOCAL_FILE}' sent successfully.")
+
+    except socket.error as e:
+        print(f"Socket error: {e}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+# Optional: Clean up the local file
+# if os.path.exists(LOCAL_FILE):
+#     os.remove(LOCAL_FILE)
+#     print(f"Cleaned up local file: {LOCAL_FILE}")
+
+print("Jetson script finished.")
+
+
 
 
 # Initialize pipeline
