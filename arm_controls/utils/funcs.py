@@ -23,7 +23,7 @@ def convert_point_from_end_effector_to_base_frame(point_in_end_effector_frame, a
     end_effector_frame = chain.forward_kinematics(angles)
     point_in_base_frame = np.dot(end_effector_frame, point_in_end_effector_frame)
     x, y, z = point_in_base_frame[0], point_in_base_frame[1], point_in_base_frame[2]
-    position = [round(x,2), round(y,2), round(z,2)]
+    position = [round(x,4), round(y,4), round(z,4)]
     return position
 
 

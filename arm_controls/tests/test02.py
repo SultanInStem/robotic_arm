@@ -41,7 +41,6 @@ while True:
 
     
     if len(coords_in_end_effector_frame) == 3:
-        get_arms_orientation()
         current_angles = [0] + mc.get_angles() + [0]
         for i in range(0, len(current_angles)): 
             current_angles[i] = convert_to_radians(current_angles[i])
