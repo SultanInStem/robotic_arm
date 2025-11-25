@@ -28,7 +28,7 @@ while True:
             for item in string_list:
                 # item.strip() removes extra spaces and newlines
                 # int() converts the clean string to a number
-                number = int(item.strip())
+                number = float(item.strip())
                 coords_in_end_effector_frame.append(number)
                 
         print(f"Successfully read file '{filename}'")
