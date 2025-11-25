@@ -29,7 +29,7 @@ def send_coords_to_pi():
         with open(LOCAL_FILE, 'w') as f:
             f.write("This is a test file from the Jetson.\n")
             f.write(f"Timestamp: {time.time()}\n")
-            f.write("Hello, Raspberry Pi! (via Socket)\n")
+            f.write("Hello, Raspberry Pi this is Mac Miller! (via Socket)\n")
         print("Local file created successfully.")
     except Exception as e:
         print(f"Error creating file: {e}")
@@ -65,14 +65,9 @@ def send_coords_to_pi():
     except Exception as e:
         print(f"An error occurred: {e}")
 
-# Optional: Clean up the local file
-# if os.path.exists(LOCAL_FILE):
-#     os.remove(LOCAL_FILE)
-#     print(f"Cleaned up local file: {LOCAL_FILE}")
-
-print("Jetson script finished.")
 
 
+send_coords_to_pi()
 
 
 # Initialize pipeline
