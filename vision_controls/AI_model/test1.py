@@ -19,61 +19,6 @@ REMOTE_PATH_ON_PI = "/Desktop/robotic_arm/vision_controls/AI_model"
 LOCAL_PATH = "coords_data.txt"
 
 
-try:
-    with open(LOCAL_PATH, 'w') as f:
-        f.write("This is a test file from the Jetson.\n")
-        f.write(f"Timestamp: {time.time()}\n")
-        f.write("Hello, Raspberry Pi! (via SFTP with SSH Key)\n")
-    print("Local file created successfully.")
-except Exception as e:
-    print(f"Error creating file: {e}")
-    exit()
-
-ssh_client = None
-try:
-    print(f"Connecting to {PI_USER}@{PI_HOST} using SSH key...")
-    
-    # Create an SSH client object
-    ssh_client = paramiko.SSHClient()
-    
-    # Automatically add the server's host key
-    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    
-    # Connect using SSH keys.
-    # Paramiko will automatically look for your default keys
-    # (like ~/.ssh/id_rsa) since we are not providing a password.
-    ssh_client.connect(hostname=PI_HOST,
-                       port=PI_PORT,
-                       username=PI_USER)
-                       
-    print("Connected successfully.")
-
-    # Open an SFTP session on the established SSH connection
-    sftp = ssh_client.open_sftp()
-    
-    # Upload the file
-    print(f"Uploading '{LOCAL_PATH}' to '{REMOTE_PATH_ON_PI}'...")
-    sftp.put(LOCAL_PATH, REMOTE_PATH_ON_PI)
-    
-    print("File uploaded successfully.")
-    
-    # Close the SFTP session
-    sftp.close()
-
-except paramiko.AuthenticationException:
-    print("Authentication failed. Did you run 'ssh-copy-id'?")
-except paramiko.SSHException as e:
-    print(f"SSH connection error: {e}")
-except Exception as e:
-    print(f"An error occurred: {e}")
-finally:
-    # Always close the SSH connection
-    if ssh_client:
-        ssh_client.close()
-        print("Connection closed.")
-
-
-
 # Initialize pipeline
 pipeline = rs.pipeline()
 config = rs.config()
