@@ -68,7 +68,6 @@ def send_coords_to_pi(point=None):
 
 
 
-send_coords_to_pi()
 
 
 # Initialize pipeline
@@ -133,6 +132,9 @@ try:
                     point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [cx, cy], depth)
                     x_3d, z_3d, y_3d = point_3d
                     print("X ", x_3d, " Y: ", y_3d, " Depth: ", z_3d)
+
+                    # send the coordinates to Raspberry Pi
+                    send_coords_to_pi(point=[x_3d, y_3d, z_3d])
                     
                     # 4. Draw visualizations
                     
