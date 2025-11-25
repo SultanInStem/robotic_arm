@@ -13,7 +13,7 @@ model = YOLO('my_model.pt')
 # Information for SSH connection to Raspberry Pi
 PI_HOST = "192.168.10.2"
 PI_PORT = 22 
-PI_USER = "er@er"
+PI_USER = "er"
 PI_PASSWORD = "fresnostate"
 REMOTE_PATH_ON_PI = "/Desktop/robotic_arm/vision_controls/AI_model"
 LOCAL_PATH = "coords_data.txt"
@@ -29,7 +29,7 @@ except Exception as e:
     print(f"Error creating file: {e}")
     exit()
 
-sh_client = None
+ssh_client = None
 try:
     print(f"Connecting to {PI_USER}@{PI_HOST} using SSH key...")
     
