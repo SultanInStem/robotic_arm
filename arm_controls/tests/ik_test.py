@@ -11,15 +11,15 @@ with warnings.catch_warnings():
 
 current_pos_of_end_effector = [0.3, 0, 0.4]
 orientation = [0,0,-1]
-angles = chain.inverse_kinematics(current_pos_of_end_effector, orientation, orientation_mode="Y")
+angles = chain.inverse_kinematics(current_pos_of_end_effector, orientation, orientation_mode="Z")
 print("Angles: ", angles)
 
 end_effector_frame = chain.forward_kinematics(angles)
 # print(end_effector_frame)
-point_in_end_effector_frame = [0.083, 0.2400, -0.0125, 1]
+point_in_end_effector_frame = [-0.017, 0.083, 0.24, 1]
 # x,y,z = end_effector_frame[0][3], end_effector_frame[1][3], end_effector_frame[2][3]
 point_in_base_frame = np.dot(end_effector_frame, point_in_end_effector_frame)
-# print("Point in base frame: ", point_in_base_frame)
+print("Point in base frame: ", point_in_base_frame)
 # postion = [round(x,2), round(y,2), round(z, 2)]
 # print(postion)
 
