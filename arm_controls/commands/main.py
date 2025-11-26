@@ -91,6 +91,11 @@ def test_pro_gripper(speed=30):
     time.sleep(2)
     mc.set_pro_gripper_open(speed)    
     time.sleep(2)
+
+    mc.set_pro_gripper(14,11,20)
+    time.sleep(2)
+    mc.set_pro_gripper(14,11,80)
+    print("Test completed")
     return 0
 
 
