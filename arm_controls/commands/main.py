@@ -87,9 +87,9 @@ def test_pro_gripper(speed=30):
     if speed > 100: 
         print("speed cannot be greater than 100")
         return -1
-    mc.set_pro_gripper_open(speed)
+    mc.set_pro_gripper_close(speed)
     time.sleep(2)
-    mc.set_pro_gripper_close(speed)    
+    mc.set_pro_gripper_open(speed)    
     time.sleep(2)
     return 0
 
