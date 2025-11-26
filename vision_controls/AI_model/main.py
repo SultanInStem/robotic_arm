@@ -38,7 +38,7 @@ def send_coords_to_pi(point=None):
     # --- 2. Send the file ---
     print(f"Connecting to Raspberry Pi at {SERVER_HOST}:{SERVER_PORT}...")
     file_size = os.path.getsize(LOCAL_FILE) 
-    if file_size is not 0:
+    if file_size != 0:
         try:
             # 1. Create a socket object
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -132,7 +132,7 @@ try:
                 if depth > 0:  # Check if depth is valid (not 0)
                     # 3. Deproject pixel to 3D point
                     point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [cx, cy], depth)
-                    x_3d, z_3d, y_3d = point_3d
+                    x_3d, y_3d, z_3d = point_3d
                     print("X ", x_3d, " Y: ", y_3d, " Depth: ", z_3d)
 
                     # send the coordinates to Raspberry Pi
