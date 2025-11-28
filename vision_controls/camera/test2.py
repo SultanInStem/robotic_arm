@@ -67,9 +67,9 @@ try:
                     if x_3d > 0: 
                         x_3d = x_3d - CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
                     else:
-                        x_3d = x_3d + CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
+                        x_3d = x_3d - CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
                     if y_3d > 0:
-                        y_3d = y_3d - CAMERA_HEIGHT_OFFSET
+                        y_3d = y_3d + CAMERA_HEIGHT_OFFSET
                     else:
                         y_3d = y_3d + CAMERA_HEIGHT_OFFSET
                     z_3d = z_3d - Z_OFFSET             
