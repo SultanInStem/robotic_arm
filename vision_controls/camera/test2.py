@@ -5,7 +5,7 @@ import pyrealsense2 as rs
 
 # Global variables to store clicked point
 clicked_point = None
-
+CAMERA_WIDTH_OFFSET = (65/2)*0.001  # Convert mm to meters
 # Mouse callback function to capture click coordinates
 def mouse_callback(event, x, y, flags, param):
     global clicked_point
@@ -62,7 +62,10 @@ try:
                     # Deproject pixel to 3D point
                     point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [x, y], depth)
                     x_3d, y_3d, z_3d = point_3d
-                    
+                    if x_3d > 0: 
+                        x_3d = x_3d - CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
+                    else:
+                        x_3d = x_3d + CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
                     # Display coordinates on image
                     text = f"3D: ({x_3d:.3f}, {y_3d:.3f}, {z_3d:.3f}) m, Depth: {depth*1000:.1f} mm"
                     cv2.putText(color_image, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
