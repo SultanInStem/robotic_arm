@@ -8,7 +8,7 @@ with warnings.catch_warnings():
 
 
 x,y,z= 0.3, 0.0, 0.4
-x1, y1, z1 = 0.022, -0.058, 0.042
+x1, y1, z1 = 0.031, -0.071, 0.1
 
 current_pos_of_end_effector = [x, y, z]
 orientation = [0,0,-1]
