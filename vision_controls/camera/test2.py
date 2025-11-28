@@ -6,7 +6,7 @@ import pyrealsense2 as rs
 # Global variables to store clicked point
 clicked_point = None
 CAMERA_WIDTH_OFFSET = (90/2)*0.001 # convert mm to meters
-CAMERA_HEIGHT_OFFSET = 35*0.001
+CAMERA_HEIGHT_OFFSET = 50*0.001
 Z_OFFSET = 0.15
 # Mouse callback function to capture click coordinates
 def mouse_callback(event, x, y, flags, param):
@@ -67,9 +67,9 @@ try:
                     if x_3d > 0: 
                         x_3d = x_3d - CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
                     else:
-                        x_3d = x_3d - CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
+                        x_3d = x_3d + CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
                     if y_3d > 0:
-                        y_3d = y_3d + CAMERA_HEIGHT_OFFSET
+                        y_3d = y_3d - CAMERA_HEIGHT_OFFSET
                     else:
                         y_3d = y_3d + CAMERA_HEIGHT_OFFSET
                     z_3d = z_3d - Z_OFFSET             
