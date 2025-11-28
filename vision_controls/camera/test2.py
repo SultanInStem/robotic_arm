@@ -5,7 +5,7 @@ import pyrealsense2 as rs
 
 # Global variables to store clicked point
 clicked_point = None
-CAMERA_WIDTH_OFFSET = (80/2)*0.001 # convert mm to meters
+CAMERA_WIDTH_OFFSET = (90/2)*0.001 # convert mm to meters
 Z_OFFSET = 0.15
 # Mouse callback function to capture click coordinates
 def mouse_callback(event, x, y, flags, param):
