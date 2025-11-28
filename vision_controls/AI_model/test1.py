@@ -89,20 +89,12 @@ try:
                     print("X ", x_3d, " Y: ", y_3d, " Depth: ", z_3d)
 
                     # send the coordinates to Raspberry Pi
-                    
-                    # 4. Draw visualizations
-                    
-                    # Draw the bounding box
-                    cv2.rectangle(color_image, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                    
-                    # Draw a circle at the center
+                    text = f"3D: ({x_3d:.3f}, {y_3d:.3f}, {z_3d:.3f}) m, Depth: {depth*1000:.1f} mm"
+                    cv2.putText(color_image, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+                    # Mark clicked point
                     cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
+                    # Update stacked image
                     
-                    # Prepare text
-                    text = f"{class_name}: ({x_3d:.2f}, {z_3d:.2f}, {y_3d:.2f}) m"
-                    
-                    # Put text above the box
-                    cv2.putText(color_image, text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
                 
                 else:
                     # Optional: Draw the box even if depth is 0, but indicate no depth
