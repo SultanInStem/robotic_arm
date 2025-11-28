@@ -66,7 +66,9 @@ try:
                         x_3d = x_3d - CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
                     else:
                         x_3d = x_3d + CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
-                    # Display coordinates on image
+                    z_3d = z_3d - 0.08                    
+
+                    # Display 3D coordinates on image
                     text = f"3D: ({x_3d:.3f}, {y_3d:.3f}, {z_3d:.3f}) m, Depth: {depth*1000:.1f} mm"
                     cv2.putText(color_image, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
                     # Mark clicked point
