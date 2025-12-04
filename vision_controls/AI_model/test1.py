@@ -11,7 +11,7 @@ from ultralytics import YOLO # Import YOLO
 model = YOLO('my_model.pt') 
 
 
-CAMERA_WIDTH_OFFSET = (70/2)*0.001 # convert mm to meters
+CAMERA_WIDTH_OFFSET = (50/2)*0.001 # convert mm to meters
 CAMERA_HEIGHT_OFFSET = 45*0.001
 Z_OFFSET = 0.13
 
