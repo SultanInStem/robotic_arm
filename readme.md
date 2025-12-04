@@ -19,3 +19,6 @@ sudo nmcli con delete static-eth0
 sudo nmcli con add type ethernet ifname enp1s0 con-name static-eth0 ip4 192.168.10.1/24
 sudo nmcli con up static-eth0
 
+wget https://github.com/agraham56/Brandy/releases/download/v1.24/matrixbrandy_1.24_armhf.deb
+sudo apt update
+sudo apt install ./matrixbrandy_1.24_armhf.deb  
