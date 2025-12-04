@@ -8,7 +8,7 @@ with warnings.catch_warnings():
 
 
 x,y,z= 0.3, 0, 0.4
-x1, y1, z1 = 0.011, -0.082, 0.116
+x1, y1, z1 = 0.067, -0.014, 0.243
 
 current_pos_of_end_effector = [x, y, z]
 orientation = [0,0,-1]
@@ -25,5 +25,4 @@ print("Point in base frame: ", point_in_base_frame)
 current_pos_of_end_effector = np.array([x, y, z, 1])
 delta_vector = point_in_base_frame - current_pos_of_end_effector
 t = 1
-print("New vector: ", current_pos_of_end_effector + t * delta_vector)
 
