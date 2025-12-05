@@ -14,7 +14,7 @@ CAMERA_HEIGHT_OFFSET = 60*0.001
 Z_OFFSET = 0.13
 DETECTION_FRAMES = 5
 detection_count = 0 
-delta = 0.0001
+delta = 0.1
 
 
 # Initialize pipeline
