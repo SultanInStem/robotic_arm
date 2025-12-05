@@ -12,7 +12,7 @@ file_path = "coords_data.txt"
 CAMERA_WIDTH_OFFSET = (50/2)*0.001 # convert mm to meters
 CAMERA_HEIGHT_OFFSET = 60*0.001
 Z_OFFSET = 0.13
-DETECTION_FRAMES = 5
+DETECTION_FRAMES = 3
 detection_count = 0 
 delta = 0.1
 
@@ -88,19 +88,21 @@ try:
                         y_3d = y_3d - CAMERA_HEIGHT_OFFSET
                     z_3d = z_3d - Z_OFFSET     
                     print("X ", x_3d, " Y: ", y_3d, " Depth: ", z_3d)
-
+                    previus_point = [x_3d, y_3d, z_3d]
+                        
+                        
                     # send the coordinates to Raspberry Pi
                     text = f"3D: ({x_3d:.3f}, {y_3d:.3f}, {z_3d:.3f}) m, Depth: {depth*1000:.1f} mm"
                     cv2.putText(color_image, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
                     # Mark clicked point
                     cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
 
-                    if abs(previus_point[0] - x_3d) < delta and abs(previus_point[1] - y_3d) < delta and abs(previus_point[2] - z_3d) < delta:
+                    if detection_count > 0 and abs(previus_point[0] - x_3d) < delta and abs(previus_point[1] - y_3d) < delta and abs(previus_point[2] - z_3d) < delta:
                         detection_count += 1
                     else: 
                         detection_count = 0
                     ### WRITE TO .TXT FILE ###
-                    if detection_count == DETECTION_FRAMES:
+                    if detection_count >= DETECTION_FRAMES:
                         if os.path.getsize(file_path) == 0: 
                             with open(file_path, "w") as f:
                                 print("COORDINATES WRITTEN TO FILE")
