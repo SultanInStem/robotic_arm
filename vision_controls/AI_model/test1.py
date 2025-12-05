@@ -13,8 +13,7 @@ CAMERA_WIDTH_OFFSET = (50/2)*0.001 # convert mm to meters
 CAMERA_HEIGHT_OFFSET = 60*0.001
 Z_OFFSET = 0.13
 DETECTION_FRAMES = 4
-detection_count = 0 
-delta = 0.1
+delta = 0.1 # uncertain in position
 
 
 # Initialize pipeline
@@ -35,6 +34,8 @@ intrinsics = depth_profile.get_intrinsics()
 
 try:
     points_collection = []
+    with open(file_path, "w") as f:
+        f.write(f"") # Clear the file at start
     while True:
         # Wait for frames
         frames = pipeline.wait_for_frames()
@@ -54,7 +55,7 @@ try:
         # Run inference on the color image
         # verbose=False suppresses the console output for each frame
         results = model(color_image, verbose=False)
-
+        if len(points_collection) >= 2*DETECTION_FRAMES: points_collection = [] # reset if too many points collected
         # Process the results
         for res in results:
             # Get bounding boxes, classes, and confidences
@@ -99,8 +100,6 @@ try:
                     cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
 
                     ### WRITE TO .TXT FILE ###
-                    print("Points collection size: ", len(points_collection))
-                    print("File size: ", os.path.getsize(file_path))
                     if len(points_collection) >= DETECTION_FRAMES and os.path.getsize(file_path) <= 1:
                             data = np.array(points_collection)
                             std_dev = np.std(data, axis=0)
