@@ -55,12 +55,12 @@ try:
         results = model(color_image, verbose=False)
 
         # Process the results
+        points_collection = []
         for res in results:
             # Get bounding boxes, classes, and confidences
             boxes = res.boxes.cpu().numpy() # .cpu().numpy() to move data to CPU/Numpy
             target_box = max(boxes, key=lambda box: box.conf[0]) if boxes else None
             if target_box is not None:
-            # for box in boxes:
                 # Get coordinates
                 x1, y1, x2, y2 = map(int, target_box.xyxy[0])
                 # Get class name
@@ -72,10 +72,9 @@ try:
                 # 1. Calculate center point
                 cx = int((x1 + x2) / 2)
                 cy = int((y1 + y2) / 2)
-                previus_point = [0,0,0]
+ 
                 # 2. Get depth value at the center point
                 depth = depth_frame.get_distance(cx, cy)
-                points_collection = []
                 if depth > 0:  # Check if depth is valid (not 0)
                     # 3. Deproject pixel to 3D point
                     point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [cx, cy], depth)
@@ -100,14 +99,14 @@ try:
                     cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
 
                     ### WRITE TO .TXT FILE ###
-                    if len(points_collection) >= DETECTION_FRAMES:
-                        if os.path.getsize(file_path) == 0: 
-                            with open(file_path, "w") as f:
-                                print("COORDINATES WRITTEN TO FILE")
-                                f.write(f"{round(x_3d, 5)},{round(y_3d, 5)},{round(z_3d,5)}")
-                                detection_count = 0
-                    
-                
+                    if len(points_collection) >= DETECTION_FRAMES and os.path.getsize(file_path) == 0:
+                            data = np.array(points_collection)
+                            std_dev = np.std(data, axis=0)
+                            if all(std_dev < delta):
+                                with open(file_path, "w") as f:
+                                    print("COORDINATES WRITTEN TO FILE")
+                                    f.write(f"{round(x_3d, 5)},{round(y_3d, 5)},{round(z_3d,5)}")
+                                    points_collection = []
                 else:
                     # Optional: Draw the box even if depth is 0, but indicate no depth
                     cv2.rectangle(color_image, (x1, y1), (x2, y2), (0, 0, 255), 2) # Red for no depth
