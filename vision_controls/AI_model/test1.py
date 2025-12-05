@@ -34,6 +34,7 @@ depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
 intrinsics = depth_profile.get_intrinsics()
 
 try:
+    points_collection = []
     while True:
         # Wait for frames
         frames = pipeline.wait_for_frames()
@@ -55,7 +56,6 @@ try:
         results = model(color_image, verbose=False)
 
         # Process the results
-        points_collection = []
         for res in results:
             # Get bounding boxes, classes, and confidences
             boxes = res.boxes.cpu().numpy() # .cpu().numpy() to move data to CPU/Numpy
@@ -101,7 +101,7 @@ try:
                     ### WRITE TO .TXT FILE ###
                     print("Points collection size: ", len(points_collection))
                     print("File size: ", os.path.getsize(file_path))
-                    if len(points_collection) >= DETECTION_FRAMES and os.path.getsize(file_path) == 0:
+                    if len(points_collection) >= DETECTION_FRAMES and os.path.getsize(file_path) <= 1:
                             data = np.array(points_collection)
                             std_dev = np.std(data, axis=0)
                             print("Standard Deviation: ", std_dev)
