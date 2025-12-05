@@ -99,6 +99,8 @@ try:
                     cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
 
                     ### WRITE TO .TXT FILE ###
+                    print("Points collection size: ", len(points_collection))
+                    print("File size: ", os.path.getsize(file_path))
                     if len(points_collection) >= DETECTION_FRAMES and os.path.getsize(file_path) == 0:
                             data = np.array(points_collection)
                             std_dev = np.std(data, axis=0)
