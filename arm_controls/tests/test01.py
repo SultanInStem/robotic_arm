@@ -49,7 +49,7 @@ while True:
     initial_position = np.array([0.3,-0.2,0.3])
     final_position = np.array([0.3,0.2,0.3])
     location = initial_position.copy()
-    step_size = 0.5
+    step_size = 0.05
     
     while scanning:
         # move_to_location(location, 20)
