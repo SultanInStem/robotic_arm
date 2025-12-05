@@ -58,12 +58,13 @@ try:
         for res in results:
             # Get bounding boxes, classes, and confidences
             boxes = res.boxes.cpu().numpy() # .cpu().numpy() to move data to CPU/Numpy
-            
-            for box in boxes:
+            target_box = max(boxes, key=lambda box: box.conf[0]) if boxes else None
+            if target_box is not None:
+            # for box in boxes:
                 # Get coordinates
-                x1, y1, x2, y2 = map(int, box.xyxy[0])
+                x1, y1, x2, y2 = map(int, target_box.xyxy[0])
                 # Get class name
-                cls = int(box.cls[0])
+                cls = int(target_box.cls[0])
                 class_name = model.names[cls]
                 
                 # --- Get 3D coordinates for the center of the box ---
@@ -74,6 +75,7 @@ try:
                 previus_point = [0,0,0]
                 # 2. Get depth value at the center point
                 depth = depth_frame.get_distance(cx, cy)
+                points_collection = []
                 if depth > 0:  # Check if depth is valid (not 0)
                     # 3. Deproject pixel to 3D point
                     point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [cx, cy], depth)
@@ -88,7 +90,7 @@ try:
                         y_3d = y_3d - CAMERA_HEIGHT_OFFSET
                     z_3d = z_3d - Z_OFFSET     
                     print("X ", x_3d, " Y: ", y_3d, " Depth: ", z_3d)
-                    previus_point = [x_3d, y_3d, z_3d]
+                    points_collection.append([x_3d, y_3d, z_3d])
                         
                         
                     # send the coordinates to Raspberry Pi
@@ -97,12 +99,8 @@ try:
                     # Mark clicked point
                     cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
 
-                    if detection_count > 0 and abs(previus_point[0] - x_3d) < delta and abs(previus_point[1] - y_3d) < delta and abs(previus_point[2] - z_3d) < delta:
-                        detection_count += 1
-                    else: 
-                        detection_count = 0
                     ### WRITE TO .TXT FILE ###
-                    if detection_count >= DETECTION_FRAMES:
+                    if len(points_collection) >= DETECTION_FRAMES:
                         if os.path.getsize(file_path) == 0: 
                             with open(file_path, "w") as f:
                                 print("COORDINATES WRITTEN TO FILE")
