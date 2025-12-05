@@ -33,6 +33,8 @@ def fetch_coordinates():
     with sftp.open(remote_file_path, 'r') as f:
         bytes = f.read()
         content = bytes.decode('utf-8')
+        if len(content) == 0:
+            return None
         coords_from_cam = [float(x) for x in content.split(",")]
         print("Coordinates from camera: ", coords_from_cam)
         return coords_from_cam
