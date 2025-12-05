@@ -26,12 +26,19 @@ def connect_ssh():
         ssh.connect(HOST, port, username, password)
         sftp = ssh.open_sftp()
         print("Connection established.")
+        with sftp.open(remote_file_path, 'a') as f:
+            f.write("This line is written from the Pi!\n")
+            f.write(f"Sensor Value: {1024}\n")
+
+        print("Text appended successfully.")
     except Exception as e:
         print(f"Connection failed: {e}")
     return ssh, sftp
 
 
 connect_ssh()
+
+
 
 # while True: 
     # coords_in_end_effector_frame = []
