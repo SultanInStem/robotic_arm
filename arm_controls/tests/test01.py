@@ -52,7 +52,8 @@ while True:
     step_size = 0.5
     
     while scanning:
-        move_to_location(location, 20)
+        # move_to_location(location, 20)
+        print("Location ", location)
         
         time.sleep(3) # wait for the camera to process and write the file
         coords = fetch_coordinates()
@@ -66,7 +67,7 @@ while True:
             location[1] += step_size
         else:
             location[1] = initial_position[1]
-            move_to_location(location, 20)
+            # move_to_location(location, 20)
 
     if scanning == False:
         print("Moving to object... ", coords)
