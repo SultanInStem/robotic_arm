@@ -103,7 +103,8 @@ try:
                     if detection_count == DETECTION_FRAMES:
                         if os.path.getsize(file_path) == 0: 
                             with open(file_path, "w") as f:
-                                f.write(f"{x_3d},{y_3d},{z_3d}")
+                                
+                                f.write(f"{round(x_3d, 5)},{round(y_3d, 5)},{round(z_3d,5)}")
                                 detection_count = 0
                     
                 
