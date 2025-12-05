@@ -5,12 +5,10 @@ import time
 import os
 from ultralytics import YOLO # Import YOLO
 
-# Load the pre-trained YOLOv8n (nano) model
-# This model will be downloaded automatically on the first run.
-# You can use other models like 'yolov8s.pt' for better accuracy at the cost of speed.
+
 model = YOLO('my_model.pt') 
 
-
+file_path = "coords_data.txt"
 CAMERA_WIDTH_OFFSET = (50/2)*0.001 # convert mm to meters
 CAMERA_HEIGHT_OFFSET = 60*0.001
 Z_OFFSET = 0.13
@@ -93,7 +91,12 @@ try:
                     cv2.putText(color_image, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
                     # Mark clicked point
                     cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
-                    # Update stacked image
+
+
+                    ### WRITE TO .TXT FILE ###
+                    if os.path.getsize(file_path) == 0: 
+                        with open(file_path, "w") as f:
+                            f.write(f"{x_3d},{y_3d},{z_3d}\n")
                     
                 
                 else:
