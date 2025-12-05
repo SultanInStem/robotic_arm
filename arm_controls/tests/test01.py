@@ -29,7 +29,7 @@ def connect_ssh():
 ssh, sftp = connect_ssh()
 
 def fetch_coordinates(): 
-    with sftp.open(remote_file_path, 'a') as f:
+    with sftp.open(remote_file_path, 'r') as f:
         bytes = f.read()
         content = bytes.decode('utf-8')
         print("Content: ", content)
