@@ -12,6 +12,9 @@ file_path = "coords_data.txt"
 CAMERA_WIDTH_OFFSET = (50/2)*0.001 # convert mm to meters
 CAMERA_HEIGHT_OFFSET = 60*0.001
 Z_OFFSET = 0.13
+DETECTION_FRAMES = 5
+detection_count = 0 
+delta = 0.01
 
 
 # Initialize pipeline
@@ -68,7 +71,7 @@ try:
                 # 1. Calculate center point
                 cx = int((x1 + x2) / 2)
                 cy = int((y1 + y2) / 2)
-                
+                previus_point = [0,0,0]
                 # 2. Get depth value at the center point
                 depth = depth_frame.get_distance(cx, cy)
                 if depth > 0:  # Check if depth is valid (not 0)
@@ -92,11 +95,16 @@ try:
                     # Mark clicked point
                     cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
 
-
+                    if abs(previus_point[0] - x_3d) < delta and abs(previus_point[1] - y_3d) < delta and abs(previus_point[2] - z_3d) < delta:
+                        detection_count += 1
+                    else: 
+                        detection_count = 0
                     ### WRITE TO .TXT FILE ###
-                    if os.path.getsize(file_path) == 0: 
-                        with open(file_path, "w") as f:
-                            f.write(f"{x_3d},{y_3d},{z_3d}")
+                    if detection_count == DETECTION_FRAMES:
+                        if os.path.getsize(file_path) == 0: 
+                            with open(file_path, "w") as f:
+                                f.write(f"{x_3d},{y_3d},{z_3d}")
+                                detection_count = 0
                     
                 
                 else:
