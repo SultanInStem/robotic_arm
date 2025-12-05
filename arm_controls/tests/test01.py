@@ -70,6 +70,7 @@ while True:
             move_to_location(location, 20)
 
     if scanning == False:
+        
         print("Moving to object... ", coords)
         break
 

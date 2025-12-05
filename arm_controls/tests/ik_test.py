@@ -23,6 +23,5 @@ point_in_base_frame = np.dot(end_effector_frame, point_in_end_effector_frame)
 print("Point in base frame: ", point_in_base_frame)
 
 current_pos_of_end_effector = np.array([x, y, z, 1])
-delta_vector = point_in_base_frame - current_pos_of_end_effector
-t = 1
+
 

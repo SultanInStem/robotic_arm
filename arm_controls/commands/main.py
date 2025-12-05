@@ -44,8 +44,8 @@ def grab_object(speed, degree):
 def move_to_location(point, speed): 
     angles = compute_ik(point)
     if len(angles) < 6: return -1
-    elif speed > 90: 
-        print("speed must not exceed 90")
+    elif speed > 60: 
+        print("speed must not exceed 60")
         return -1
     mc.send_angles(angles, speed)
     while mc.is_moving():
