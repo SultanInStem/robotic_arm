@@ -7,8 +7,8 @@ with warnings.catch_warnings():
     chain = Chain.from_urdf_file("../mycobot_320pi.urdf")
 
 
-x,y,z= 0.3, 0, 0.4
-x1, y1, z1 = 0.008, -0.140, 0.112
+x,y,z= -0.3, -0.2, 0.25
+x1, y1, z1 = -0.005, -0.113, 0.055
 
 current_pos_of_end_effector = [x, y, z]
 orientation = [0,0,-1]
