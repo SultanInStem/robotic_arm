@@ -1,5 +1,6 @@
 import sys
 import os
+import numpy as np
 import paramiko 
 import time
 from pymycobot.mycobot320 import MyCobot320
@@ -38,12 +39,35 @@ def fetch_coordinates():
     return None
 
 
-fetch_coordinates()
+# fetch_coordinates()
 
-# reset()
-# while True:
-#     move_to_location([0.3,-0.2,0.3], 30)
-#     time.sleep(1)
+reset()
+while True:
+    scanning = True
+    initial_position = np.array([0.3,-0.2,0.3])
+    final_position = np.array([0.3,0.2,0.3])
+    location = initial_position.copy()
+    step_size = 0.5
+    
+    while scanning:
+        move_to_location(location, 20)
+        
+        time.sleep(3) # wait for the camera to process and write the file
+        coords = fetch_coordinates()
+        if coords is not None:
+            print("Object detected at: ", coords)
+            scanning = False
+            break
+
+
+        if location[1] < final_position[1]:
+            location[1] += step_size
+        else:
+            location[1] -= step_size
+    if scanning == False:
+        break
+    
+
 
 
 
