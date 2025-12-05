@@ -12,7 +12,7 @@ file_path = "coords_data.txt"
 CAMERA_WIDTH_OFFSET = (50/2)*0.001 # convert mm to meters
 CAMERA_HEIGHT_OFFSET = 60*0.001
 Z_OFFSET = 0.13
-DETECTION_FRAMES = 3
+DETECTION_FRAMES = 4
 detection_count = 0 
 delta = 0.1
 
@@ -102,6 +102,7 @@ try:
                     if len(points_collection) >= DETECTION_FRAMES and os.path.getsize(file_path) == 0:
                             data = np.array(points_collection)
                             std_dev = np.std(data, axis=0)
+                            print("Standard Deviation: ", std_dev)
                             if all(std_dev < delta):
                                 with open(file_path, "w") as f:
                                     print("COORDINATES WRITTEN TO FILE")
