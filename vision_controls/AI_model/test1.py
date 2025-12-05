@@ -96,7 +96,7 @@ try:
                     ### WRITE TO .TXT FILE ###
                     if os.path.getsize(file_path) == 0: 
                         with open(file_path, "w") as f:
-                            f.write(f"{x_3d},{y_3d},{z_3d}\n")
+                            f.write(f"{x_3d},{y_3d},{z_3d}")
                     
                 
                 else:
