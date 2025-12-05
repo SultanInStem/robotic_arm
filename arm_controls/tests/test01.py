@@ -34,11 +34,11 @@ def fetch_coordinates():
         bytes = f.read()
         content = bytes.decode('utf-8')
         if not content: 
-            return None
+            return []
         coords_from_cam = [float(x.strip()) for x in content.split(",") if x.strip()]
         print("Coordinates from camera: ", coords_from_cam)
         return coords_from_cam
-    return None
+    return []
 
 
 # fetch_coordinates()
@@ -56,7 +56,7 @@ while True:
         
         time.sleep(3) # wait for the camera to process and write the file
         coords = fetch_coordinates()
-        if coords is not None:
+        if len(coords) == 3:
             print("Object detected at: ", coords)
             scanning = False
             break
