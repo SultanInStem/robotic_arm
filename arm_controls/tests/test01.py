@@ -65,9 +65,13 @@ while True:
         if location[1] < final_position[1]:
             location[1] += step_size
         else:
-            location[1] -= step_size
+            location[1] = initial_position
+            move_to_location(location, 20)
+
     if scanning == False:
+        print("Moving to object... ", coords)
         break
+
     
 
 
