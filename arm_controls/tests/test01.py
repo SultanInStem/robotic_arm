@@ -65,7 +65,7 @@ while True:
         if location[1] < final_position[1]:
             location[1] += step_size
         else:
-            location[1] = initial_position
+            location[1] = initial_position[1]
             move_to_location(location, 20)
 
     if scanning == False:
