@@ -19,7 +19,7 @@ REMOTE_PATH_ON_PI = "/Desktop/robotic_arm/vision_controls/AI_model"
 LOCAL_FILE = "coords_data.txt"
 
 
-threshold = 100
+threshold = 70
 
 
 
