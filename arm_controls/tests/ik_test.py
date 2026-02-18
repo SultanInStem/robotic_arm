@@ -13,7 +13,7 @@ x1, y1, z1 = -0.005, -0.113, 0.055
 current_pos_of_end_effector = [x, y, z]
 orientation = [0,0,-1]
 angles = chain.inverse_kinematics(current_pos_of_end_effector, orientation, orientation_mode="Z")
-print("Angles: ", angles)
+print("Angles: ", len(angles))
 
 end_effector_frame = chain.forward_kinematics(angles)
 # print(end_effector_frame)
