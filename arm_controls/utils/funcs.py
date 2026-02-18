@@ -18,7 +18,7 @@ def compute_ik(point=[0.3,0,0.4], orientation=[0,0,-1], orientation_mode="Z"): #
         main_angles.append(round(float(angles[i]) * (180 / math.pi), 2))
     # angles are returned in degrees 
     return main_angles
-def convert_point_from_end_effector_to_base_frame(point_in_end_effector_frame, angles): 
+def convert_point_from_end_effector_to_base_frame(point_in_end_effector_frame, angles): # current angles of the arm
     end_effector_frame = chain.forward_kinematics(angles)
     point_in_base_frame = np.dot(end_effector_frame, point_in_end_effector_frame)
     x, y, z = point_in_base_frame[0], point_in_base_frame[1], point_in_base_frame[2]
