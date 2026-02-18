@@ -81,6 +81,14 @@ def get_arms_orientation():
     print("ANGLES (RAD): ", angles)
     print("POSITION: ", pos)
     return pos
+def get_arms_angles():
+    angles = mc.get_angles() ## angles in degrees
+    for i in range(0, len(angles)): 
+        angles[i] = convert_to_radians(angles[i])
+    angles.insert(0,0)
+    angles.append(0)
+    return angles
+
 
 
 def test_pro_gripper(speed=30):
