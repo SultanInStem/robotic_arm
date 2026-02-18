@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 import os
 import time
 from pymycobot.mycobot320 import MyCobot320
@@ -51,6 +52,12 @@ def move_to_location(point, speed):
     while mc.is_moving():
         time.sleep(0.1)
     time.sleep(2)
+    ### UPDATE LOCATION.TXT FILE TO ACOID USING GET_POSITION() 
+    with open("../location.txt", 'w') as f:
+        f.write(",".join(map(str, point)) + "\n")
+        
+
+
     return 0
 
 def reset(): 

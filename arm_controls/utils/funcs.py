@@ -45,3 +45,5 @@ def get_rotation_matrix(angles): ## must contain 8 angles in radians
 
 def convert_to_radians(n): 
     return round(n * (math.pi / 180), 2)
+
+
