@@ -70,9 +70,8 @@ while True:
             move_to_location(location, 20)
 
     if scanning == False:
-
-        print("Moving to object... ", coords)
-        move_to_location(coords, 10)
+        base_frame_coords = convert_point_from_end_effector_to_base_frame(coords)
+        print("Moving to object... ", base_frame_coords)
         time.sleep(2)
         break
 
