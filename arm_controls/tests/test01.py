@@ -72,7 +72,6 @@ while True:
     if scanning == False:
         current_angles = get_arms_angles()
         print("Current angles: ", current_angles)
-        break
         base_frame_coords = convert_point_from_end_effector_to_base_frame(coords, current_angles)
         print("Moving to object... ", base_frame_coords)
         time.sleep(2)
