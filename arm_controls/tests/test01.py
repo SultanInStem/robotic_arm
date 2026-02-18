@@ -83,12 +83,8 @@ while True:
         with open("../../current_location.txt", "r") as f:
             content = f.read()
             current_pos_of_end_effector = [float(x) for x in content.split(",")]
-
-        print("Current position of end effector: ", current_pos_of_end_effector)
-        break
         current_angles = chain.inverse_kinematics(current_pos_of_end_effector, [0,0,-1], orientation_mode="Z")
-        print("Current angles: ", current_angles)
-        coords.append(1) # add 1 to make it a homogeneous coordinate for matrix multiplication
+        coords.append(1) # add 1 to make dimensions compatible for matrix multiplication
         base_frame_coords = convert_point_from_end_effector_to_base_frame(coords, current_angles)
         
         print("Moving to object... ", base_frame_coords)
