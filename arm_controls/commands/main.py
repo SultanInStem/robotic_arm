@@ -56,8 +56,6 @@ def move_to_location(point, speed):
     with open("../../current_location.txt", 'w') as f:
         f.write(",".join(map(str, point)) + "\n")
 
-
-
     return 0
 
 def reset(): 

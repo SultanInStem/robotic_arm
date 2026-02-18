@@ -3,6 +3,14 @@ import os
 import numpy as np
 import paramiko
 import time
+import warnings 
+import math
+import numpy as np
+chain = None
+with warnings.catch_warnings(): 
+    warnings.simplefilter("ignore")
+    from ikpy.chain import Chain
+    chain = Chain.from_urdf_file("../mycobot_320pi.urdf")
 from pymycobot.mycobot320 import MyCobot320
 sys.path.append(os.path.abspath(".."))
 from commands.main import reset, move_to_location, close_gripper, open_gripper, get_arms_orientation, get_arms_angles
@@ -70,7 +78,15 @@ while True:
             move_to_location(location, 20)
 
     if scanning == False:
-        current_angles = get_arms_angles()
+        orientation = [0,0,-1]
+        current_pos_of_end_effector = []
+        with open("../../current_location.txt", "r") as f:
+            content = f.read()
+            current_pos_of_end_effector = [float(x) for x in content.split(",")]
+
+        print("Current position of end effector: ", current_pos_of_end_effector)
+        break
+        current_angles = chain.inverse_kinematics(current_pos_of_end_effector, [0,0,-1], orientation_mode="Z")
         print("Current angles: ", current_angles)
         coords.append(1) # add 1 to make it a homogeneous coordinate for matrix multiplication
         base_frame_coords = convert_point_from_end_effector_to_base_frame(coords, current_angles)
