@@ -53,9 +53,9 @@ def move_to_location(point, speed):
         time.sleep(0.1)
     time.sleep(2)
     ### UPDATE LOCATION.TXT FILE TO ACOID USING GET_POSITION() 
-    with open("../location.txt", 'w') as f:
+    with open("../../current_location.txt", 'w') as f:
         f.write(",".join(map(str, point)) + "\n")
-        
+
 
 
     return 0
