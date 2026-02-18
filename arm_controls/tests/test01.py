@@ -72,8 +72,7 @@ while True:
     if scanning == False:
         current_angles = get_arms_angles()
         print("Current angles: ", current_angles)
-        print(len(coords))
-        break
+        coords.append(1) # add 1 to make it a homogeneous coordinate for matrix multiplication
         base_frame_coords = convert_point_from_end_effector_to_base_frame(coords, current_angles)
         print("Moving to object... ", base_frame_coords)
         time.sleep(2)
