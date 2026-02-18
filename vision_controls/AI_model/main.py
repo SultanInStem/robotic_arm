@@ -103,8 +103,8 @@ try:
         # Convert to numpy arrays
         depth_image = np.asanyarray(depth_frame.get_data())
         color_image = np.asanyarray(color_frame.get_data())
-        frame_center_x = color_image.shape[1] // 2
-        frame_center_y = color_image.shape[0] // 2
+        frame_center_x = 640 // 2
+        frame_center_y = 480 // 2
         
         # --- YOLOv8 Inference ---
         # Run inference on the color image
