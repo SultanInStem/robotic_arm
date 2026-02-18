@@ -86,10 +86,18 @@ while True:
         current_angles = chain.inverse_kinematics(current_pos_of_end_effector, [0,0,-1], orientation_mode="Z")
         coords.append(1) # add 1 to make dimensions compatible for matrix multiplication
         base_frame_coords = convert_point_from_end_effector_to_base_frame(coords, current_angles)
-        
-        print("Moving to object... ", base_frame_coords)
+        if base_frame_coords[2] < 0.10:
+            print("Object is too close to the base frame.")
+            base_frame_coords[2] = 0.10 # set a minimum height for the object to be picked up
+        move_to_location(base_frame_coords, 10)
         time.sleep(2)
+        close_gripper()
+        move_to_location([-0.3,0,0.2], 20)
+        time.sleep(2)
+        open_gripper()        
+        print("Moving to object... ", base_frame_coords)
         break
+      
 
     
 

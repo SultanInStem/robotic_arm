@@ -19,7 +19,7 @@ REMOTE_PATH_ON_PI = "/Desktop/robotic_arm/vision_controls/AI_model"
 LOCAL_FILE = "coords_data.txt"
 
 
-
+threshold = 50
 
 
 
@@ -103,6 +103,8 @@ try:
         # Convert to numpy arrays
         depth_image = np.asanyarray(depth_frame.get_data())
         color_image = np.asanyarray(color_frame.get_data())
+        frame_center_x = color_image.shape[1] // 2
+        frame_center_y = color_image.shape[0] // 2
         
         # --- YOLOv8 Inference ---
         # Run inference on the color image
@@ -135,8 +137,11 @@ try:
                     x_3d, y_3d, z_3d = point_3d
                     print("X ", x_3d, " Y: ", y_3d, " Depth: ", z_3d)
 
-                    # send the coordinates to Raspberry Pi
-                    send_coords_to_pi(point=[x_3d, y_3d, z_3d])
+                    if abs(cx - frame_center_x) < threshold and abs(cy - frame_center_y) < threshold:
+                        # send the coordinates to Raspberry Pi
+                        send_coords_to_pi(point=[x_3d, y_3d, z_3d])
+                    else: 
+                        print("Object is outside the threshold area. Not sending coordinates.")
                     
                     # 4. Draw visualizations
                     
