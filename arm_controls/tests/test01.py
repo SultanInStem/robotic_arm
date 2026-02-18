@@ -70,8 +70,10 @@ while True:
             move_to_location(location, 20)
 
     if scanning == False:
-        
+
         print("Moving to object... ", coords)
+        move_to_location(coords, 10)
+        time.sleep(2)
         break
 
     
