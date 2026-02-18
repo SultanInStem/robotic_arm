@@ -71,7 +71,7 @@ def calibrate_gripper():
     mc.set_gripper_calibration()
     time.sleep(2)
  
-def get_arms_orientation(): 
+def get_arms_position(): 
     angles = mc.get_angles() ## angles in degrees
     for i in range(0, len(angles)): 
         angles[i] = convert_to_radians(angles[i])
