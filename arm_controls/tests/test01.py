@@ -96,6 +96,7 @@ while True:
         time.sleep(2)
         open_gripper()        
         print("Moving to object... ", base_frame_coords)
+        reset()
         break
       
 
