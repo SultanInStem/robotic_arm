@@ -168,6 +168,8 @@ try:
                         print(stable, centered)
                         if stable and centered:
                                 # send the coordinates to Raspberry Pi
+                                with open(file_path, 'w') as f:
+                                    f.write(f"")
                                 send_coords_to_pi(point=[x_3d, y_3d, z_3d])
                                 points_collection = []
                         else: 
