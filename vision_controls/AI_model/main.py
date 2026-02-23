@@ -164,7 +164,8 @@ try:
                             abs(cx - frame_center_x) < THRESHOLD and
                             abs(cy - frame_center_y) < THRESHOLD
                         )
-                        stable = np.all(std_dev < delta)  #
+                        stable = np.all(std_dev < delta)
+                        print(stable, centered)
                         if stable and centered:
                                 # send the coordinates to Raspberry Pi
                                 send_coords_to_pi(point=[x_3d, y_3d, z_3d])
