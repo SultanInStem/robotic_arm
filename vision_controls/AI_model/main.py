@@ -15,7 +15,7 @@ CAMERA_HEIGHT_OFFSET = -50*0.001
 Z_OFFSET = 0.13
 DETECTION_FRAMES = 4
 delta = 0.3 # uncertainty in position 
-THRESHOLD = 70
+THRESHOLD = 140
 frame_center_x = 640 // 2
 frame_center_y = 480 // 2
 
