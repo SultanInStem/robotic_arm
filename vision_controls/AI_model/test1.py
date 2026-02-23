@@ -10,7 +10,7 @@ model = YOLO('my_model.pt')
 
 file_path = "coords_data.txt"
 CAMERA_WIDTH_OFFSET = (50/2)*0.001 # convert mm to meters
-CAMERA_HEIGHT_OFFSET = 100*0.001
+CAMERA_HEIGHT_OFFSET = 30*0.001
 Z_OFFSET = 0.13
 DETECTION_FRAMES = 4
 delta = 0.1 # uncertain in position 
