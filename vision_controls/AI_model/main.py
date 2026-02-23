@@ -14,7 +14,7 @@ CAMERA_WIDTH_OFFSET = (50/2)*0.001 # convert mm to meters
 CAMERA_HEIGHT_OFFSET = -50*0.001
 Z_OFFSET = 0.13
 DETECTION_FRAMES = 4
-delta = 0.1 # uncertain in position 
+delta = 0.1 # uncertainty in position 
 THRESHOLD = 70
 frame_center_x = 640 // 2
 frame_center_y = 480 // 2
@@ -158,20 +158,15 @@ try:
 
                     ### WRITE TO .TXT FILE ###
                     if len(points_collection) >= DETECTION_FRAMES and os.path.getsize(file_path) <= 1:
-                            if abs(cx - frame_center_x) < THRESHOLD and abs(cy - frame_center_y) < THRESHOLD:
+                            data = np.array(points_collection)
+                            std_dev = np.std(data, axis=0)
+                            if abs(cx - frame_center_x) < THRESHOLD and abs(cy - frame_center_y) < THRESHOLD and std_dev < delta:
                                 # send the coordinates to Raspberry Pi
                                 send_coords_to_pi(point=[x_3d, y_3d, z_3d])
+                                points_collection = []
                             else: 
                                 print("Object is outside the threshold area. Not sending coordinates.")
                                 continue
-                            data = np.array(points_collection)
-                            std_dev = np.std(data, axis=0)
-                            print("Standard Deviation: ", std_dev)
-                            if all(std_dev < delta):
-                                with open(file_path, "w") as f:
-                                    print("COORDINATES WRITTEN TO FILE")
-                                    f.write(f"{round(x_3d, 5)},{round(y_3d, 5)},{round(z_3d,5)}")
-                                    points_collection = []
                 else:
                     # Optional: Draw the box even if depth is 0, but indicate no depth
                     cv2.rectangle(color_image, (x1, y1), (x2, y2), (0, 0, 255), 2) # Red for no depth
