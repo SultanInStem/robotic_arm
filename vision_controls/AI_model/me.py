@@ -1,46 +1,27 @@
 import pyrealsense2 as rs
 import numpy as np
 import cv2
-import socket
 import time
+import socket
 import os
-from ultralytics import YOLO
+from ultralytics import YOLO # Import YOLO
 
-
+# Load the pre-trained YOLOv8n (nano) model
+# This model will be downloaded automatically on the first run.
+# You can use other models like 'yolov8s.pt' for better accuracy at the cost of speed.
 model = YOLO('my_model.pt') 
 
-file_path = "coords_data.txt"
-CAMERA_WIDTH_OFFSET = (50/2)*0.001 # convert mm to meters
-CAMERA_HEIGHT_OFFSET = -50*0.001
-Z_OFFSET = 0.13
-DETECTION_FRAMES = 4
-delta = 0.1 # uncertain in position 
-THRESHOLD = 70
-frame_center_x = 640 // 2
-frame_center_y = 480 // 2
-
-
-# Initialize pipeline
-pipeline = rs.pipeline()
-config = rs.config()
-config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
-
-# Start streaming
-profile = pipeline.start(config)
-
-# Align depth to color
-align = rs.align(rs.stream.color)
-
-# Get camera intrinsics (needed for deprojection)
-depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
-intrinsics = depth_profile.get_intrinsics()
-
+# Information for SSH connection to Raspberry Pi
 SERVER_HOST = '192.168.10.2' # Example: '192.168.1.10'
 SERVER_PORT = 65432
 BUFFER_SIZE = 4096           # 4KB buffer for sending data
 REMOTE_PATH_ON_PI = "/Desktop/robotic_arm/vision_controls/AI_model"
 LOCAL_FILE = "coords_data.txt"
+
+
+threshold = 70
+
+
 
 def send_coords_to_pi(point=None):
     # --- 1. Create the .txt file ---
@@ -89,10 +70,25 @@ def send_coords_to_pi(point=None):
 
 
 
+
+
+# Initialize pipeline
+pipeline = rs.pipeline()
+config = rs.config()
+config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+
+# Start streaming
+profile = pipeline.start(config)
+
+# Align depth to color
+align = rs.align(rs.stream.color)
+
+# Get camera intrinsics (needed for deprojection)
+depth_profile = rs.video_stream_profile(profile.get_stream(rs.stream.depth))
+intrinsics = depth_profile.get_intrinsics()
+
 try:
-    points_collection = []
-    with open(file_path, "w") as f:
-        f.write(f"") # Clear the file at start
     while True:
         # Wait for frames
         frames = pipeline.wait_for_frames()
@@ -107,22 +103,24 @@ try:
         # Convert to numpy arrays
         depth_image = np.asanyarray(depth_frame.get_data())
         color_image = np.asanyarray(color_frame.get_data())
+        frame_center_x = 640 // 2
+        frame_center_y = 480 // 2
         
         # --- YOLOv8 Inference ---
         # Run inference on the color image
         # verbose=False suppresses the console output for each frame
         results = model(color_image, verbose=False)
-        if len(points_collection) >= 2*DETECTION_FRAMES: points_collection = [] # reset if too many points collected
+
         # Process the results
         for res in results:
             # Get bounding boxes, classes, and confidences
             boxes = res.boxes.cpu().numpy() # .cpu().numpy() to move data to CPU/Numpy
-            target_box = max(boxes, key=lambda box: box.conf[0]) if boxes else None
-            if target_box is not None:
+            
+            for box in boxes:
                 # Get coordinates
-                x1, y1, x2, y2 = map(int, target_box.xyxy[0])
+                x1, y1, x2, y2 = map(int, box.xyxy[0])
                 # Get class name
-                cls = int(target_box.cls[0])
+                cls = int(box.cls[0])
                 class_name = model.names[cls]
                 
                 # --- Get 3D coordinates for the center of the box ---
@@ -130,48 +128,35 @@ try:
                 # 1. Calculate center point
                 cx = int((x1 + x2) / 2)
                 cy = int((y1 + y2) / 2)
- 
+                
                 # 2. Get depth value at the center point
                 depth = depth_frame.get_distance(cx, cy)
                 if depth > 0:  # Check if depth is valid (not 0)
                     # 3. Deproject pixel to 3D point
                     point_3d = rs.rs2_deproject_pixel_to_point(intrinsics, [cx, cy], depth)
                     x_3d, y_3d, z_3d = point_3d
-                    if x_3d > 0: 
-                        x_3d = x_3d - CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
-                    else:
-                        x_3d = x_3d + CAMERA_WIDTH_OFFSET   # Adjust sign if necessary
-                    if y_3d > 0:
-                        y_3d = y_3d + CAMERA_HEIGHT_OFFSET
-                    else:
-                        y_3d = y_3d - CAMERA_HEIGHT_OFFSET
-                    z_3d = z_3d - Z_OFFSET     
                     print("X ", x_3d, " Y: ", y_3d, " Depth: ", z_3d)
-                    points_collection.append([x_3d, y_3d, z_3d])
-                        
-                        
-                    # send the coordinates to Raspberry Pi
-                    text = f"3D: ({x_3d:.3f}, {y_3d:.3f}, {z_3d:.3f}) m, Depth: {depth*1000:.1f} mm"
-                    cv2.putText(color_image, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-                    # Mark clicked point
-                    cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
 
-                    ### WRITE TO .TXT FILE ###
-                    if len(points_collection) >= DETECTION_FRAMES and os.path.getsize(file_path) <= 1:
-                            if abs(cx - frame_center_x) < THRESHOLD and abs(cy - frame_center_y) < THRESHOLD:
-                                # send the coordinates to Raspberry Pi
-                                send_coords_to_pi(point=[x_3d, y_3d, z_3d])
-                            else: 
-                                print("Object is outside the threshold area. Not sending coordinates.")
-                                continue
-                            data = np.array(points_collection)
-                            std_dev = np.std(data, axis=0)
-                            print("Standard Deviation: ", std_dev)
-                            if all(std_dev < delta):
-                                with open(file_path, "w") as f:
-                                    print("COORDINATES WRITTEN TO FILE")
-                                    f.write(f"{round(x_3d, 5)},{round(y_3d, 5)},{round(z_3d,5)}")
-                                    points_collection = []
+                    if abs(cx - frame_center_x) < threshold and abs(cy - frame_center_y) < threshold:
+                        # send the coordinates to Raspberry Pi
+                        send_coords_to_pi(point=[x_3d, y_3d, z_3d])
+                    else: 
+                        print("Object is outside the threshold area. Not sending coordinates.")
+                    
+                    # 4. Draw visualizations
+                    
+                    # Draw the bounding box
+                    cv2.rectangle(color_image, (x1, y1), (x2, y2), (255, 0, 0), 2)
+                    
+                    # Draw a circle at the center
+                    cv2.circle(color_image, (cx, cy), 5, (0, 0, 255), -1)
+                    
+                    # Prepare text
+                    text = f"{class_name}: ({x_3d:.2f}, {z_3d:.2f}, {y_3d:.2f}) m"
+                    
+                    # Put text above the box
+                    cv2.putText(color_image, text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+                
                 else:
                     # Optional: Draw the box even if depth is 0, but indicate no depth
                     cv2.rectangle(color_image, (x1, y1), (x2, y2), (0, 0, 255), 2) # Red for no depth
