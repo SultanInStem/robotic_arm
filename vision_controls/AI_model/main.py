@@ -160,7 +160,12 @@ try:
                     if len(points_collection) >= DETECTION_FRAMES and os.path.getsize(file_path) <= 1:
                         data = np.array(points_collection)
                         std_dev = np.std(data, axis=0)
-                        if abs(cx - frame_center_x) < THRESHOLD and abs(cy - frame_center_y) < THRESHOLD and std_dev < delta:
+                        centered = (
+                            abs(cx - frame_center_x) < THRESHOLD and
+                            abs(cy - frame_center_y) < THRESHOLD
+                        )
+                        stable = np.all(std_dev < delta)  #
+                        if stable and centered:
                                 # send the coordinates to Raspberry Pi
                                 send_coords_to_pi(point=[x_3d, y_3d, z_3d])
                                 points_collection = []
