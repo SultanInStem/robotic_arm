@@ -98,7 +98,6 @@ while True:
         open_gripper()        
         print("Moving to object... ", base_frame_coords)
         reset()
-        break
       
 
     
