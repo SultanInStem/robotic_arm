@@ -219,15 +219,15 @@ try:
             Z = point_3d[2] + Z_OFFSET
 
 
-            if x_3d > 0: 
-                x_3d = x_3d - CAMERA_WIDTH_OFFSET  
+            if X > 0: 
+                X = X - CAMERA_WIDTH_OFFSET  
             else:
-                x_3d = x_3d + CAMERA_WIDTH_OFFSET   
-            if y_3d > 0:
-                y_3d = y_3d + CAMERA_HEIGHT_OFFSET
+                X = X + CAMERA_WIDTH_OFFSET   
+            if Y > 0:
+                Y = Y + CAMERA_HEIGHT_OFFSET
             else:
-                y_3d = y_3d - CAMERA_HEIGHT_OFFSET
-                z_3d = z_3d - Z_OFFSET 
+                Y = Y - CAMERA_HEIGHT_OFFSET
+                Z = Z - Z_OFFSET 
 
 
 
