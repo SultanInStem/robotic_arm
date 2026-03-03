@@ -182,12 +182,12 @@ try:
         for (label, conf, x1, y1, x2, y2) in detections:
 
             # Clamp box to frame boundaries
-            print(f"[1] Raw Box: {label} {conf:.2f} x1={x1} y1={y1} x2={x2} y2={y2}")
+            # print(f"[1] Raw Box: {label} {conf:.2f} x1={x1} y1={y1} x2={x2} y2={y2}")
             x1 = max(0, x1)
             y1 = max(0, y1)
             x2 = min(color_image.shape[1], x2)
             y2 = min(color_image.shape[0], y2)
-            print(f"[2] Clamped: x1={x1} y1={y1} x2={x2} y2={y2}")
+            # print(f"[2] Clamped: x1={x1} y1={y1} x2={x2} y2={y2}")
             # Skip if box is invalid after clamping
             if x2 <= x1 or y2 <= y1:
                 print("[3] SKIPPED: invalid box after clamp")
@@ -206,7 +206,7 @@ try:
 
             # Get depth (meters)
             depth_m = depth_frame.get_distance(cx, cy)
-            print(f"[6] Depth: {depth_m:.3f}m")
+            # print(f"[6] Depth: {depth_m:.3f}m")
             if depth_m == 0:
                 continue
 
