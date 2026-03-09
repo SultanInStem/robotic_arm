@@ -229,6 +229,7 @@ try:
         depth_image = np.asanyarray(depth_frame.get_data())
 
         detections = detect(net, color_image, class_names)
+        is_centered = False
 
         for (label, conf, x1, y1, x2, y2) in detections:
 
@@ -265,9 +266,6 @@ try:
             point_3d = rs.rs2_deproject_pixel_to_point(
                 intrinsics, [cx, cy], depth_m
             )
-            # X = point_3d[0] + CAMERA_WIDTH_OFFSET
-            # Y = point_3d[1] + CAMERA_HEIGHT_OFFSET
-            # Z = point_3d[2] + Z_OFFSET
 
             ### -----------------------------------
             # applying physical camera offsets 
@@ -296,10 +294,10 @@ try:
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2
             )
 
-        is_centered = (
-            abs(cx - frame_center_x) < THRESHOLD and
-            abs(cy - frame_center_y) < THRESHOLD
-        )
+            is_centered = (
+                abs(cx - frame_center_x) < THRESHOLD and
+                abs(cy - frame_center_y) < THRESHOLD
+            )
         # After N consistent frames, save + send coords
         if detection_count >= DETECTION_FRAMES and coords_buffer and is_centered:
             avg_X = np.mean([c[0] for c in coords_buffer])
