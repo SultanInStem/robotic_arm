@@ -265,9 +265,9 @@ try:
             point_3d = rs.rs2_deproject_pixel_to_point(
                 intrinsics, [cx, cy], depth_m
             )
-            X = point_3d[0] + CAMERA_WIDTH_OFFSET
-            Y = point_3d[1] + CAMERA_HEIGHT_OFFSET
-            Z = point_3d[2] + Z_OFFSET
+            # X = point_3d[0] + CAMERA_WIDTH_OFFSET
+            # Y = point_3d[1] + CAMERA_HEIGHT_OFFSET
+            # Z = point_3d[2] + Z_OFFSET
 
             ### -----------------------------------
             # applying physical camera offsets 
@@ -296,8 +296,12 @@ try:
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2
             )
 
+        is_centered = (
+            abs(cx - frame_center_x) < THRESHOLD and
+            abs(cy - frame_center_y) < THRESHOLD
+        )
         # After N consistent frames, save + send coords
-        if detection_count >= DETECTION_FRAMES and coords_buffer:
+        if detection_count >= DETECTION_FRAMES and coords_buffer and is_centered:
             avg_X = np.mean([c[0] for c in coords_buffer])
             avg_Y = np.mean([c[1] for c in coords_buffer])
             avg_Z = np.mean([c[2] for c in coords_buffer])
@@ -305,12 +309,8 @@ try:
             std_X = np.std([c[0] for c in coords_buffer])
             std_Y = np.std([c[1] for c in coords_buffer])
             std_Z = np.std([c[2] for c in coords_buffer])
-            is_centered = (
-                abs(avg_X - frame_center_x) < THRESHOLD and
-                abs(avg_Y - frame_center_y) < THRESHOLD
-            )
             is_stable = std_X < delta and std_Y < delta and std_Z < delta
-            if is_centered and is_stable:
+            if is_stable:
                 coord_str = f"{avg_X:.4f},{avg_Y:.4f},{avg_Z:.4f}\n"
                 print(f"📍 Stable detection: {coord_str.strip()}")
                 # Save to file
