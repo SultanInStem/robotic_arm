@@ -22,7 +22,7 @@ HOST = "192.168.10.1"
 port = 22
 username = "usr2" # username of nvidia jetson 
 password = "fresnostate" # password of nvidia jetson
-remote_file_path = "/home/usr2/robotic_arm/vision_controls/AI_model/coords_data.txt"
+remote_file_path = "/home/usr2/Desktop/robotic_arm/vision_controls/AI_model/coords_data.txt"
 
 def connect_ssh(): 
     ssh = paramiko.SSHClient()
