@@ -266,30 +266,31 @@ try:
             point_3d = rs.rs2_deproject_pixel_to_point(
                 intrinsics, [cx, cy], depth_m
             )
+            x_3d, y_3d, z_3d = point_3d
 
             ### -----------------------------------
             # applying physical camera offsets 
-            if X > 0: 
-                X = X - CAMERA_WIDTH_OFFSET  
+            if x_3d > 0: 
+                x_3d = x_3d - CAMERA_WIDTH_OFFSET  
             else:
-                X = X + CAMERA_WIDTH_OFFSET   
-            if Y > 0:
-                Y = Y + CAMERA_HEIGHT_OFFSET
+                x_3d = x_3d + CAMERA_WIDTH_OFFSET   
+            if y_3d > 0:
+                y_3d = y_3d + CAMERA_HEIGHT_OFFSET
             else:
-                Y = Y - CAMERA_HEIGHT_OFFSET
-                Z = Z - Z_OFFSET 
+                y_3d = y_3d - CAMERA_HEIGHT_OFFSET
+                z_3d = z_3d - Z_OFFSET 
             ### -----------------------------------
 
 
 
-            coords_buffer.append((X, Y, Z))
+            coords_buffer.append((x_3d, y_3d, z_3d))
             detection_count += 1
 
             # Draw bounding box
             cv2.rectangle(color_image, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.putText(
                 color_image,
-                f"{label} {conf:.2f} | X:{X:.3f} Y:{Y:.3f} Z:{Z:.3f}",
+                f"{label} {conf:.2f} | X:{x_3d:.3f} Y:{y_3d:.3f} Z:{z_3d:.3f}",
                 (x1, y1 - 8),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2
             )
