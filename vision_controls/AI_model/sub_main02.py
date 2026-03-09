@@ -24,6 +24,7 @@ Z_OFFSET             = 0.13
 DETECTION_FRAMES     = 4
 delta                = 0.15
 THRESHOLD            = 50
+BRIGHTNESS_THRESHOLD = 30
 frame_center_x       = 640 // 2
 frame_center_y       = 480 // 2
 
@@ -250,7 +251,7 @@ try:
             roi_gray = cv2.cvtColor(
                 color_image[y1:y2, x1:x2], cv2.COLOR_BGR2GRAY
             )
-            if roi_gray.mean() < THRESHOLD:
+            if roi_gray.mean() < BRIGHTNESS_THRESHOLD:
                 print("[5] SKIPPED: Below brightness threshold") 
                 continue
 
