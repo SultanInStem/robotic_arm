@@ -218,7 +218,8 @@ try:
             Y = point_3d[1] + CAMERA_HEIGHT_OFFSET
             Z = point_3d[2] + Z_OFFSET
 
-
+            ### -----------------------------------
+            # applying physical camera offsets 
             if X > 0: 
                 X = X - CAMERA_WIDTH_OFFSET  
             else:
@@ -228,6 +229,7 @@ try:
             else:
                 Y = Y - CAMERA_HEIGHT_OFFSET
                 Z = Z - Z_OFFSET 
+            ### -----------------------------------
 
 
 
