@@ -304,11 +304,14 @@ try:
             std_X = np.std([c[0] for c in coords_buffer])
             std_Y = np.std([c[1] for c in coords_buffer])
             std_Z = np.std([c[2] for c in coords_buffer])
-
-            if std_X < delta and std_Y < delta and std_Z < delta:
+            is_centered = (
+                abs(avg_X - frame_center_x) < THRESHOLD and
+                abs(avg_Y - frame_center_y) < THRESHOLD
+            )
+            is_stable = std_X < delta and std_Y < delta and std_Z < delta
+            if is_centered and is_stable:
                 coord_str = f"{avg_X:.4f},{avg_Y:.4f},{avg_Z:.4f}\n"
                 print(f"📍 Stable detection: {coord_str.strip()}")
-
                 # Save to file
                 with open(file_path, 'w') as f:
                     f.write(f"")
