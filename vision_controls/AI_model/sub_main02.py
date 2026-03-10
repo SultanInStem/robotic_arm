@@ -19,7 +19,7 @@ NMS_THRESH  = 0.4
 # ─────────────────────────────────────────────
 file_path            = "coords_data.txt"
 CAMERA_WIDTH_OFFSET  = (50 / 2) * 0.001
-CAMERA_HEIGHT_OFFSET = -60 * 0.001
+CAMERA_HEIGHT_OFFSET = -20 * 0.001
 Z_OFFSET             = 0.13
 DETECTION_FRAMES     = 20
 delta                = 0.15
