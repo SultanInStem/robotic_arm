@@ -4,12 +4,12 @@ import roboticstoolbox as rtb
 from spatialmath import SE3
 
 robot = rtb.DHRobot([
-    rtb.RevoluteDH(d=0.162,  alpha=pi/2,  a=0,       offset=0),
-    rtb.RevoluteDH(d=0,      alpha=0,     a=0.1364,  offset=pi/2),
-    rtb.RevoluteDH(d=0,      alpha=0,     a=0.1205,  offset=0),
-    rtb.RevoluteDH(d=0.083,  alpha=pi/2,  a=0,       offset=pi/2),
-    rtb.RevoluteDH(d=0.083,  alpha=-pi/2, a=0,       offset=0),
-    rtb.RevoluteDH(d=0.0666, alpha=0,     a=0,       offset=0),
+    rtb.RevoluteDH(d=0.1739,  alpha=pi/2,  a=0,      offset=0),      # J1
+    rtb.RevoluteDH(d=0,       alpha=0,     a=0.135,  offset=pi/2),   # J2
+    rtb.RevoluteDH(d=0,       alpha=0,     a=0.120,  offset=0),      # J3
+    rtb.RevoluteDH(d=0.08878, alpha=pi/2,  a=0,      offset=pi/2),   # J4
+    rtb.RevoluteDH(d=0.095,   alpha=-pi/2, a=0,      offset=0),      # J5
+    rtb.RevoluteDH(d=0.0655,  alpha=0,     a=0,      offset=0),      # J6
 ], name="myCobot320")
 # a is the lenght of each link 
 # alpha is the angle between two joints 
