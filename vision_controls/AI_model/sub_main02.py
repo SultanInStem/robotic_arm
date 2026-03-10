@@ -21,6 +21,7 @@ file_path            = "coords_data.txt"
 CAMERA_WIDTH_OFFSET  = (50 / 2) * 0.001
 CAMERA_HEIGHT_OFFSET = -20 * 0.001
 Z_OFFSET             = 0.13
+CAMMERA_TO_GRIPPER_Z = 90* 0.001 
 DETECTION_FRAMES     = 20
 delta                = 0.15
 THRESHOLD            = 50
@@ -278,7 +279,7 @@ try:
                 y_3d = y_3d + CAMERA_HEIGHT_OFFSET
             else:
                 y_3d = y_3d - CAMERA_HEIGHT_OFFSET
-            z_3d = z_3d - Z_OFFSET 
+            z_3d = z_3d - CAMMERA_TO_GRIPPER_Z 
             ### -----------------------------------
 
 
