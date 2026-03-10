@@ -92,6 +92,9 @@ def set_arms_angles(angles, speed=10):
     elif speed > 40: 
         print("speed must not exceed 40")
         return -1
+    ## convert angles from radians to degrees
+    for i in range(0, len(angles)): 
+        angles[i] = round(angles[i] * (180 / np.pi), 3)
 
     mc.send_angles(angles, speed)
     while mc.is_moving():
