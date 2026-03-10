@@ -278,7 +278,7 @@ try:
                 y_3d = y_3d + CAMERA_HEIGHT_OFFSET
             else:
                 y_3d = y_3d - CAMERA_HEIGHT_OFFSET
-                z_3d = z_3d - Z_OFFSET 
+            z_3d = z_3d - Z_OFFSET 
             ### -----------------------------------
 
 
