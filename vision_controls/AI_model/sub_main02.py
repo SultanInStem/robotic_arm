@@ -284,6 +284,7 @@ try:
 
 
             coords_buffer.append((x_3d, y_3d, z_3d))
+            print(f"Detection: {label} {conf:.2f} | X:{x_3d:.3f} Y:{y_3d:.3f} Z:{z_3d:.3f}")
             detection_count += 1
 
             # Draw bounding box
