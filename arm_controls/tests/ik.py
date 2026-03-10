@@ -26,6 +26,6 @@ solution = robot.ik_LM(target)
 angles = solution[0]
 print("Joint angles (radians):", angles)
 
-# Verify with FK
+# Verify with FK q 1q
 fk = robot.fkine(angles)
 print("FK result:", fk.t)  # should match your target
