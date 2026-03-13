@@ -8,8 +8,8 @@ import os
 # ─────────────────────────────────────────────
 # MODEL CONFIG
 # ─────────────────────────────────────────────
-MODEL_PATH  = "./yolov8m_apples/my_model.onnx"
-NAMES_PATH  = "./yolov8m_apples/my_model.names"
+MODEL_PATH  = "./yolov8n_apples/my_model.onnx"
+NAMES_PATH  = "./yolov8n_apples/my_model.names"
 INPUT_SIZE  = (640, 640)
 CONF_THRESH = 0.5
 NMS_THRESH  = 0.4
