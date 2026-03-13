@@ -18,7 +18,7 @@ from utils.funcs import compute_ik, compute_fk, convert_to_radians, convert_poin
 from utils.globals import PORT, BANDWIDTH
 mc = MyCobot320(PORT, BANDWIDTH)
 
-tree_angles = [1.64,-0.76,-0.52,1.41,0,0]
+# tree_angles = [1.64,-0.76,-0.52,1.41,0,0]
 
 
 def scanning_table(): 
@@ -32,6 +32,8 @@ def scanning_table():
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
     time.sleep(2)
+scanning_table()
+
 
 def scanning_tree(): 
     pass
