@@ -19,7 +19,7 @@ robot = rtb.DHRobot([
 # match the mathematical zero.
 
 # Define target position (x, y, z in meters)
-target = SE3(0.3, 0.1, 0.2)
+target = SE3(0.2, 0.1, 0)
 
 # Solve IK using Levenberg-Marquardt
 solution = robot.ik_LM(target)
