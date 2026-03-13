@@ -49,21 +49,21 @@ def scanning_table():
     open_gripper()
     time.sleep(1)
     reset()
-scanning_table()
+# scanning_table()
 
 
 def scanning_tree(): 
     initial_angles = [1, 1.3, 0, -1.4, 0.5,  0]
     final_angles =   [1, 1.3, 0, -1.4, 1.55, 0]
     target_angles = [0.18, -0.917, 0, -2.21, -2.93,  3.14]
-    set_arms_angles(initial_angles, 10)
+    # set_arms_angles(initial_angles, 10)
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
-    time.sleep(2)
-    set_arms_angles(final_angles, 10)
+    # time.sleep(2)
+    # set_arms_angles(final_angles, 10)
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
-    time.sleep(2)
+    # time.sleep(2)
     set_arms_angles(target_angles, 10)
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
