@@ -22,8 +22,8 @@ mc = MyCobot320(PORT, BANDWIDTH)
 
 
 def scanning_table(): 
-    initial_angles = np.array([-0.58,  -0.864, 0, -0.685,  1.57,  0])
-    final_angles = np.array([0.7,  -0.864, 0, -0.685,  -1.57,  0])
+    initial_angles = [-0.58,  -0.864, 0, -0.685,  1.57,  0]
+    final_angles = [0.7,  -0.864, 0, -0.685,  -1.57,  0]
     mc.send_angles(initial_angles, 10)
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
