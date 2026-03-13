@@ -10,12 +10,12 @@ with warnings.catch_warnings():
     )
 
 
-x,y,z= -0.3, 0, 0.30
+x,y,z= 0.3, 0.2, 0.30
 # x1, y1, z1 = 0.035, 0.000, 0.094
 
 current_pos_of_end_effector = [x, y, z]
-orientation = [0,0,-1]
-angles = chain.inverse_kinematics(current_pos_of_end_effector, orientation, orientation_mode="Z")
+orientation = [1,0,0]
+angles = chain.inverse_kinematics(current_pos_of_end_effector, orientation, orientation_mode="X")
 print("Angles: ", angles)
 
 end_effector_frame = chain.forward_kinematics(angles)
