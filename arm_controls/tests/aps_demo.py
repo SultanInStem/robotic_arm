@@ -18,8 +18,8 @@ from utils.funcs import compute_ik, compute_fk
 from utils.globals import PORT, BANDWIDTH
 mc = MyCobot320(PORT, BANDWIDTH)
 
+deposit_angles = [0, 0.566, 0, 0.979, -1.57, 0]
 
-# tree_angles = [1.64,-0.76,-0.52,1.41,0,0]
 
 
 def scanning_table(): 
@@ -39,6 +39,17 @@ def scanning_table():
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
     time.sleep(1)
+
+    close_gripper()
+    time.sleep(1) 
+    set_arms_angles(deposit_angles, 10)
+    while mc.is_moving(): ### Allows for the movement to finish properly    
+        time.sleep(0.1)
+    time.sleep(1)
+    open_gripper()
+    time.sleep(1)
+    reset()
+
 
 scanning_table()
 
