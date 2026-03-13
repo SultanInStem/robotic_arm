@@ -10,20 +10,20 @@ with warnings.catch_warnings():
     )
 
 
-x,y,z= 0.3, 0, 0.2
-x1, y1, z1 = 0.035, 0.000, 0.094
+x,y,z= 0.3, +0.2, 0.2
+# x1, y1, z1 = 0.035, 0.000, 0.094
 
 current_pos_of_end_effector = [x, y, z]
 orientation = [0,0,-1]
-angles = chain.inverse_kinematics(current_pos_of_end_effector)
+angles = chain.inverse_kinematics(current_pos_of_end_effector, orientation, orientation_mode="Z")
 print("Angles: ", angles)
 
 end_effector_frame = chain.forward_kinematics(angles)
 # print(end_effector_frame)
-point_in_end_effector_frame = [x1, y1, z1, 1]
+# point_in_end_effector_frame = [x1, y1, z1, 1]
 # x,y,z = end_effector_frame[0][3], end_effector_frame[1][3], end_effector_frame[2][3]
-point_in_base_frame = np.dot(end_effector_frame, point_in_end_effector_frame)
-print("Point in base frame: ", point_in_base_frame)
+# point_in_base_frame = np.dot(end_effector_frame, point_in_end_effector_frame)
+# print("Point in base frame: ", point_in_base_frame)
 
 current_pos_of_end_effector = np.array([x, y, z, 1])
 
