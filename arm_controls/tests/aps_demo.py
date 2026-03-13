@@ -34,6 +34,12 @@ def scanning_table():
         time.sleep(0.1)
     time.sleep(2)
 
+    target_angles = [0.32, -1.04, 0, -0.522, 1.57, 0]
+    set_arms_angles(target_angles, 10)
+    while mc.is_moving(): ### Allows for the movement to finish properly
+        time.sleep(0.1)
+    time.sleep(1)
+
 scanning_table()
 
 
