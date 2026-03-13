@@ -49,7 +49,7 @@ def scanning_table():
     open_gripper()
     time.sleep(1)
     reset()
-# scanning_table()
+scanning_table()
 
 
 def scanning_tree(): 
@@ -68,6 +68,15 @@ def scanning_tree():
     while mc.is_moving(): ### Allows for the movement to finish properly
         time.sleep(0.1)
     time.sleep(1)
+    close_gripper()
+    time.sleep(1)
+    set_arms_angles(deposit_angles, 10)
+    while mc.is_moving(): ### Allows for the movement to finish properly    
+        time.sleep(0.1)
+    time.sleep(1)
+    open_gripper()
+    time.sleep(1)
+    reset()
 
 scanning_tree()
 
