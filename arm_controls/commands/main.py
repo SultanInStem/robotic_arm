@@ -55,11 +55,16 @@ def reset():
     mc.set_gripper_calibration()
     return 0
 
-def calibrate_joints(): 
-    mc.set_servo_calibration(1)
-    print("You have 8 seconds to align all the joints")
-    time.sleep(8)
-    mc.focus_servo(1)
+def calibrate_joints():
+    mc.release_all_servos()          # unlock so you can hand-align
+    print("Align all joints to zero marks. You have 10 seconds...")
+    time.sleep(10)
+
+    for joint_id in range(1, 7):     # calibrate all 6 joints
+        mc.set_servo_calibration(joint_id)
+
+    mc.focus_all_servos()            # re-lock all joints
+    print("Calibration saved.")
 
 def calibrate_gripper():
     mc.set_gripper_calibration()
