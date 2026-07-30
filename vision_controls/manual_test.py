@@ -203,6 +203,7 @@ try:
     while True:
         frames      = pipeline.wait_for_frames()
         aligned     = align.process(frames)
+        intrinsics = depth_frame.profile.as_video_stream_profile().intrinsics
         depth_frame = aligned.get_depth_frame()
         color_frame = aligned.get_color_frame()
 
@@ -255,7 +256,7 @@ try:
             ### -----------------------------------
             # APPLYING PHYSICAL CAMERA OFFSETS
             x_3d = x_3d - CAMERA_X_OFFSET
-            y_3d = -1*y_3d + CAMERA_Y_OFFSET
+            y_3d = -y_3d
             z_3d = CAMERA_Z_OFFSET - z_3d
             ### -----------------------------------
 
