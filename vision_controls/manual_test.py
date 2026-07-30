@@ -255,7 +255,7 @@ try:
             ### -----------------------------------
             # APPLYING PHYSICAL CAMERA OFFSETS
             x_3d -= CAMERA_X_OFFSET   
-            y_3d -= CAMERA_Y_OFFSET
+            y_3d *= -1
             z_3d -= CAMERA_Z_OFFSET
             ### -----------------------------------
 
