@@ -5,9 +5,14 @@ import warnings
 
 
 print("CAUTION: THIS SCRIPT ASSUMES A PARTICULAR ALLIGNMENT OF THE CAMERA")
-CAMERA_X = input("Enter X coordinate of the camera in base frame (m)")
-CAMERA_Y = input("Enter Y coordinate of the camera in base frame (m)")
-CAMERA_Z = input("Enter Z coordinate of the camera in base frame (m)")
+
+### the measured position is: 
+# X = 0.3631m 
+# Y = 0
+# Z = 0.5521
+CAMERA_X_OFFSET = 0.3631
+CAMERA_Y_OFFSET = 0
+CAMERA_Z_OFFSET = 0.5521
 
 
 # ----------------------------------------------
@@ -57,10 +62,7 @@ NMS_THRESH  = 0.4
 # ─────────────────────────────────────────────
 # DETECTION CONFIG
 # ─────────────────────────────────────────────
-CAMERA_WIDTH_OFFSET  = (50 / 2) * 0.001
-CAMERA_HEIGHT_OFFSET = -20 * 0.001
-Z_OFFSET             = 0.13
-CAMMERA_TO_GRIPPER_Z = 90* 0.001 
+
 DETECTION_FRAMES     = 20
 delta                = 0.15
 THRESHOLD            = 50
@@ -251,21 +253,16 @@ try:
 
             ### -----------------------------------
             # APPLYING PHYSICAL CAMERA OFFSETS
-            if x_3d > 0: 
-                x_3d = x_3d - CAMERA_WIDTH_OFFSET  
-            else:
-                x_3d = x_3d + CAMERA_WIDTH_OFFSET   
-            if y_3d > 0:
-                y_3d = y_3d + CAMERA_HEIGHT_OFFSET
-            else:
-                y_3d = y_3d - CAMERA_HEIGHT_OFFSET
-            z_3d = z_3d - CAMMERA_TO_GRIPPER_Z 
+            x_3d -= CAMERA_X_OFFSET   
+            y_3d -= CAMERA_Y_OFFSET
+            z_3d -= CAMERA_Z_OFFSET
             ### -----------------------------------
 
 
 
             coords_buffer.append((x_3d, y_3d, z_3d))
             print(f"Detection: {label} {conf:.2f} | X:{x_3d:.3f} Y:{y_3d:.3f} Z:{z_3d:.3f}")
+            angles = compute_angles([x_3d,y_3d,z_3d])
             detection_count += 1
 
             # Draw bounding box
@@ -293,7 +290,7 @@ try:
             is_stable = std_X < delta and std_Y < delta and std_Z < delta
             if is_stable:
                 coord_str = f"{avg_X:.4f},{avg_Y:.4f},{avg_Z:.4f}\n"
-                print(f"📍 Stable detection: {coord_str.strip()}")
+                print(f"Detection: {coord_str.strip()}")
             # Reset buffers
             detection_count = 0
             coords_buffer   = []
