@@ -1,14 +1,26 @@
 import pyrealsense2 as rs
 import numpy as np
 import cv2
-import socket
-import time
-import os
+import warnings 
 
 
-CAMERA_X = input("Please enter X coordinate of the camera in base frame")
-CAMERA_Y = input("Please enter Y coordinate of the camera in base frame")
-CAMERA_Z = input("Please enter Z coordinate of the camera in base frame")
+print("CAUTION: THIS SCRIPT ASSUMES A PARTICULAR ALLIGNMENT OF THE CAMERA")
+CAMERA_X = input("Enter X coordinate of the camera in base frame (m)")
+CAMERA_Y = input("Enter Y coordinate of the camera in base frame (m)")
+CAMERA_Z = input("Enter Z coordinate of the camera in base frame (m)")
+
+
+# ----------------------------------------------
+# Importing the kinematic chain 
+# ----------------------------------------------
+chain = None
+with warnings.catch_warnings(): 
+    warnings.simplefilter("ignore")
+    from ikpy.chain import Chain
+    chain = Chain.from_urdf_file(
+        "./mycobot_320pi.urdf", 
+        active_links_mask=[False, True, True, True, True, True, True, False]
+    )
 
 
 
@@ -63,7 +75,6 @@ def get_output_layers(net):
     if isinstance(unconnected[0], (list, np.ndarray)):
         return [layer_names[i[0] - 1] for i in unconnected]
     return [layer_names[i - 1] for i in unconnected]
-
 
 # ─────────────────────────────────────────────
 # LETTERBOX — matches ultralytics preprocessing
