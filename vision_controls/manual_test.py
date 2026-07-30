@@ -22,6 +22,27 @@ with warnings.catch_warnings():
         active_links_mask=[False, True, True, True, True, True, True, False]
     )
 
+def compute_angles(point_in_base_frame): 
+    orientation = [0,0,-1]
+    orientation_mode = "Z"
+    working_radius = 0.35
+    x = point_in_base_frame[0]
+    y = point_in_base_frame[1]
+    z = point_in_base_frame[2]
+    if x**2 + y**2 + z**2 >= working_radius**2:
+        print("The point is outside of working radius")
+        return []
+    angles = chain.inverse_kinematics(
+        point_in_base_frame, 
+        orientation, 
+        orientation_mode=orientation_mode,
+        optimizer="least_squares", 
+        max_iter=1000, 
+    )
+    for i in range(0, len(angles)): 
+        angles[i] = round(angles[i], 3)
+    print("Target angles: ", angles)
+
 
 
 # ─────────────────────────────────────────────
