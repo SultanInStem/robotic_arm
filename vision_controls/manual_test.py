@@ -203,9 +203,9 @@ try:
     while True:
         frames      = pipeline.wait_for_frames()
         aligned     = align.process(frames)
-        intrinsics = depth_frame.profile.as_video_stream_profile().intrinsics
         depth_frame = aligned.get_depth_frame()
         color_frame = aligned.get_color_frame()
+        intrinsics = depth_frame.profile.as_video_stream_profile().intrinsics
 
         if not depth_frame or not color_frame:
             continue
