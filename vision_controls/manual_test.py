@@ -10,7 +10,7 @@ print("CAUTION: THIS SCRIPT ASSUMES A PARTICULAR ALLIGNMENT OF THE CAMERA")
 # X = 0.3631m 
 # Y = 0
 # Z = 0.5521
-CAMERA_X_OFFSET = 0.3631
+CAMERA_X_OFFSET = 0.43
 CAMERA_Y_OFFSET = 0
 CAMERA_Z_OFFSET = 0.50
 
@@ -254,7 +254,7 @@ try:
 
             ### -----------------------------------
             # APPLYING PHYSICAL CAMERA OFFSETS
-            x_3d -= CAMERA_X_OFFSET   
+            x_3d = -(CAMERA_X_OFFSET + x_3d) 
             y_3d *= -1
             z_3d = CAMERA_Z_OFFSET - z_3d
             ### -----------------------------------
