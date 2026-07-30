@@ -47,6 +47,7 @@ def compute_angles(point_in_base_frame):
     for i in range(0, len(angles)): 
         angles[i] = round(angles[i], 3)
     print("Target angles: ", angles)
+    return angles
 
 
 
@@ -255,7 +256,7 @@ try:
             # APPLYING PHYSICAL CAMERA OFFSETS
             x_3d -= CAMERA_X_OFFSET   
             y_3d -= CAMERA_Y_OFFSET
-            z_3d -= CAMERA_Z_OFFSET
+            z_3d = CAMERA_Z_OFFSET - z_3d
             ### -----------------------------------
 
 
