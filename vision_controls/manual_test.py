@@ -256,14 +256,14 @@ try:
             # APPLYING PHYSICAL CAMERA OFFSETS
             x_3d -= CAMERA_X_OFFSET   
             y_3d *= -1
-            z_3d -= CAMERA_Z_OFFSET
+            z_3d += CAMERA_Z_OFFSET
             ### -----------------------------------
 
 
 
             coords_buffer.append((x_3d, y_3d, z_3d))
             print(f"Detection: {label} {conf:.2f} | X:{x_3d:.3f} Y:{y_3d:.3f} Z:{z_3d:.3f}")
-            angles = compute_angles([x_3d,y_3d,z_3d])
+            angles = compute_angles([x_3d, y_3d, z_3d])
             detection_count += 1
 
             # Draw bounding box
