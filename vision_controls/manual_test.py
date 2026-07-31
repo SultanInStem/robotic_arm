@@ -54,8 +54,8 @@ def compute_angles(point_in_base_frame):
 # ─────────────────────────────────────────────
 # MODEL CONFIG
 # ─────────────────────────────────────────────
-MODEL_PATH  = "./AI_model/yolov8n_apples/my_model.onnx"
-NAMES_PATH  = "./AI_model/yolov8n_apples/my_model.names"
+MODEL_PATH  = "./AI_model/yolov8m_strawberry/my_model.onnx"
+NAMES_PATH  = "./AI_model/yolov8m_strawberry/my_model.names"
 INPUT_SIZE  = (640, 640)
 CONF_THRESH = 0.5
 NMS_THRESH  = 0.4
@@ -205,7 +205,7 @@ try:
         aligned     = align.process(frames)
         depth_frame = aligned.get_depth_frame()
         color_frame = aligned.get_color_frame()
-        intrinsics = depth_frame.profile.as_video_stream_profile().intrinsics
+        intrinsics = depth_frame.profile.as_video_stream_profile().intrinsics ### THIS IS HELLA IMPORTANT 
 
         if not depth_frame or not color_frame:
             continue
