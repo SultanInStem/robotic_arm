@@ -31,13 +31,7 @@ with warnings.catch_warnings():
 def compute_angles(point_in_base_frame): 
     orientation = [0,0,-1]
     orientation_mode = "Z"
-    working_radius = 0.35
-    x = point_in_base_frame[0]
-    y = point_in_base_frame[1]
-    z = point_in_base_frame[2]
-    if x**2 + y**2 + z**2 >= working_radius**2:
-        print("The point is outside of working radius")
-        return []
+
     angles = chain.inverse_kinematics(
         point_in_base_frame, 
         orientation, 
@@ -45,6 +39,11 @@ def compute_angles(point_in_base_frame):
         optimizer="least_squares", 
         max_iter=1000, 
     )
+    # run forward kinematics to confirm reachability
+    achieved = chain.forward_kinematics(angles)[:3, 3] 
+    if np.linalg.norm(achieved - point_in_base_frame) > 0.005:
+        print("Point outside of working radius. ")
+        return []
     for i in range(0, len(angles)): 
         angles[i] = round(angles[i], 3)
     print("Target angles: ", angles)
@@ -55,8 +54,8 @@ def compute_angles(point_in_base_frame):
 # ─────────────────────────────────────────────
 # MODEL CONFIG
 # ─────────────────────────────────────────────
-MODEL_PATH  = "./AI_model/yolov8m_strawberry/my_model.onnx"
-NAMES_PATH  = "./AI_model/yolov8m_strawberry/my_model.names"
+MODEL_PATH  = "./AI_model/yolov8n_apples/my_model.onnx"
+NAMES_PATH  = "./AI_model/yolov8n_apples/my_model.names"
 INPUT_SIZE  = (640, 640)
 CONF_THRESH = 0.5
 NMS_THRESH  = 0.4
