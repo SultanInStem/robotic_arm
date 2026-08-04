@@ -13,7 +13,7 @@ print("CAUTION: THIS SCRIPT ASSUMES A PARTICULAR ALLIGNMENT OF THE CAMERA")
 CAMERA_X_OFFSET = 0.41
 CAMERA_Y_OFFSET = 0.03
 gripper_length = 0.11
-CAMERA_Z_OFFSET = 0.75
+CAMERA_Z_OFFSET = 0.78
 
 
 # ----------------------------------------------
