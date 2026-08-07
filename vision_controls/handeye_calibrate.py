@@ -120,7 +120,7 @@ def collect(n_target=18):
     dictionary = _get_dictionary()
     board = _get_board(dictionary)
 
-    mc = MyCobot("/dev/ttyAMA0", 1000000)   # adjust port for your setup
+    mc = MyCobot("192.168.10.2", 9000)   # adjust port for your setup
 
     pipeline = rs.pipeline()
     cfg = rs.config()
