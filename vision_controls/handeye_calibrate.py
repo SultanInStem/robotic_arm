@@ -203,7 +203,8 @@ def collect(n_target=18):
 # =====================================================================
 def load_chain(urdf_path="mycobot_320.urdf"):
     from ikpy.chain import Chain
-    return Chain.from_urdf_file(urdf_path)
+    return Chain.from_urdf_file("mycobot_320pi.urdf",
+                     active_links_mask=[False, True, True, True, True, True, True, False])
 
 
 def fk_pose(chain, angles_deg):
