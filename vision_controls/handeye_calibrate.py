@@ -171,9 +171,15 @@ def collect(n_target=18):
                     continue
 
                 angles = mc.get_angles()
-                if angles is None:
-                    print("  get_angles() returned None, skipping")
-                    continue
+
+                if not isinstance(angles, (list, tuple)) or len(angles) != 6:
+                    print(f"  bad get_angles() -> {angles!r}, retrying")
+                    import time
+                    time.sleep(0.3)
+                    angles = mc.get_angles()
+                    if not isinstance(angles, (list, tuple)) or len(angles) != 6:
+                        print("  still bad, skipping this capture")
+                        continue
 
                 samples.append({
                     "joint_angles_deg": list(angles),
