@@ -115,12 +115,12 @@ def make_board(path="charuco_board.png", dpi=300):
 # =====================================================================
 def collect(n_target=18):
     import pyrealsense2 as rs
-    from pymycobot.mycobot import MyCobot
+    from pymycobot import MyCobot320Socket
 
     dictionary = _get_dictionary()
     board = _get_board(dictionary)
 
-    mc = MyCobot("129.8.233.110", 9000)   # adjust port for your setup
+    mc = MyCobot320Socket("129.8.233.110", 9000)   # adjust port for your setup
 
     pipeline = rs.pipeline()
     cfg = rs.config()
