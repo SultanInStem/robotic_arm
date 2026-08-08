@@ -124,7 +124,7 @@ def collect(n_target=18):
 
     pipeline = rs.pipeline()
     cfg = rs.config()
-    cfg.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
+    cfg.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
     profile = pipeline.start(cfg)
 
     intr = profile.get_stream(rs.stream.color).as_video_stream_profile().intrinsics
