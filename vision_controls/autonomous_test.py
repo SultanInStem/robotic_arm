@@ -52,7 +52,7 @@ TARGET_CLASS = "apple"   # only pick this class; set to None to pick any
 # ─────────────────────────────────────────────
 DETECTION_FRAMES     = 10      # consecutive stable frames required
 STABILITY_TOL        = 0.010   # m - max SD across the buffer on every axis
-CENTER_THRESHOLD     = 50      # px
+CENTER_THRESHOLD     = 9999      # px
 BRIGHTNESS_THRESHOLD = 10
 DEPTH_PATCH          = 5       # median over a DEPTH_PATCH x DEPTH_PATCH window
 frame_center_x       = 640 // 2
