@@ -54,16 +54,9 @@ def calibrate_joints():
     print("Calibration saved.")
 
 def calibrate_gripper():
-    import time
-    for gt in (1, 2, 3, 4):
-        print(f"--- type {gt}")
-        try:
-            mc.set_gripper_value(100, 30, gt); time.sleep(2)
-            mc.set_gripper_value(50,  30, gt); time.sleep(2)
-            input("  did it stop at MID-travel? [enter] ")
-            mc.set_gripper_value(100, 30, gt); time.sleep(2)
-        except Exception as e:
-            print("  error:", e)
+    mc.set_gripper_mode(1); time.sleep(0.1)
+    mc.set_gripper_calibration()
+    time.sleep(2)
  
 def get_arms_position(): 
     angles = mc.get_angles() ## angles in degrees
