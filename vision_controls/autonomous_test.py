@@ -50,7 +50,7 @@ TARGET_CLASS = "apple"   # only pick this class; set to None to pick any
 # ─────────────────────────────────────────────
 # DETECTION / STABILITY CONFIG
 # ─────────────────────────────────────────────
-DETECTION_FRAMES     = 10      # consecutive stable frames required
+DETECTION_FRAMES     = 15      # consecutive stable frames required
 STABILITY_TOL        = 0.010   # m - max SD across the buffer on every axis
 CENTER_THRESHOLD     = 9999      # px
 BRIGHTNESS_THRESHOLD = 10
