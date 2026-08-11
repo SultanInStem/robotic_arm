@@ -55,8 +55,10 @@ def calibrate_joints():
 
 def calibrate_gripper():
     mc.set_gripper_mode(1); time.sleep(0.1)
-    mc.set_gripper_calibration()
+    mc.set_gripper_value(100, 30, 1)   # open, then let go
     time.sleep(2)
+    mc.set_gripper_calibration()
+    time.sleep(3)
  
 def get_arms_position(): 
     angles = mc.get_angles() ## angles in degrees
