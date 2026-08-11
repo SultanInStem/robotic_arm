@@ -40,8 +40,8 @@ COOLDOWN_S    = 3.0      # dead time after a trial before re-arming
 # ─────────────────────────────────────────────
 # MODEL CONFIG
 # ─────────────────────────────────────────────
-MODEL_PATH  = "./AI_model/yolov8m_strawberry/my_model.onnx"
-NAMES_PATH  = "./AI_model/yolov8m_strawberry/my_model.names"
+MODEL_PATH  = "./AI_model/yolov8n_apples/my_model.onnx"
+NAMES_PATH  = "./AI_model/yolov8n_apples/my_model.names"
 INPUT_SIZE  = (640, 640)
 CONF_THRESH = 0.70      # MUST match the value reported in Table I
 NMS_THRESH  = 0.4
