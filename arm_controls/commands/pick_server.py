@@ -12,7 +12,7 @@ from commands.main import mc          # reuses the existing MyCobot320 handle
 HOST = "0.0.0.0"
 PORT = 65432
  
-MOVE_SPEED   = 20      # send_angles speed; keep <= 40 per existing guards
+MOVE_SPEED   = 10      # send_angles speed; keep <= 40 per existing guards
 SETTLE_S     = 0.5     # extra dwell after is_moving() clears
 GRIP_DWELL_S = 1.5     # time for the gripper to finish closing/opening
  
@@ -20,8 +20,8 @@ GRIP_DWELL_S = 1.5     # time for the gripper to finish closing/opening
 #   1. jog the arm by hand to the pose
 #   2. run get_angles.py, paste the result here
 HOME_ANGLES   = [0, 0, 0, 0, 0, 0]
-LIFT_ANGLES   = [0, -20, -20, 0, 0, 0]      # <-- RETEACH: clear of the platform
-BASKET_ANGLES = [-90, -20, -30, 0, 0, 0]    # <-- RETEACH: over the basket
+LIFT_ANGLES   = [0, 20, 20, 0, 0, 0]      # <-- RETEACH: clear of the platform
+BASKET_ANGLES = [0, -40, 0, 0, 90, 0]    # <-- RETEACH: over the basket
  
 JOINT_LIMITS = [(-168, 168), (-135, 135), (-145, 145),
                 (-148, 148), (-168, 168), (-175, 175)]
@@ -30,7 +30,7 @@ JOINT_LIMITS = [(-168, 168), (-135, 135), (-145, 145),
 # ─────────────────────────────────────────────
 # MOTION HELPERS
 # ─────────────────────────────────────────────
-def wait_until_stopped(timeout=20.0):
+def wait_until_stopped(timeout=60.0):
     """Blocks until the arm reports it has stopped moving."""
     t0 = time.time()
     time.sleep(0.3)                     # is_moving() can lag the command
