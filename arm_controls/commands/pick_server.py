@@ -25,8 +25,10 @@ BASKET_ANGLES = [0, -40, 0, 0, 90, 0]    # <-- RETEACH: over the basket
  
 JOINT_LIMITS = [(-168, 168), (-135, 135), (-145, 145),
                 (-148, 148), (-168, 168), (-175, 175)]
- 
- 
+
+GRIPPER_OPEN_VALUE = 100
+GRIPPER_CLOSED_VALUE = 10
+
 # ─────────────────────────────────────────────
 # MOTION HELPERS
 # ─────────────────────────────────────────────
@@ -74,12 +76,12 @@ def run_pick(joint_deg, grip_value, grip_speed):
     Returns when the fruit has been released. Homing happens afterwards,
     outside the timed window.
     """
-    set_gripper(100, grip_speed)                       # open before approach
+    set_gripper(GRIPPER_OPEN_VALUE, grip_speed)                       # open before approach
     move_angles(joint_deg,      label="target")
-    set_gripper(grip_value, grip_speed)                # close on the fruit
+    set_gripper(GRIPPER_CLOSED_VALUE, grip_speed)                # close on the fruit
     move_angles(LIFT_ANGLES,    label="lift")
     move_angles(BASKET_ANGLES,  label="basket")
-    set_gripper(100, grip_speed)                       # release
+    set_gripper(GRIPPER_OPEN_VALUE, grip_speed)                       # release
     return True
  
  
