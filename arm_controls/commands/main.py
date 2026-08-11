@@ -14,7 +14,7 @@ def set_gripper(value, speed=50):
     if speed > 100:
         print("speed cannot be greater than 100")
         return -1
-    mc.set_gripper_value(value, speed)
+    mc.set_gripper_value(value, speed, 1)
     time.sleep(2)
     return 0 
 
