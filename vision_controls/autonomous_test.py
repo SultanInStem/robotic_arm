@@ -51,7 +51,7 @@ TARGET_CLASS = "ripe"   # only pick this class; set to None to pick any
 # DETECTION / STABILITY CONFIG
 # ─────────────────────────────────────────────
 DETECTION_FRAMES     = 20      # consecutive stable frames required
-STABILITY_TOL        = 0.005   # m - max SD across the buffer on every axis
+STABILITY_TOL        = 0.010   # m - max SD across the buffer on every axis
 CENTER_THRESHOLD     = 50      # px
 BRIGHTNESS_THRESHOLD = 30
 DEPTH_PATCH          = 5       # median over a DEPTH_PATCH x DEPTH_PATCH window
