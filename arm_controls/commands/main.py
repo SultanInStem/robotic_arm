@@ -54,8 +54,8 @@ def calibrate_joints():
     print("Calibration saved.")
 
 def calibrate_gripper():
-    mc.set_gripper_mode(1); time.sleep(0.2)
-    print("mode reads back:", mc.get_gripper_mode())
+    print("angles:", mc.get_angles())
+    print("version:", mc.get_system_version())
     # mc.set_gripper_calibration()
     # time.sleep(2)
  
