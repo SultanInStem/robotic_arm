@@ -20,14 +20,14 @@ def open_gripper(speed=80):
 
     return 0 
 
-def close_gripper(speed=80): 
+def close_gripper(value, speed=80): 
     mc.set_gripper_mode(1)
     print("GRIPPER VALUE ", mc.get_gripper_mode())
     if speed > 100:
         print("speed cannot be greater than 100")
         return -1
 
-    mc.set_gripper_value(20, speed)
+    mc.set_gripper_value(value, speed)
     time.sleep(2)
     return 0 
 
