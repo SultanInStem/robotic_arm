@@ -54,12 +54,14 @@ def calibrate_joints():
     print("Calibration saved.")
 
 def calibrate_gripper():
+    # jaws spread fully open by hand, then hands off
     mc.set_gripper_mode(1); time.sleep(0.1)
-    mc.set_gripper_value(100, 30, 1)   # open, then let go
-    time.sleep(2)
     mc.set_gripper_calibration()
     time.sleep(3)
- 
+    mc.set_gripper_value(100, 30, 1); time.sleep(2)   # check: fully open?
+    mc.set_gripper_value(0, 30, 1);   time.sleep(2)   # check: fully closed?
+    mc.set_gripper_value(50, 30, 1);  time.sleep(2)   # check: halfway?
+    
 def get_arms_position(): 
     angles = mc.get_angles() ## angles in degrees
     for i in range(0, len(angles)): 
