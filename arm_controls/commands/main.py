@@ -54,10 +54,8 @@ def calibrate_joints():
     print("Calibration saved.")
 
 def calibrate_gripper():
-    print("angles:", mc.get_angles())
-    print("version:", mc.get_system_version())
-    # mc.set_gripper_calibration()
-    # time.sleep(2)
+    help(mc.set_gripper_value)
+    import pymycobot; print(pymycobot.__version__)
  
 def get_arms_position(): 
     angles = mc.get_angles() ## angles in degrees
