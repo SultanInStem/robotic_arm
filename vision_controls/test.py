@@ -5,17 +5,6 @@ import warnings
 import json
 
 
-print("CAUTION: THIS SCRIPT ASSUMES A PARTICULAR ALLIGNMENT OF THE CAMERA")
-
-### the measured position is: 
-# X = 0.3631m 
-# Y = 0
-# Z = 0.5521
-CAMERA_X_OFFSET = 0.425
-CAMERA_Y_OFFSET = 0.03
-CAMERA_Z_OFFSET = 0.75
-
-
 # ----------------------------------------------
 # Importing the kinematic chain 
 # ----------------------------------------------
