@@ -33,7 +33,7 @@ import json
 with open("cam2base.json") as f:
     T_CAM2BASE = np.array(json.load(f)["T_cam2base"])
 
-GRIPPER_LENGTH = 0.12   # flange-to-tip, measured
+GRIPPER_LENGTH = 0.13   # flange-to-tip, measured
 
 def cam_to_base(point_cam):
     """RealSense camera frame (metres) -> robot base frame (metres)."""
